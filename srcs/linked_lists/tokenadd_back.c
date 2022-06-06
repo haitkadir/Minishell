@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/15 12:26:14 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/03/30 20:15:41 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "../../minishell.h"
+
+void	tokenadd_back(t_token **lst, t_token *new)
+{
+	t_token	*temp;
+
+	if (new == NULL)
+		exit(-1);
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		temp = tokenlast(*lst);
+		if (temp)
+			temp->next = new;
+			new->prev = temp;
+	}
+}
