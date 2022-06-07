@@ -1,7 +1,5 @@
 #include "../lexer.h"
 
-
-
 char lexer(char *line)
 {
 	if (check_qoutes(line))

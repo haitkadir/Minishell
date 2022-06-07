@@ -15,6 +15,7 @@ all: $(NAME)
 %.o : %.c lexer.h
 	@$(CC) $(FLAGS) -o $@ -c $<
 
+.INTERMEDIATE: $(OBJECTS)
 # execute: all
 # 	@gcc -lreadline testmain.c -L. -lparsing -o minishell
 

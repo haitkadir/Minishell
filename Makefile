@@ -7,18 +7,23 @@ LEXER = -L ./srcs/lexer/  -llexer
 PARSER = -L ./srcs/parser/  -lparser
 
 
-SOURCES = minishell.c
+SOURCES = $(addprefix srcs/linked_lists/,tokennew.c tokenadd_front.c tokenadd_back.c tokensize.c tokenlast.c)
 
-all: $(NAME)
+.PHONY: srcs/lexer/liblexer.a
+
+all: dependencies $(NAME)
+
+srcs/lexer/liblexer.a:
+	make -C srcs/lexer/
+
+$(NAME): srcs/lexer/liblexer.a
+	@$(CC) $(FLAGS) minishell.c $(SOURCES) $(LIBFT) $(LEXER) -o $(NAME)
+	@echo "\033[1;34mMinishell Compield successfuly\033[0m"
+
 
 dependencies:
 	@make -sC ./libft/
 	@make -sC ./srcs/lexer/
-
-$(NAME): dependencies
-	@$(CC) $(FLAGS) $(SOURCES) $(LIBFT) $(LEXER) -o $(NAME)
-	@echo "\033[1;34mMinishell Compield successfuly\033[0m"
-
 
 clean:
 	@make clean -sC ./libft/

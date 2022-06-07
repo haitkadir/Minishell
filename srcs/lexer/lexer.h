@@ -15,25 +15,25 @@
 # define BCYAN     '\033[1;36m'
 # define COFF      '\033[0m'
 
-typedef enum s_type
-{
-	CMD,
-	HERE_DOC,
-	RED_IN,
-	RED_OUT,
-	RED_APPEND,
-	PIPE,
-}	t_type;
+// typedef enum s_type
+// {
+// 	CMD,
+// 	HERE_DOC,
+// 	RED_IN,
+// 	RED_OUT,
+// 	RED_APPEND,
+// 	PIPE,
+// }	t_type;
 
 
 
 
-typedef struct s_token
-{
-	int		token;
-	char 	*str;
-	char 	*file;
-}	t_token;
+// typedef struct s_token
+// {
+// 	int		token;
+// 	char 	*str;
+// 	char 	*file;
+// }	t_token;
 
 char check_qoutes(char *line);
 char	lexer(char *line);

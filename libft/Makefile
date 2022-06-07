@@ -40,6 +40,8 @@ all: $(NAME)
 %.o : %.c libft.h
 	@$(CC) $(FLAGS) -o $@ -c $<
 
+.INTERMEDIATE: $(OBJECTS) $(BONUS_OBJECTS)
+
 clean:
 	@rm -f *.o
 
