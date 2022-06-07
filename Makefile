@@ -14,7 +14,7 @@ SOURCES = $(addprefix srcs/linked_lists/,tokennew.c tokenadd_front.c tokenadd_ba
 all: dependencies $(NAME)
 
 srcs/lexer/liblexer.a:
-	make -C srcs/lexer/
+	@make -sC srcs/lexer/
 
 $(NAME): srcs/lexer/liblexer.a
 	@$(CC) $(FLAGS) minishell.c $(SOURCES) $(LIBFT) $(LEXER) -o $(NAME)
