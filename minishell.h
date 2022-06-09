@@ -25,6 +25,7 @@ typedef struct s_token
 {
     struct s_token  *prev;
 	int             token;
+	int				red_from; // redirected from
 	char            *content;
     struct s_token  *next;
 }	t_token;

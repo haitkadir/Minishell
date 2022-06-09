@@ -24,8 +24,8 @@ static char check_qoutes_util(char c, char *flag, char *dbl, char *sngl)
 		}
 		*sngl = !*sngl;
 	}
-	else if (ft_strchr("!#%&()*+,:;@[\\]^_`{}", c) && (!*dbl && !*sngl))
-		return (1);
+	// else if (ft_strchr("!#%&()*+,:;@[\\]^_`{}", c) && (!*dbl && !*sngl))
+	// 	return (1);
 	return (0);
 }
 

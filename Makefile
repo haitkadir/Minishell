@@ -17,7 +17,7 @@ srcs/lexer/liblexer.a:
 	@make -sC srcs/lexer/
 
 $(NAME): srcs/lexer/liblexer.a
-	@$(CC) $(FLAGS) minishell.c $(SOURCES) $(LIBFT) $(LEXER) -o $(NAME)
+	@$(CC) $(FLAGS) minishell.c $(SOURCES) $(LIBFT) $(LEXER) -o $(NAME) -g
 	@echo "\033[1;34mMinishell Compield successfuly\033[0m"
 
 
