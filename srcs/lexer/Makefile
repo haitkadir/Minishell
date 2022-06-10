@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 NAME = liblexer.a
 
-SOURCES = $(addprefix srcs/,lexer.c check_qoutes.c)
+SOURCES = $(addprefix srcs/,lexer.c check_errors.c check_qoutes.c)
 
 OBJECTS = $(SOURCES:%.c=%.o)
 

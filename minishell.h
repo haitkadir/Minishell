@@ -7,7 +7,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "./libft/libft.h"
-# include "./srcs/lexer/lexer.h"
 
 typedef enum s_type
 {
@@ -25,7 +24,6 @@ typedef struct s_token
 {
     struct s_token  *prev;
 	int             token;
-	int				red_from; // redirected from
 	char            *content;
     struct s_token  *next;
 }	t_token;
@@ -39,6 +37,11 @@ void	tokenadd_back(t_token **lst, t_token *new);
 int     tokensize(t_token *lst);
 t_token	*tokenlast(t_token *lst);
 
+/*---------------------- Lexer ----------------------*/
+
+t_token	*lexer(char *line);
+
+
+
 
 #endif
-
