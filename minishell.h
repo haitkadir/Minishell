@@ -15,8 +15,8 @@ typedef enum s_type
 	CMD,
 	HERE_DOC,
 	RED_IN,
-	RED_OUT,
 	RED_APPEND,
+	RED_OUT,
 	PIPE,
 }	t_type;
 

@@ -8,10 +8,22 @@ char	get_here_doc(t_token **token, int *i)
 	return (0);
 }
 
+char	get_red_in(t_token **token, int *i)
+{
+	if (tokenadd_back(token, tokennew(ft_strdup("<"), RED_IN)))
+		return (1);
+	*i += 1;
+	return (0);
+}
 
+char	get_red_append(t_token **token, int *i)
+{
+	if (tokenadd_back(token, tokennew(ft_strdup(">>"), RED_APPEND)))
+		return (1);
+	*i += 2;
+	return (0);
+}
 
-
-// char	get_red_in(t_token **token, char *line, int *i);
 // char	get_red_out(t_token **token, char *line, int *i);
 // char	get_red_append(t_token **token, char *line, int *i);
 // char	get_pipe(t_token **token, char *line, int *i);

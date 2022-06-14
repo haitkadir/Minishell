@@ -17,15 +17,9 @@ char	tokenizer(t_token **token, char *line)
 		if (!qoute && line[i] == '<' && line[i + 1] == '<')
 			get_here_doc(token, &i);
 		else if (!qoute && line[i] == '<' && line[i + 1] != '<')
-		{
-			printf("in_redirection\n");
-			i++;
-		}
+			get_red_in(token, &i);
 		else if (!qoute && line[i] == '>' && line[i + 1] == '>')
-		{
-			printf("append_redirection\n");
-			i += 2;
-		}
+			get_red_append(token, &i);
 		else if (!qoute && line[i] == '>' && line[i + 1] != '>')
 		{
 			printf("out_redirection\n");
