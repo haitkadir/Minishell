@@ -11,19 +11,22 @@
 /* ************************************************************************** */
 #include "../../minishell.h"
 
-void	tokenadd_back(t_token **lst, t_token *new)
+char	tokenadd_back(t_token **lst, t_token *new)
 {
 	t_token	*temp;
 
 	if (new == NULL)
-		exit(-1);
+		return (1);
 	if (*lst == NULL)
 		*lst = new;
 	else
 	{
 		temp = tokenlast(*lst);
 		if (temp)
+		{
 			temp->next = new;
 			new->prev = temp;
+		}
 	}
+	return (0);
 }

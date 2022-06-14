@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -lreadline
+FLAGS = -lreadline -fsanitize=address
 NAME = minishell
 
 LIBFT = -L ./libft/  -lft
@@ -13,7 +13,7 @@ SOURCES = $(addprefix srcs/linked_lists/,tokennew.c tokenadd_front.c tokenadd_ba
 all: $(NAME)
 
 libft/libft.a:
-	@make -sC libft/
+	@make bonus -sC libft/
 
 srcs/lexer/liblexer.a:
 	@make -sC srcs/lexer/
