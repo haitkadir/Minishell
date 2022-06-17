@@ -39,6 +39,18 @@ typedef struct s_shell
     struct s_token  *next;
 }	t_shell;
 
+/*------------------- get environment variables -------------------*/
+
+typedef struct s_env
+{
+    char            *key;
+    char            *value;
+    struct s_env    *next;
+} t_env;
+
+void    create_env(t_env **list, char **env);
+void	free_env(t_env *head, char error);
+
 /*---------------------- Linkedlist functions ----------------------*/
 
 t_token	*tokennew(char *content, int token);
