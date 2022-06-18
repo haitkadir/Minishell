@@ -21,18 +21,11 @@ char	tokenizer(t_token **token, char *line)
 		else if (!qoute && line[i] == '>' && line[i + 1] == '>')
 			get_red_append(token, &i);
 		else if (!qoute && line[i] == '>' && line[i + 1] != '>')
-		{
-			printf("=================Im here ===================\n");
 			get_red_out(token, &i);
-		}
 		else if (!qoute && line[i] == '|' && line[i + 1] != '|')
 			get_pipe(token, &i);
 		else if (ft_isascii(line[i]) && !ft_strchr("#&();|<> \\`~/", line[i]))
-		{
-		printf("==before==%c===\n", line[i]);
-			get_word(token, line, &i);
-		printf("==after==%c===\n", line[i]);
-		}
+			get_word(token, line, &i, &qoute);
 		else
 			i++;
 	}

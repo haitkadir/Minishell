@@ -11,7 +11,7 @@ char	*expender(char *line, int *i);
 char	*word_within_dqoutes(char *line, int *i);
 char	*word_within_sqoutes(char *line, int *i);
 char	*word(char *line, int *i);
-char	get_word(t_token **token, char *line, int *i);
+char	get_word(t_token **token, char *line, int *i, char *qoute);
 char	get_here_doc(t_token **token, int *i);
 char	get_red_in(t_token **token, int *i);
 char	get_red_append(t_token **token, int *i);
