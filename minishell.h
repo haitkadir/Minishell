@@ -48,7 +48,10 @@ typedef struct s_env
     struct s_env    *next;
 } t_env;
 
-void    create_env(t_env **list, char **env);
+void	ft_envadd_back(t_env **lst, t_env *new);
+t_env	*ft_envnew(char *key, char *value);
+void	create_env(t_env **list, char **env);
+char	*ft_getenv(t_env *env, char *buffer);
 void	free_env(t_env *head, char error);
 
 /*---------------------- Linkedlist functions ----------------------*/
@@ -61,7 +64,7 @@ t_token	*tokenlast(t_token *lst);
 
 /*---------------------- Lexer ----------------------*/
 
-t_token	*lexer(char *line);
+t_token	*lexer(char *line, t_env *env);
 
 
 
