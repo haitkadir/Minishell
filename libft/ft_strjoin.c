@@ -19,11 +19,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*new_str;
 
 	if (!s1)
-		return (0);
+		return (NULL);
 	str_size = (ft_strlen(s1) + ft_strlen(s2));
 	new_str = (char *)malloc(sizeof(char) * str_size + 1);
 	if (!new_str)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (s1[i])
 	{
