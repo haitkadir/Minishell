@@ -7,7 +7,8 @@ LEXER = -L ./srcs/lexer/  -llexer
 
 
 ENVSRCS = $(addprefix srcs/env/, get_env.c)
-TOKENSRCS = $(addprefix srcs/linked_lists/, tokennew.c tokenadd_front.c tokenadd_back.c tokensize.c tokenlast.c)
+TOKENSRCS = $(addprefix srcs/linked_lists/, tokennew.c tokenadd_front.c \
+			tokenadd_back.c tokensize.c tokenlast.c)
 
 .PHONY: all clean fclean re libft/libft.a srcs/lexer/liblexer.a
 
@@ -21,13 +22,9 @@ srcs/lexer/liblexer.a:
 
 
 $(NAME): libft/libft.a srcs/lexer/liblexer.a
-	@$(CC) $(FLAGS) minishell.c $(LIBFT) $(ENVSRCS) $(TOKENSRCS) $(LEXER) -o $(NAME) -g
+	@$(CC) $(FLAGS) minishell.c $(LIBFT) $(ENVSRCS) $(TOKENSRCS) $(LEXER) \
+	-o $(NAME) -g
 	@echo "\033[1;34mMinishell Compield successfuly\033[0m"
-
-
-# dependencies:
-# 	@make -sC ./libft/
-# 	@make -sC ./srcs/lexer/
 
 clean:
 	@make clean -sC ./libft/
