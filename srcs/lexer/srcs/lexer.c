@@ -13,14 +13,14 @@ static void print_token(t_token *token)
 
 
 
-t_token *lexer(char *line)
+t_token *lexer(char *line, t_env *env)
 {
 	t_token	*token;
 
 	token = NULL;
 	if (check_errors(line))
 		return (NULL);
-	if (tokenizer(&token, line))
+	if (tokenizer(&token, line, env))
 		return (NULL);
 	print_token(token);
 	return (tokennew("hello", 5));
