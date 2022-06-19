@@ -12,16 +12,28 @@
 
 #include "minishell.h"
 
+static void print_env(t_env	*env)
+{
+	t_env	*tmp;
 
-int main(int ac, char **av, char **mean_env)
+	tmp = env;
+	while (tmp)
+	{
+		printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
+}
+
+
+int main(int ac, char **av, char **main_env)
 {
 	char *line;
 	t_token *shell;
-	// t_env	*env;
+	t_env	*env;
 
 	line = NULL;
 	shell = NULL;
-	// create_env(&env, mean_env);
+	create_env(&env, main_env);
 	while (1)
 	{
 		line = readline("\033[1;32mMinishell:\033[0m ");
@@ -30,9 +42,11 @@ int main(int ac, char **av, char **mean_env)
 		else if (line[0] == '\n')
 			continue ;
 		add_history (line);
-		shell = lexer(line);
+		shell = lexer(line, env);
 		if (!shell)
 			ft_putstr_fd("\033[1;31mSyntax error\033[0m\n", 2);
+		// print_env(env);
+		
 	}
 	return (0);
 }
