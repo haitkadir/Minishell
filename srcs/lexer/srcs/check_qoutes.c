@@ -1,5 +1,7 @@
 #include "../lexer.h"
 
+/*----------------------------------------------------------------------------*/
+
 static char check_qoutes_util(char c, char *flag, char *dbl, char *sngl)
 {
 	if (c == '\"')
@@ -28,6 +30,8 @@ static char check_qoutes_util(char c, char *flag, char *dbl, char *sngl)
 		return (1);
 	return (0);
 }
+
+/*----------------------------------------------------------------------------*/
 
 char check_qoutes(char *line)
 {

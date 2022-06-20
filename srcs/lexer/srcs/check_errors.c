@@ -1,5 +1,7 @@
 #include "../lexer.h"
 
+/*----------------------------------------------------------------------------*/
+
 char check_in_out_operators(char *line, char oper)
 {
 	int i;
@@ -23,6 +25,8 @@ char check_in_out_operators(char *line, char oper)
 		return (1);
 	return (0);
 }
+
+/*----------------------------------------------------------------------------*/
 
 char	check_errors(char *line)
 {
