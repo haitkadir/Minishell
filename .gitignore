@@ -1,0 +1,9 @@
+minishell.dSYM/
+*.o
+*.a
+.vscode/
+minishell
+infile
+outfile
+test
+.DS_Store
