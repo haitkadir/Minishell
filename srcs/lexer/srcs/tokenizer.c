@@ -1,5 +1,7 @@
 #include "../lexer.h"
 
+/*----------------------------------------------------------------------------*/
+
 char	get_space(t_token **token, char *line, int *i)
 {
 	if (tokenadd_back(token, tokennew(ft_strdup(" "), SPACE)))
@@ -9,6 +11,19 @@ char	get_space(t_token **token, char *line, int *i)
 	return (0);
 }
 
+/*----------------------------------------------------------------------------*/
+
+char	check_last(t_token *token, int	macro)
+{
+	if (token)
+	{
+		if (tokenlast(token)->token == macro)
+			return (1);
+	}
+	return (0);
+}
+
+/*----------------------------------------------------------------------------*/
 
 char	tokenizer(t_token **token, char *line, t_env *env)
 {
@@ -21,24 +36,18 @@ char	tokenizer(t_token **token, char *line, t_env *env)
 	{
 		if (ft_strchr("\"\'", line[i]))
 			qoute = !qoute;
-		if (!qoute && line[i] == '<' && line[i + 1] == '<')
-			get_here_doc(token, &i);
-		else if (!qoute && line[i] == '<' && line[i + 1] != '<')
-			get_red_in(token, &i);
-		else if (!qoute && line[i] == '>' && line[i + 1] == '>')
-			get_red_append(token, &i);
-		else if (!qoute && line[i] == '>' && line[i + 1] != '>')
-			get_red_out(token, &i);
-		else if (!qoute && line[i] == '|' && line[i + 1] != '|')
-			get_pipe(token, &i);
+		if (!qoute && is_operators(qoute, line[i], line[i + 1]))
+			get_operator(token, line, &i);
 		else if (ft_isascii(line[i]) && !ft_strchr("#&();|<> \\`~/", line[i]))
 		{
 			if (ft_strchr("\"\'", line[i]))
 				qoute = !qoute;
 			get_word(token, line, &i, env);
 		}
-		else if (!qoute && ft_isspace(line[i]))
+		else if (!qoute && !check_last(*token, HERE_DOC) && ft_isspace(line[i]))
 			get_space(token, line, &i);
+		else
+			i++;
 	}
 	return (0);
 }

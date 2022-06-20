@@ -35,7 +35,7 @@ static	char	*get_chunk(char *line, int *i)
 	start = *i;
 	while (line[*i])
 	{
-		if (ft_strchr("$\"", line[*i]))
+		if (len && ft_strchr("$\"", line[*i]))
 			break ;
 		len++;
 		*i += 1;
@@ -45,27 +45,26 @@ static	char	*get_chunk(char *line, int *i)
 
 /*----------------------------------------------------------------------------*/
 
-char	*word_within_dqoutes(char *line, int *i, t_env *env)
+char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token)
 {
 	char	*string;
 	char	*substring;
-	char	*tmp;
 
-	*i += 1;
 	string = NULL;
 	substring = NULL;
 	while (line[*i])
 	{
-		if (line[*i] == '$')
+		if (!check_last(token, HERE_DOC) && line[*i] == '$')
 			substring = expender(line, i, env);
 		else
 			substring = get_chunk(line, i);
-
 		if (!string)
+		{
 			string = ft_strdup(substring);
+			ft_free(substring);
+		}
 		else if (substring)
 			string = ft_realloc(string, substring);
-		ft_free(substring);
 		if (line[*i] == '\"')
 		{
 			*i += 1;
@@ -109,7 +108,7 @@ char	*word(char *line, int *i)
 	start = *i;
 	while (line[*i])
 	{
-		if (ft_strchr("<>| \'\"", line[*i]))
+		if (len && ft_strchr("<>|$ \'\"", line[*i]))
 			break ;
 		len++;
 		*i += 1;
@@ -122,13 +121,17 @@ char	*word(char *line, int *i)
 char get_word(t_token **token, char *line, int *i, t_env *env)
 {
 	char	*content;
-
+ 
 	content = NULL;
 	if (line[*i] == '\"')
-		content = word_within_dqoutes(line, i, env);
+	{
+		*i += 1;
+		content = word_within_dqoutes(line, i, env, *token);
+	}
 	else if (line[*i] == '\'')
 		content = word_within_sqoutes(line, i);
-	else if (line[*i] == '$' && ft_isalnum(line[(*i) + 1]))
+	else if (!check_last(*token, HERE_DOC) && line[*i] == '$' \
+		&& ft_isalnum(line[*i + 1]))
 		content = expender(line, i, env);
 	else
 		content = word(line, i);
