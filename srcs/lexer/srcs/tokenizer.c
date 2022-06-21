@@ -25,6 +25,23 @@ char	check_last(t_token *token, int	macro)
 
 /*----------------------------------------------------------------------------*/
 
+char	is_last_operator(t_token *token)
+{
+	int	last;
+
+	if (token)
+	{
+		last = tokenlast(token)->token;
+		return ((last == RED_IN)
+			|| (last == RED_OUT)
+			|| (last == HERE_DOC)
+			|| (last == PIPE));
+	}
+	return (0);
+}
+
+/*----------------------------------------------------------------------------*/
+
 char	tokenizer(t_token **token, char *line, t_env *env)
 {
 	int i;
@@ -44,7 +61,7 @@ char	tokenizer(t_token **token, char *line, t_env *env)
 				qoute = !qoute;
 			get_word(token, line, &i, env);
 		}
-		else if (!qoute && !check_last(*token, HERE_DOC) && ft_isspace(line[i]))
+		else if (!qoute && !is_last_operator(*token) && ft_isspace(line[i]))
 			get_space(token, line, &i);
 		else
 			i++;
