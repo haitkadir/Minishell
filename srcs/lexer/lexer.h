@@ -19,6 +19,7 @@ char	get_red_out(t_token **token, int *i);
 char	get_pipe(t_token **token, int *i);
 char	get_space(t_token **token, char *line, int *i);
 char	is_operators(char qoute, char a, char b);
+char	is_last_operator(t_token *token);
 char	get_operator(t_token **token, char *line, int *i);
 char	check_last(t_token *token, int	macro);
 char	tokenizer(t_token **token, char *line, t_env *env);
