@@ -28,11 +28,10 @@ static void print_env(t_env	*env)
 int main(int ac, char **av, char **main_env)
 {
 	char *line;
-	t_token *shell;
+	t_shell *shell;
 	t_env	*env;
 
 	line = NULL;
-	shell = NULL;
 	create_env(&env, main_env);
 	while (1)
 	{
@@ -42,9 +41,9 @@ int main(int ac, char **av, char **main_env)
 		else if (line[0] == '\n')
 			continue ;
 		add_history (line);
-		shell = lexer(line, env);
-		if (!shell)
-			ft_putstr_fd("\033[1;31mSyntax error\033[0m\n", 2);
+		shell = parser(line, env);
+		// if (!shell)
+		// 	ft_putstr_fd("\033[1;31mSyntax error\033[0m\n", 2);
 		// print_env(env);
 		
 	}
