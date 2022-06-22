@@ -27,7 +27,7 @@ srcs/lexer/liblexer.a:
 srcs/lexer/libparser.a:
 	@make -sC srcs/parser/
 
-$(NAME): libft/libft.a srcs/lexer/liblexer.a srcs/lexer/libparser.a
+$(NAME): libft/libft.a srcs/lexer/liblexer.a srcs/lexer/libparser.a minishell.c $(ENVSRCS) $(LIST_FUNCS)
 	@$(CC) $(FLAGS) minishell.c $(LIBFT) $(ENVSRCS) $(LIST_FUNCS) \
 	$(PARSER) $(LEXER) -o $(NAME) -g
 	@echo "\033[1;34mMinishell Compield successfuly\033[0m"
