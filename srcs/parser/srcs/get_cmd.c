@@ -60,22 +60,77 @@ char	*check_cmd(t_env *env, char *cmd)
 		}
 		ft_free(full_cmd);
 		i++;
-
 	}
 	return (NULL);
 }
 
 /*----------------------------------------------------------------------------*/
 
-char	*get_cmd(t_env *env, char *cmd)
+static int	count_words(t_token *token)
+{
+	int i;
+
+	i = 0;
+	if (!token)
+		return (0);
+	while (token && (token->token == WORD || token->token == SPACE))
+	{
+		if (token->token == WORD && token->prev->token == SPACE)
+			i++;
+		token = token->next;
+	}
+	return (i);
+}
+
+/*----------------------------------------------------------------------------*/
+
+char	**get_switchs( t_token ***token)
+{
+	char	**switchs;
+	char	*tmp;
+	int		i;
+
+	tmp = NULL;
+	i = 0;
+	switchs = (char **)ft_calloc(count_words(**token) + 1, sizeof(char *));
+	while ((**token) && ((**token)->token == WORD || (**token)->token == SPACE))
+	{
+		if ((**token)->token == WORD)
+		{
+			if (tmp)
+				tmp = ft_realloc(tmp, ft_strdup((**token)->content));
+			else
+				tmp = ft_strdup((**token)->content);
+		}
+		if (tmp && (!(**token)->next || (**token)->token == SPACE))
+		{
+			switchs[i++] = tmp;
+			tmp = NULL;
+		}
+		(**token) = (**token)->next;
+	}
+	return (switchs);
+}
+
+/*----------------------------------------------------------------------------*/
+
+char	*get_cmd(t_shell **shell, t_env *env, t_token **token)
 {
 	char	*full_cmd;
-
-	if (ft_strnstr(BUILTINS, cmd, ft_strlen(BUILTINS)))
-		return (ft_strdup(cmd));
-	full_cmd = check_cmd(env, cmd);
+	char	**switchs;
+	if (ft_strnstr(BUILTINS, (*token)->content, ft_strlen(BUILTINS)))
+		full_cmd = ft_strdup((*token)->content);
+	else if (ft_strchr("./", (*token)->content[0]))
+		full_cmd = ft_strdup((*token)->content);
+	else
+		full_cmd = check_cmd(env, (*token)->content);
 	if (!full_cmd)
 		return (NULL);
+	switchs = get_switchs(&token);
+	if (!switchs)
+		return (NULL);
+	if (shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1)))
+		exit(1);
 	return (full_cmd);
 }
 
