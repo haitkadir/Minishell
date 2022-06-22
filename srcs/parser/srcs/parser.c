@@ -11,6 +11,6 @@ t_shell *parser(char *line, t_env *env)
 	if (!token)
 		return (NULL);
 	if (process_data(&shell, token, env))
-		return (NULL);
+		return (NULL);	
 	return (shell);
 }
