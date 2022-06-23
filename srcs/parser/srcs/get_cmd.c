@@ -46,12 +46,12 @@ char	*check_cmd(t_env *env, char *cmd)
 	tmp_cmd = ft_strjoin("/", cmd);
 	path = get_path(env);
 	if (!tmp_cmd || !path)
-		exit(-1);
+		return (NULL);
 	while (path[i])
 	{
 		full_cmd = ft_strjoin(path[i], tmp_cmd);
 		if (!full_cmd)
-			exit(-1);
+			return (NULL);
 		if (access(full_cmd, F_OK) == 0)
 		{
 			free_path(path);
@@ -75,7 +75,7 @@ static int	count_words(t_token *token)
 		return (0);
 	while (token && (token->token == WORD || token->token == SPACE))
 	{
-		if (token->token == WORD && token->prev->token == SPACE)
+		if (token->token == WORD)
 			i++;
 		token = token->next;
 	}
@@ -84,31 +84,24 @@ static int	count_words(t_token *token)
 
 /*----------------------------------------------------------------------------*/
 
-char	**get_switchs( t_token ***token)
+char	**get_switchs(t_token **token)
 {
 	char	**switchs;
-	char	*tmp;
 	int		i;
-
-	tmp = NULL;
 	i = 0;
-	switchs = (char **)ft_calloc(count_words(**token) + 1, sizeof(char *));
-	while ((**token) && ((**token)->token == WORD || (**token)->token == SPACE))
+
+	if (!*token)
+		return (NULL);
+	switchs = (char **)ft_calloc(count_words(*token) + 1, sizeof(char *));
+	if (!switchs)
+		return (NULL);
+	while ((*token) && ((*token)->token != PIPE))
 	{
-		if ((**token)->token == WORD)
-		{
-			if (tmp)
-				tmp = ft_realloc(tmp, ft_strdup((**token)->content));
-			else
-				tmp = ft_strdup((**token)->content);
-		}
-		if (tmp && (!(**token)->next || (**token)->token == SPACE))
-		{
-			switchs[i++] = tmp;
-			tmp = NULL;
-		}
-		(**token) = (**token)->next;
+		if ((*token)->token == WORD && ((*token)->prev && !is_operator((*token)->prev)))
+			switchs[i++] = ft_strdup((*token)->content);
+		(*token) = (*token)->next;
 	}
+	switchs[i] = NULL;
 	return (switchs);
 }
 
@@ -118,19 +111,28 @@ char	*get_cmd(t_shell **shell, t_env *env, t_token **token)
 {
 	char	*full_cmd;
 	char	**switchs;
+	
+	full_cmd = NULL;
+	switchs = NULL;
+	if (!*token)
+		return (NULL);
 	if (ft_strnstr(BUILTINS, (*token)->content, ft_strlen(BUILTINS)))
 		full_cmd = ft_strdup((*token)->content);
 	else if (ft_strchr("./", (*token)->content[0]))
 		full_cmd = ft_strdup((*token)->content);
 	else
 		full_cmd = check_cmd(env, (*token)->content);
+	switchs = get_switchs(token);
 	if (!full_cmd)
 		return (NULL);
-	switchs = get_switchs(&token);
-	if (!switchs)
+	if (!*switchs)
 		return (NULL);
-	if (shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1)))
-		exit(1);
+	printf("cmd: %s:\n", full_cmd);
+	int i = 0;
+	while (switchs[i])
+		printf("switchs:%s:\n", switchs[i++]);
+	// if (shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1)))
+	// 	exit(1);
 	return (full_cmd);
 }
 
