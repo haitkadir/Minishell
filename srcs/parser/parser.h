@@ -6,6 +6,7 @@
 void	free_path(char **path);
 char	**get_path(t_env *env);
 char	*check_cmd(t_env *env, char *cmd);
+char	**get_switchs( t_token **token);
 char	*get_cmd(t_shell **shell, t_env *env, t_token **token);
 
 char	is_operator(t_token *token);
