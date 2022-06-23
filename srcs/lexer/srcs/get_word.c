@@ -1,119 +1,20 @@
 #include "../lexer.h"
 
-char	*expender(char *line, int *i, t_env *env)
-{
-	char	*buffer;
-	char	*res;
-	int 	len;
-	int 	start;
-
-	len = 0;
-	*i += 1;
-	start = *i;
-	buffer = NULL;
-	while (line[*i])
-	{
-		if (ft_strchr("\"\' $", line[*i]))
-			break ;
-		len++;
-		*i += 1;
-	}
-	buffer = ft_substr(line, start, len);
-	res = ft_getenv(env, buffer);
-	ft_free(buffer);
-	return (res);
-}
-
 /*----------------------------------------------------------------------------*/
 
-static	char	*get_chunk(char *line, int *i)
+char	get_word_util(char **s1, char **s2)
 {
-	int len;
-	int start;
-
-	len = 0;
-	start = *i;
-	while (line[*i])
+	if (!*s1)
 	{
-		if (len && ft_strchr("$\"", line[*i]))
-			break ;
-		len++;
-		*i += 1;
+		*s1 = ft_strdup(*s2);
+		ft_free(*s2);
 	}
-	return (ft_substr(line, start, len));
-}
-
-/*----------------------------------------------------------------------------*/
-
-char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token)
-{
-	char	*string;
-	char	*substring;
-
-	string = NULL;
-	substring = NULL;
-	while (line[*i])
-	{
-		if (!check_last(token, HERE_DOC) && line[*i] == '$')
-			substring = expender(line, i, env);
-		else
-			substring = get_chunk(line, i);
-		if (!string)
-		{
-			string = ft_strdup(substring);
-			ft_free(substring);
-		}
-		else if (substring)
-			string = ft_realloc(string, substring);
-		if (line[*i] == '\"')
-		{
-			*i += 1;
-			break;
-		}
-	}
-	return (string);
-}
-
-/*----------------------------------------------------------------------------*/
-
-char	*word_within_sqoutes(char *line, int *i)
-{
-	int len;
-	int start;
-
-	len = 0;
-	*i += 1;
-	start = *i;
-	while (line[*i])
-	{
-		if (line[*i] == '\'')
-		{
-			*i += 1;
-			break ;
-		}
-		len++;
-		*i += 1;
-	}
-	return (ft_substr(line, start, len));
-}
-
-/*----------------------------------------------------------------------------*/
-
-char	*word(char *line, int *i)
-{
-	int len;
-	int start;
-
-	len = 0;
-	start = *i;
-	while (line[*i])
-	{
-		if (len && ft_strchr("<>|$ \'\"", line[*i]))
-			break ;
-		len++;
-		*i += 1;
-	}
-	return (ft_substr(line, start, len));
+	else
+		*s1 = ft_realloc(*s1, *s2);
+	if (!s1)
+		return (1);
+	s2 = NULL;
+	return (0);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -121,22 +22,26 @@ char	*word(char *line, int *i)
 char get_word(t_token **token, char *line, int *i, t_env *env)
 {
 	char	*content;
+	char	*result;
  
 	content = NULL;
-	if (line[*i] == '\"')
+	result = NULL;
+	while(ft_isascii(line[*i]) && !ft_strchr("#&();|<> \\`~/", line[*i]))
 	{
-		*i += 1;
-		content = word_within_dqoutes(line, i, env, *token);
+		if (line[*i] == '\"')
+		{
+			*i += 1;
+			content = word_within_dqoutes(line, i, env, *token);
+		}
+		else if (line[*i] == '\'')
+			content = word_within_sqoutes(line, i);
+		else if (!check_last(*token, HERE_DOC) && line[*i] == '$' \
+			&& ft_isalnum(line[*i + 1]))
+			content = expender(line, i, env);
+		else
+			content = word(line, i);
+		get_word_util(&result, &content);
 	}
-	else if (line[*i] == '\'')
-		content = word_within_sqoutes(line, i);
-	else if (!check_last(*token, HERE_DOC) && line[*i] == '$' \
-		&& ft_isalnum(line[*i + 1]))
-		content = expender(line, i, env);
-	else
-		content = word(line, i);
-	if (!content)
-		return (1);
-	tokenadd_back(token, tokennew(content, WORD));
+	tokenadd_back(token, tokennew(result, WORD));
 	return (0);
 }
