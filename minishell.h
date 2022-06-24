@@ -9,6 +9,10 @@
 # include "./libft/libft.h"
 
 # define BUILTINS "echo cd pwd export unset env exit"
+
+/*-------------------------------- global ------------------------------------*/
+
+
 typedef enum s_type
 {
 	WORD,
@@ -22,6 +26,7 @@ typedef enum s_type
 }	t_type;
 
 
+void	put_error(char *keyword, char *err);
 
 
 
