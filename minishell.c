@@ -4,13 +4,23 @@
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: sahafid <marvin@42.fr>                   +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 02:38:45 by haitkadi          #+#    #+#             */
 /*   Updated: 2022/06/14 02:38:48 by haitkadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	put_error(char *keyword, char *err)
+{
+	ft_putstr_fd("\033[4;31mMinishell\033[0m: ", 2);
+	ft_putstr_fd(keyword, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(err, 2);
+	ft_putstr_fd("\n", 2);
+}
+
 
 static void print_env(t_env	*env)
 {
