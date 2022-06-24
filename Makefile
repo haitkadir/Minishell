@@ -9,7 +9,7 @@ PARSER = -L ./srcs/parser/  -lparser
 
 ENVSRCS = $(addprefix srcs/env/, get_env.c)
 LIST_FUNCS = $(addprefix srcs/linked_lists/, tokennew.c tokenadd_front.c \
-			tokenadd_back.c tokensize.c tokenlast.c \
+			tokenadd_back.c tokensize.c tokenlast.c tokendelone.c \
 			shell_new.c shell_last.c shell_size.c shelladd_back.c \
 			shelladd_front.c)
 
