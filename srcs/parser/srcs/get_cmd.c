@@ -61,7 +61,7 @@ char	*check_cmd(t_env *env, char *cmd)
 		ft_free(full_cmd);
 		i++;
 	}
-	return (NULL);
+	return (put_error(cmd, "Command not found"), NULL);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -97,7 +97,7 @@ char	**get_switchs(t_token **token)
 		return (NULL);
 	while ((*token) && ((*token)->token != PIPE))
 	{
-		if ((*token)->token == WORD && ((*token)->prev && !is_operator((*token)->prev)))
+		if ((*token)->token == WORD)
 			switchs[i++] = ft_strdup((*token)->content);
 		(*token) = (*token)->next;
 	}
@@ -107,7 +107,7 @@ char	**get_switchs(t_token **token)
 
 /*----------------------------------------------------------------------------*/
 
-char	*get_cmd(t_shell **shell, t_env *env, t_token **token)
+void	get_cmd(t_shell **shell, t_env *env, t_token **token)
 {
 	char	*full_cmd;
 	char	**switchs;
@@ -115,25 +115,23 @@ char	*get_cmd(t_shell **shell, t_env *env, t_token **token)
 	full_cmd = NULL;
 	switchs = NULL;
 	if (!*token)
-		return (NULL);
-	if (ft_strnstr(BUILTINS, (*token)->content, ft_strlen(BUILTINS)))
+		return ;
+	if (ft_strnstr_tl(BUILTINS, (*token)->content, ft_strlen(BUILTINS)))
 		full_cmd = ft_strdup((*token)->content);
 	else if (ft_strchr("./", (*token)->content[0]))
-		full_cmd = ft_strdup((*token)->content);
+	{
+		if (access((*token)->content, F_OK) == 0)
+			full_cmd = ft_strdup((*token)->content);
+		else
+			put_error((*token)->content, "No such file of directory");
+	}
 	else
 		full_cmd = check_cmd(env, (*token)->content);
-	switchs = get_switchs(token);
 	if (!full_cmd)
-		return (NULL);
-	if (!*switchs)
-		return (NULL);
-	printf("cmd: %s:\n", full_cmd);
-	int i = 0;
-	while (switchs[i])
-		printf("switchs:%s:\n", switchs[i++]);
-	// if (shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1)))
-	// 	exit(1);
-	return (full_cmd);
+		return ;
+	switchs = get_switchs(token);
+	if (shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1)))
+		return ;
 }
 
 /*----------------------------------------------------------------------------*/

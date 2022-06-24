@@ -57,11 +57,14 @@ typedef struct s_token
     struct s_token  *next;
 }	t_token;
 
+char	is_last_operator(t_token *token);
+char	check_last(t_token *token, int	macro);
 t_token	*tokennew(char *content, int token);
 void	tokenadd_front(t_token **lst, t_token *new);
 char	tokenadd_back(t_token **lst, t_token *new);
 int     tokensize(t_token *lst);
 t_token	*tokenlast(t_token *lst);
+void	tokendelone(t_token *lst);
 
 t_token	*lexer(char *line, t_env *env);
 

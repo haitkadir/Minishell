@@ -34,6 +34,7 @@ char	is_last_operator(t_token *token)
 		last = tokenlast(token)->token;
 		return ((last == RED_IN)
 			|| (last == RED_OUT)
+			|| (last == RED_APPEND)
 			|| (last == HERE_DOC)
 			|| (last == PIPE));
 	}
