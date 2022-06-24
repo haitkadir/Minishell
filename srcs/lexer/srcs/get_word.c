@@ -26,7 +26,7 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
  
 	content = NULL;
 	result = NULL;
-	while(ft_isascii(line[*i]) && !ft_strchr("#&();|<> \\`~/", line[*i]))
+	while(ft_isascii(line[*i]) && !ft_strchr("#&();|<> \\`~", line[*i]))
 	{
 		if (line[*i] == '\"')
 		{
