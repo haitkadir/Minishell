@@ -15,8 +15,6 @@ t_token	*tokennew(char *content, int token)
 {
 	t_token	*temp;
 
-	if (!content)
-		return (NULL);
 	temp = (t_token *)malloc(sizeof(t_token));
 	if (!temp)
 		return (NULL);

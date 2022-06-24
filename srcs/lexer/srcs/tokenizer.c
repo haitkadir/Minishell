@@ -47,7 +47,7 @@ char	tokenizer(t_token **token, char *line, t_env *env)
 {
 	int i;
 	char	qoute;
-	
+
 	qoute = 0;
 	i = 0;
 	while (line[i])

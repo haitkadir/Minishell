@@ -24,7 +24,6 @@ char	tokenadd_back(t_token **lst, t_token *new)
 		temp = tokenlast(*lst);
 		if (is_last_operator(temp) && temp->token != PIPE && !temp->content)
 		{
-			printf("++++++++++++++++|%s|+++++++++\n", new->content);
 			temp->content = ft_strdup(new->content);
 			tokendelone(new);
 		}
