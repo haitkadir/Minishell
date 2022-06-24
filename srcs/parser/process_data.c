@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 // char	is_prev_operator(t_token *token)
 // {
@@ -23,10 +23,8 @@ char	is_operator(t_token *token)
 char	process_data(t_shell **shell, t_token *token, t_env *env)
 {
 	char	is_cmd;
-	char	*cmd;
 
 	is_cmd = 0;
-	cmd = NULL;
 	*shell = NULL;
 	while (token)
 	{

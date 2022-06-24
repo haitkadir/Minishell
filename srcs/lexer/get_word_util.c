@@ -1,4 +1,4 @@
-#include "../lexer.h"
+#include "../../minishell.h"
 
 char	*expender(char *line, int *i, t_env *env)
 {

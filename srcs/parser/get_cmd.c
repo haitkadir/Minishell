@@ -1,4 +1,4 @@
-#include "../parser.h"
+#include "../../minishell.h"
 
 /*----------------------------------------------------------------------------*/
 
@@ -19,9 +19,6 @@ void	free_path(char **path)
 
 char	**get_path(t_env *env)
 {
-	int		i;
-
-	i = 0;
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PATH") == 0)
