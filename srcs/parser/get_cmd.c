@@ -117,18 +117,16 @@ void	get_cmd(t_shell **shell, t_env *env, t_token **token)
 		full_cmd = ft_strdup((*token)->content);
 	else if (ft_strchr("./", (*token)->content[0]))
 	{
-		if (access((*token)->content, F_OK) == 0)
+		if (access((*token)->content, F_OK | X_OK) == 0)
 			full_cmd = ft_strdup((*token)->content);
 		else
 			put_error((*token)->content, "No such file of directory");
 	}
 	else
 		full_cmd = check_cmd(env, (*token)->content);
-	if (!full_cmd)
-		return ;
+
 	switchs = get_switchs(token);
-	if (shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1)))
-		return ;
+	shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1));
 }
 
 /*----------------------------------------------------------------------------*/

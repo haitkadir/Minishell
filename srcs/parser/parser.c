@@ -7,24 +7,28 @@ static void print_node(t_shell *shell)
 	int i;
 
 	i = 0;
-	printf("\n================Start======================\n");
-	while (shell)
+	if (shell)
 	{
-		printf("| prev:%p:\n", shell->prev);
-		printf("| token:%d:\n",shell->token);
-		printf("| data:%s:\n",shell->data);
-		if (shell->switchs)
+		while (shell)
 		{
-			while (shell->switchs[i])
-				printf("| switchs:%s:\n",shell->switchs[i++]);
+		printf("\n================Start======================\n");
+			printf("| prev:%p:\n", shell->prev);
+			printf("| token:%d:\n",shell->token);
+			printf("| data:%s:\n",shell->data);
+			if (shell->switchs)
+			{
+				while (shell->switchs[i])
+					printf("| switchs:%s:\n",shell->switchs[i++]);
+			}
+			printf("| fd:%d:\n",shell->file);
+			printf("| next:%p:\n", shell->next);
+			shell = shell->next;
+		printf("=================End=======================\n");
 		}
-		printf("| fd:%d:\n",shell->file);
-		printf("| next:%p:\n", shell->next);
-		shell = shell->next;
 	}
-	printf("=================End=======================\n");
 }
 
+/*----------------------------------------------------------------------------*/
 
 t_shell *parser(char *line, t_env *env)
 {

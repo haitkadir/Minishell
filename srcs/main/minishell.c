@@ -45,7 +45,7 @@ int main(int ac, char **av, char **main_env)
 	create_env(&env, main_env);
 	while (1)
 	{
-		line = readline("\033[1;32mMinishell:\033[0m ");
+		line = readline("\001\033[1;32m\002Minishell:\001\e[0m\002 ");
 		if (!line)
 			break ;
 		else if (line[0] == '\n')

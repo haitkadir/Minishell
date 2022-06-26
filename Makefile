@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -lreadline -fsanitize=address -static-libasan -I includes/ -I libft/includes/
+CFLAGS = -lreadline -fsanitize=address -static-libasan -I ./ -I libft/
 
 LIBFT = -L libft -lft
 
@@ -18,7 +18,7 @@ MAIN = minishell
 
 LEXER = lexer tokenizer get_operators get_operators_util get_word get_word_util check_errors check_qoutes
 
-PARSER = parser process_data get_cmd
+PARSER = parser process_data get_cmd get_operators
 
 TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast tokendelone shell_new shell_last shell_size shelladd_back shelladd_front
 
@@ -36,12 +36,14 @@ $(NAME): $(OBJ)
 	@echo "\n"
 	@make bonus -sC libft/
 	@echo "\033[0;32mCompiling minishell..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -g
 	@echo "\n\033[0mDone !"
 
 %.o: %.c
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} ${CFLAGS} -c $< -o $@
+
+.INTERMEDIATE: $(OBJ)
 
 clean:
 	@echo "\033[0;31mCleaning libft..."
@@ -65,7 +67,8 @@ test: all
 	./minishell
 
 norm:
-	norminette $(SRC) $(HEADER)
+	@norminette $(SRC) 
+	@norminette $(HEADER)
 
 .PHONY: clean fclean re test norm
 

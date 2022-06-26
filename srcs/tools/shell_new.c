@@ -15,8 +15,6 @@ t_shell	*shell_new(int token, char *data, char **switchs, int file)
 {
 	t_shell	*temp;
 
-	if (!data || !switchs)
-		return (NULL);
 	temp = (t_shell *)malloc(sizeof(t_shell));
 	if (!temp)
 		return (NULL);

@@ -1,16 +1,5 @@
 #include "../../minishell.h"
 
-// char	is_prev_operator(t_token *token)
-// {
-// 	if (token->prev)
-// 	{
-// 		return ((token->prev->token == RED_IN)
-// 			|| (token->prev->token == RED_OUT)
-// 			|| (token->prev->token == HERE_DOC));
-// 	}
-// 	return (0);
-// }
-
 char	is_operator(t_token *token)
 {
 	return ((token->token == RED_IN)
@@ -31,13 +20,15 @@ char	process_data(t_shell **shell, t_token *token, t_env *env)
 		if (!is_cmd && token->token == WORD)
 		{
 			is_cmd = !is_cmd;
+			printf("######################## CMD #########################\n");
 			get_cmd(shell, env, &token);
 			continue;
 		}
 		else if (is_operator(token))
 		{
 			is_cmd = 0;
-			printf("operator\n");
+			printf("######################## OPERATOR #########################\n");
+			process_operator(shell, &token);
 		}
 		if (token)
 			token = token->next;
