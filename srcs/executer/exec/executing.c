@@ -59,20 +59,18 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 	if (i == 0)
 	{
 		lst = shell;
-		printf("anah na\n");
-		if (lst != NULL && lst->token == RED_IN)
+		if (lst && lst->token == RED_IN)
 		{
-			printf("anah na\n");
 			arg->in_fd = lst->file;
 			lst = lst->next;
 		}
-		if (lst != NULL && check_builtins(env, lst->switchs[0]))
+		if (lst && lst->token == CMD && check_builtins(env, lst->switchs[0]))
 		{
 			if (lst->next != NULL)
 				ft_dup(lst, arg, 1);
 			else
 				ft_dup(lst, arg, 0);
-			return (1);	
+			return (1);
 		}	
 	}
 	return (0);

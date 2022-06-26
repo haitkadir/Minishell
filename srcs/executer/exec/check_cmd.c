@@ -119,9 +119,9 @@ int	check_builtins(t_env	*envi, char *str)
 		return (1);
 	else if (!ft_strcmp(str, "exit"))
 		return (1);
-	else if (!ft_strcmp(str, "cd"))
+	else if (!ft_strcmp1(str, "cd"))
 		return (1);
-	else if (!ft_strcmp(str, "echo"))
+	else if (!ft_strcmp1(str, "echo"))
 		return (1);
 	return (0);
 }
