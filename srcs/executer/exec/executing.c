@@ -71,7 +71,7 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 			else
 				ft_dup(lst, arg, 0);
 			return (1);
-		}	
+		}
 	}
 	return (0);
 }
