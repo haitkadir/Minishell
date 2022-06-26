@@ -8,24 +8,36 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
-# BUILTINS = cd echo env exit export pwd unset
+# execution part
 
-ENV = get_env
+BUILTINS =  cd cd_home echo env exit export export_things export_utils pwd unset
 
-# EXEC = bin builtin exec
+EXEC = check_cmd duping executing executing_cmd
 
-MAIN = minishell
+UTILS = utils
+
+# parsing part
 
 LEXER = lexer tokenizer get_operators get_operators_util get_word get_word_util check_errors check_qoutes
 
 PARSER = parser process_data get_cmd get_operators
 
+SIGNALS = signals
+
 TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast tokendelone shell_new shell_last shell_size shelladd_back shelladd_front
+
+ENV = get_env
+
+MAIN = minishell
 
 SRC = $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
 	  $(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \
 	  $(addsuffix .c, $(addprefix srcs/parser/, $(PARSER))) \
 	  $(addsuffix .c, $(addprefix srcs/tools/, $(TOOLS))) \
+	  $(addsuffix .c, $(addprefix srcs/signals/, $(SIGNALS))) \
+	  $(addsuffix .c, $(addprefix srcs/executer/builtins/, $(BUILTINS))) \
+	  $(addsuffix .c, $(addprefix srcs/executer/exec/, $(EXEC))) \
+	  $(addsuffix .c, $(addprefix srcs/executer/utils/, $(UTILS))) \
 	  $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 
 OBJ = $(SRC:c=o)

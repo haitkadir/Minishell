@@ -98,3 +98,24 @@ char	*ft_getenv(t_env *env, char *buffer)
 	return (NULL);
 }
 
+char	*get_keys(char *str, int c)
+{
+	char	*h;
+	char	a;
+	int		j;
+
+	h = (char *)str;
+	j = 0;
+	a = (char) c;
+	while (h[j] != a)
+		j++;
+	if (h[j] + 2 == 0)
+		return (str);
+	else
+	{
+		h[j] = 0;
+		return (h);
+	}
+	return (0);
+}
+
