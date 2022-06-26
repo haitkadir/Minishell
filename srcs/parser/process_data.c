@@ -20,14 +20,12 @@ char	process_data(t_shell **shell, t_token *token, t_env *env)
 		if (!is_cmd && token->token == WORD)
 		{
 			is_cmd = !is_cmd;
-			printf("######################## CMD #########################\n");
 			get_cmd(shell, env, &token);
 			continue;
 		}
 		else if (is_operator(token))
 		{
 			is_cmd = 0;
-			printf("######################## OPERATOR #########################\n");
 			process_operator(shell, &token);
 		}
 		if (token)

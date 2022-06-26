@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -lreadline -fsanitize=address -static-libasan -I ./ -I libft/
+CFLAGS = -fsanitize=address -static-libsan -I ./ -I libft/
 
 LIBFT = -L libft -lft
 
@@ -36,7 +36,7 @@ $(NAME): $(OBJ)
 	@echo "\n"
 	@make bonus -sC libft/
 	@echo "\033[0;32mCompiling minishell..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -g
+	@$(CC) -lreadline $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -g
 	@echo "\n\033[0mDone !"
 
 %.o: %.c

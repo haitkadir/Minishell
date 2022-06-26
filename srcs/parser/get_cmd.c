@@ -124,53 +124,11 @@ void	get_cmd(t_shell **shell, t_env *env, t_token **token)
 	}
 	else
 		full_cmd = check_cmd(env, (*token)->content);
-
+	if (!full_cmd)
+	{
+		shelladd_back(shell, shell_new(CMD_NOT_FOUND, NULL, NULL, -1));
+		return ;
+	}
 	switchs = get_switchs(token);
 	shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1));
 }
-
-/*----------------------------------------------------------------------------*/
-
-// int	check_files(char **filename)
-// {
-// 	int file;
-
-// 	file = open(av[1], O_RDONLY);
-// 	if (file == -1)
-// 		return (-1);
-// 	exec->outfile = open(av[4], O_CREAT | O_TRUNC | O_RDWR, 0777);
-// 	if (exec->outfile == -1)
-// 		return (exec->err = 4, 1);
-// 	return (0);
-// }
-
-/*----------------------------------------------------------------------------*/
-
-// t_exec	*parsing(char **env, char **av)
-// {
-// 	t_exec	*exec;
-// 	char	**paths;
-
-// 	paths = NULL;
-// 	exec = (t_exec *)ft_calloc(1, sizeof(t_exec));
-// 	if (!exec)
-// 		exit_err();
-// 	if (check_files(av, exec))
-// 		return (exec);
-// 	paths = get_paths(env);
-// 	if (!paths)
-// 		return (exec->err = 9, exec);
-// 	exec->cmd_switchs1 = ft_split(av[2], ' ');
-// 	exec->cmd_switchs2 = ft_split(av[3], ' ');
-// 	if (!exec->cmd_switchs1[0] || !exec->cmd_switchs2[0])
-// 		return (exec->err = 5, exec);
-// 	exec->full_cmd1 = check_cmd(paths, exec->cmd_switchs1[0]);
-// 	if (!exec->full_cmd1)
-// 		return (exec->err = 2, exec);
-// 	exec->full_cmd2 = check_cmd(paths, exec->cmd_switchs2[0]);
-// 	if (!exec->full_cmd2)
-// 		return (exec->err = 3, exec);
-// 	if (paths)
-// 		free_paths(paths);
-// 	return (exec);
-// }
