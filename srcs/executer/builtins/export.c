@@ -15,6 +15,7 @@
 int	check_keys(t_env *lst, char *str, int *j, int i)
 {
 	t_env	*lst1;
+	t_env	*tmp;
 
 	if (!(ft_isalpha(str[0]) || str[0] == '_'))
 		return (1);
@@ -36,6 +37,13 @@ int	check_keys(t_env *lst, char *str, int *j, int i)
 	}
 	if (i == ft_strlen(str))
 	{
+		tmp = lst;
+		while (tmp)
+		{
+			if (!ft_strcmp(tmp->key, str))
+				return (1);
+			tmp = tmp->next;
+		}
 		lst1 = ft_envnew(ft_strdup(str), NULL);
 		ft_envadd_back(&lst, lst1);
 		return (1);

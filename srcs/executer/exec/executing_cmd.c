@@ -12,6 +12,48 @@
 
 #include "../../../minishell.h"
 
+void	converting_env(t_env *env, char	**envirement)
+{
+	char	*tmp;
+	t_env	*lst;
+	int		i;
+
+	tmp = NULL;
+	i = 0;
+	lst = env;
+	while (lst)
+	{
+		if (lst->value)
+		{
+			tmp = ft_strjoin(lst->key, "=");
+			envirement[i] = ft_strjoin(tmp, lst->value);
+			free(tmp);
+		}
+		lst = lst->next;
+		i++;
+	}
+	envirement[i] = NULL;
+}
+
+char	**env_to_table(t_env *env)
+{
+	char	**envirement;
+	int		i;
+	t_env	*lst;
+
+	lst = env;
+	i = 0;
+	envirement = NULL;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	envirement = (char **)ft_calloc(i + 1, sizeof(char *));
+	converting_env(env, envirement);
+	return (envirement);
+}
+
 void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 {
 	int	i;
@@ -19,6 +61,7 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 	i = fork();
 	if (i == 0)
 	{
+		arg->paths = env_to_table(env);
 		if (j == 1)
 			ft_dup(shell, arg, 1);
 		else

@@ -21,7 +21,7 @@ void	her_doc(t_shell *shell, t_arg *arg)
 	i = 0;
 	str = NULL;
 	tmp = NULL;
-	i = open("tmp", O_CREAT | O_WRONLY | O_APPEND);
+	i = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC);
 	while (1)
 	{
 		str = readline("<< ");
@@ -94,7 +94,7 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == HERE_DOC)
 		{
 			her_doc(shell, arg);
-			arg->in_fd = open("tmp", O_RDONLY);
+			arg->in_fd = open(".tmp", O_RDONLY);
 		}
 		shell = shell->next;
 	}
