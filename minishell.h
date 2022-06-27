@@ -155,7 +155,7 @@ void	check_oldpwd(t_env *env, char	*oldpwd);
 
 /* --------------------------------- builtins --------------------------------- */
 
-void	builtins(t_env	*envi, char *str, t_arg *arg);
+void	builtins(t_env	*envi, char **str, t_arg *arg);
 char	*pwd(t_env *env, int i);
 void	unset_env(t_env **env, char **str);
 void	unset_utils(t_env **env, t_env *lst, char *find);
@@ -180,7 +180,7 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 
 /* ------------------------- executing function ----------------------------- */
 
-int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell);
+int		one_cmd(t_env	*env, t_arg *arg, t_shell *shell);
 
 int		check_builtins(t_env	*envi, char *str);
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell);

@@ -79,30 +79,27 @@ int	check_cmd1(t_env	*env, t_arg *arg, char *str)
 	return (0);
 }
 
-void	builtins(t_env	*envi, char *str, t_arg *arg)
+void	builtins(t_env	*envi, char **str, t_arg *arg)
 {
-	char	**splited;
-
-	splited = ft_split(str, ' ');
-	if (!ft_strcmp1(splited[0], "pwd"))
+	if (!ft_strcmp1(str[0], "pwd"))
 		pwd(envi, 1);
-	else if (!ft_strcmp(splited[0], "export"))
-		export_env(&envi, splited[0], splited, arg);
-	else if (!ft_strcmp(splited[0], "unset"))
-		unset_env(&envi, splited);
-	else if (!ft_strcmp1(splited[0], "env"))
+	else if (!ft_strcmp(str[0], "export"))
+		export_env(&envi, str[0], str, arg);
+	else if (!ft_strcmp(str[0], "unset"))
+		unset_env(&envi, str);
+	else if (!ft_strcmp1(str[0], "env"))
 		env(envi);
-	else if (!ft_strcmp(splited[0], "exit"))
+	else if (!ft_strcmp(str[0], "exit"))
 	{
-		if (splited[1] != NULL)
-			exit11(ft_atoi(splited[1]));
+		if (str[1] != NULL)
+			exit11(ft_atoi(str[1]));
 		else
 			exit10();
 	}
-	else if (!ft_strcmp(splited[0], "cd"))
-		cd_env(envi, splited[0], splited[1]);
-	else if (!ft_strcmp(splited[0], "echo"))
-		echo_env1(envi, splited);
+	else if (!ft_strcmp(str[0], "cd"))
+		cd_env(envi, str[0], str[1]);
+	else if (!ft_strcmp(str[0], "echo"))
+		echo_env1(envi, str);
 }
 
 int	check_builtins(t_env	*envi, char *str)

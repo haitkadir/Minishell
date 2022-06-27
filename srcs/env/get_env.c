@@ -47,8 +47,8 @@ t_env    *ft_envnew(char *key, char *value)
 {
     t_env    *tmp;
 
-	if (!key || !value)
-		return (NULL);
+	// if (!key || !value)
+	// 	return (NULL);
     tmp = NULL;
     tmp = (t_env *)malloc(sizeof(t_env));
     if (!tmp)

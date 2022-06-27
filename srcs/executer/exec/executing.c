@@ -12,35 +12,45 @@
 
 #include "../../../minishell.h"
 
-void	her_doc(t_shell *shell, t_arg *arg)
+int	her_doc(t_shell *shell, t_arg *arg)
 {
 	int		i;
+	int		id;
 	char	*str;
 	char	*tmp;
 
-	i = 0;
+	id = fork();
 	str = NULL;
 	tmp = NULL;
-	i = open("tmp", O_CREAT | O_WRONLY | O_APPEND);
-	while (1)
+	if (id == 0)
 	{
-		str = readline("<< ");
-		if (!ft_strcmp(str, shell->data))
+		i = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC);
+		while (1)
 		{
-			free(str);
-			return ;
+			str = readline("herdoc> ");
+			if (!ft_strcmp(str, shell->data))
+			{
+				free(str);
+				return (id);
+			}
+			else if (!str)
+			{
+				close(i);
+				exit(0);
+				return (id);
+			}
+			else
+			{
+				ft_putstr_fd(str, i);
+				ft_putstr_fd("\n", i);
+				free(str);
+				str = NULL;
+			}
 		}
-		else if (!str)
-			return ;
-		else
-		{
-			ft_putstr_fd(str, i);
-			ft_putstr_fd("\n", i);
-			free(str);
-			str = NULL;
-		}
+		close(i);
+		exit(1);
 	}
-	close(i);
+	return (id);
 }
 
 int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
@@ -50,6 +60,7 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 
 	i = 0;
 	lst = shell;
+	arg->in_fd = 0;
 	while (lst)
 	{
 		if (lst->token == PIPE)
@@ -66,26 +77,21 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 		}
 		if (lst && lst->token == CMD && check_builtins(env, lst->switchs[0]))
 		{
-			if (lst->next != NULL)
-				ft_dup(lst, arg, 1);
-			else
-				ft_dup(lst, arg, 0);
+			ft_dup(lst, arg, 2);
+			builtins(env, shell->switchs, arg);
 			return (1);
-		}	
+		}
 	}
 	return (0);
 }
 
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 {
+	int	id;
+	int	status;
+
 	if (one_cmd(env, arg, shell))
 		return ;
-	// if (!env)
-	// {
-	// 	ft_putstr_fd("envirement is not set\n", 2);
-	// 	status.exit_status = 1;
-	// 	return ;
-	// }
 	while (shell)
 	{
 		if (shell->token == CMD)
@@ -99,8 +105,13 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 			arg->in_fd = shell->file;
 		else if (shell->token == HERE_DOC)
 		{
-			her_doc(shell, arg);
-			arg->in_fd = open("tmp", O_RDONLY);
+			id = her_doc(shell, arg);
+			waitpid(id, &status, 0);
+			if (!WEXITSTATUS(status))
+				break ;
+			if (status == 0)
+				break ;
+			arg->in_fd = open(".tmp", O_RDONLY);
 		}
 		shell = shell->next;
 	}

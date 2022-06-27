@@ -101,5 +101,5 @@ void	echo_env1(t_env *env, char **str)
 			return ;
 	}
 	no_flag(str);
-	write(1, "\n", 1);
+	printf("\n");
 }
