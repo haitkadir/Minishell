@@ -21,7 +21,7 @@ void	her_doc(t_shell *shell, t_arg *arg)
 	i = 0;
 	str = NULL;
 	tmp = NULL;
-	i = open("tmp", O_CREAT | O_WRONLY | O_APPEND);
+	i = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC);
 	while (1)
 	{
 		str = readline("<< ");
@@ -50,6 +50,7 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 
 	i = 0;
 	lst = shell;
+	arg->in_fd = 0;
 	while (lst)
 	{
 		if (lst->token == PIPE)
@@ -66,12 +67,11 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 		}
 		if (lst && lst->token == CMD && check_builtins(env, lst->switchs[0]))
 		{
-			if (lst->next != NULL)
-				ft_dup(lst, arg, 1);
-			else
-				ft_dup(lst, arg, 0);
+			ft_dup(lst, arg, 2);
+			builtins(env, shell->switchs, arg);
 			return (1);
-		}	
+		}
+
 	}
 	return (0);
 }
@@ -80,12 +80,6 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 {
 	if (one_cmd(env, arg, shell))
 		return ;
-	// if (!env)
-	// {
-	// 	ft_putstr_fd("envirement is not set\n", 2);
-	// 	status.exit_status = 1;
-	// 	return ;
-	// }
 	while (shell)
 	{
 		if (shell->token == CMD)
@@ -100,7 +94,7 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == HERE_DOC)
 		{
 			her_doc(shell, arg);
-			arg->in_fd = open("tmp", O_RDONLY);
+			arg->in_fd = open(".tmp", O_RDONLY);
 		}
 		shell = shell->next;
 	}
