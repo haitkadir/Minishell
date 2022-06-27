@@ -22,22 +22,24 @@ int	her_doc(t_shell *shell, t_arg *arg)
 	id = fork();
 	str = NULL;
 	tmp = NULL;
+	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (id == 0)
 	{
-		i = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC);
 		while (1)
 		{
 			str = readline("herdoc> ");
 			if (!ft_strcmp(str, shell->data))
 			{
 				free(str);
-				return (id);
+				close(i);
+				// break ;
+				exit(0);
 			}
 			else if (!str)
 			{
 				close(i);
-				exit(0);
-				return (id);
+				// break ;
+				exit(1);
 			}
 			else
 			{
@@ -48,7 +50,7 @@ int	her_doc(t_shell *shell, t_arg *arg)
 			}
 		}
 		close(i);
-		exit(1);
+		exit(0);
 	}
 	return (id);
 }
@@ -106,12 +108,12 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == HERE_DOC)
 		{
 			id = her_doc(shell, arg);
-			waitpid(id, &status, 0);
-			if (!WEXITSTATUS(status))
+			waitpid(-1, &status, 0);
+			if (!WIFEXITED(status))
 				break ;
-			if (status == 0)
+			if (status != 0)
 				break ;
-			arg->in_fd = open(".tmp", O_RDONLY);
+			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
 		shell = shell->next;
 	}
