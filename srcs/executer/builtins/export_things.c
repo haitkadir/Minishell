@@ -38,7 +38,10 @@ int	key_exist(t_env *lst, char	*find, int *j)
 			if (*j == 1)
 			{
 				tmp = lst->value;
+				if (!lst->value)
+					lst->value = "";
 				lst->value = ft_strjoin(lst->value, ft_strchr(find, '=') + 1);
+				printf("%s\n", lst->value);
 				if (tmp != NULL)
 					free(tmp);
 			}
@@ -94,11 +97,8 @@ void	export_things(t_env *env, char	*find, t_arg *arg)
 	lst = env;
 	if (check_keys(lst, find, &j, i))
 		return ;
-	else
-	{
-		if (key_exist(lst, find, &j))
-			return ;
-		i = 0;
-		key_not_exist(lst, find, j, i);
-	}
+	if (key_exist(lst, find, &j))
+		return ;
+	i = 0;
+	key_not_exist(lst, find, j, i);
 }
