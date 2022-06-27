@@ -4,10 +4,10 @@ void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc)
 {
 	if (files[0] > -1)
 		shelladd_back(shell, shell_new(RED_IN, NULL, NULL, files[0]));
-	if (files[1] > -1)
-		shelladd_back(shell, shell_new(RED_OUT, NULL, NULL, files[1]));
 	if (here_doc)
 		shelladd_back(shell, here_doc);
+	if (files[1] > -1)
+		shelladd_back(shell, shell_new(RED_OUT, NULL, NULL, files[1]));
 	if (cmd)
 		shelladd_back(shell, cmd);
 }
@@ -21,20 +21,20 @@ void	process_data_util(t_shell **shell, t_token **token, t_env *env)
 
 	new_cmd = NULL;
 	here_docs = NULL;
+	files[0] = -2;
+	files[1] = -2;
 	is_cmd = 0;	
 	while (*token && (*token)->token != PIPE)
 	{
-		if (!is_cmd && (*token)->token == WORD)
-		{
-			is_cmd = !is_cmd;
+		if (!new_cmd && (*token)->token == WORD)
 			new_cmd = get_cmd(env, *token);
-		}
 		else if ((*token)->token == RED_IN)
 			files[0] = open_file((*token)->content, RED_IN);
 		else if ((*token)->token == RED_OUT || (*token)->token == RED_APPEND)
 			files[1] = open_file((*token)->content, (*token)->token);
 		else if ((*token)->token == HERE_DOC)
-			shelladd_back(&here_docs, shell_new(HERE_DOC, (*token)->content, NULL, -1));
+			shelladd_back(&here_docs, shell_new(HERE_DOC, \
+			ft_strdup((*token)->content), NULL, -1));
 		*token = (*token)->next;
 	}
 	store_data(shell, files, new_cmd, here_docs);
@@ -58,6 +58,8 @@ char	process_data(t_shell **shell, t_token *token, t_env *env)
 	while (token)
 	{
 		process_data_util(shell, &token, env);
+		if (token && token->token == PIPE)
+			shelladd_back(shell, shell_new(PIPE, NULL, NULL, -1));
 		if (token)
 			token = token->next;
 	}
