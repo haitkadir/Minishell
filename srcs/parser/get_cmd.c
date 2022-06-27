@@ -70,7 +70,7 @@ static int	count_words(t_token *token)
 	i = 0;
 	if (!token)
 		return (0);
-	while (token && (token->token == WORD || token->token == SPACE))
+	while (token && (token->token != PIPE))
 	{
 		if (token->token == WORD)
 			i++;
@@ -81,22 +81,22 @@ static int	count_words(t_token *token)
 
 /*----------------------------------------------------------------------------*/
 
-char	**get_switchs(t_token **token)
+char	**get_switchs(t_token *token)
 {
 	char	**switchs;
 	int		i;
 	i = 0;
 
-	if (!*token)
+	if (!token)
 		return (NULL);
-	switchs = (char **)ft_calloc(count_words(*token) + 1, sizeof(char *));
+	switchs = (char **)ft_calloc(count_words(token) + 1, sizeof(char *));
 	if (!switchs)
 		return (NULL);
-	while ((*token) && ((*token)->token != PIPE))
+	while (token && (token->token != PIPE))
 	{
-		if ((*token)->token == WORD)
-			switchs[i++] = ft_strdup((*token)->content);
-		(*token) = (*token)->next;
+		if (token->token == WORD)
+			switchs[i++] = ft_strdup(token->content);
+		token = token->next;
 	}
 	switchs[i] = NULL;
 	return (switchs);
@@ -104,31 +104,28 @@ char	**get_switchs(t_token **token)
 
 /*----------------------------------------------------------------------------*/
 
-void	get_cmd(t_shell **shell, t_env *env, t_token **token)
+t_shell	*get_cmd(t_env *env, t_token *token)
 {
 	char	*full_cmd;
 	char	**switchs;
 	
 	full_cmd = NULL;
 	switchs = NULL;
-	if (!*token)
-		return ;
-	if (ft_strnstr_tl(BUILTINS, (*token)->content, ft_strlen(BUILTINS)))
-		full_cmd = ft_strdup((*token)->content);
-	else if (ft_strchr("./", (*token)->content[0]))
+	if (!token)
+		return (NULL);
+	if (ft_strnstr_tl(BUILTINS, token->content, ft_strlen(BUILTINS)))
+		full_cmd = ft_strdup(token->content);
+	else if (ft_strchr("./", token->content[0]))
 	{
-		if (access((*token)->content, F_OK | X_OK) == 0)
-			full_cmd = ft_strdup((*token)->content);
+		if (access(token->content, F_OK | X_OK) == 0)
+			full_cmd = ft_strdup(token->content);
 		else
-			put_error((*token)->content, "No such file of directory");
+			put_error(token->content, "No such file or directory");
 	}
 	else
-		full_cmd = check_cmd(env, (*token)->content);
+		full_cmd = check_cmd(env, token->content);
 	if (!full_cmd)
-	{
-		shelladd_back(shell, shell_new(CMD_NOT_FOUND, NULL, NULL, -1));
-		return ;
-	}
+		return (shell_new(CMD_NOT_FOUND, NULL, NULL, -1));
 	switchs = get_switchs(token);
-	shelladd_back(shell, shell_new(CMD, full_cmd, switchs, -1));
+	return (shell_new(CMD, full_cmd, switchs, -1));
 }

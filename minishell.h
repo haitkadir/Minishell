@@ -123,12 +123,14 @@ char	tokenizer(t_token **token, char *line, t_env *env);
 void	free_path(char **path);
 char	**get_path(t_env *env);
 char	*check_cmd(t_env *env, char *cmd);
-char	**get_switchs(t_token **token);
-void	get_cmd(t_shell **shell, t_env *env, t_token **token);
+char	**get_switchs(t_token *token);
+t_shell	*get_cmd(t_env *env, t_token *token);
 int		open_file(char *filename, int macro);
 void    check_file_permession(char  *file, int macro);
 char	is_operator(t_token *token);
 void    process_operator(t_shell **shell, t_token **token);
+void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc);
+void	process_data_util(t_shell **shell, t_token **token, t_env *env);
 char	process_data(t_shell **shell, t_token *token, t_env *env);
 
 /*-------------------------------- Executer ------------------------------------*/
