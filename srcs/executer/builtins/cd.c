@@ -33,7 +33,7 @@ void	check_oldpwd(t_env *env, char	*oldpwd)
 	ft_envadd_back(&env, lst);
 }
 
-void	update_dir(t_env *env, char	*dir, char	*oldpwd)
+void	update_dir(t_env *env, char	*dir, char	**oldpwd)
 {
 	int		i;
 	t_env	*lst;
@@ -45,7 +45,7 @@ void	update_dir(t_env *env, char	*dir, char	*oldpwd)
 		if (!ft_strcmp(lst->key, "PWD"))
 		{
 			if (lst->value)
-				oldpwd = lst->value;
+				*oldpwd = lst->value;
 			lst->value = getcwd(dir, 9999);
 			i = 1;
 			break ;
@@ -73,7 +73,7 @@ int	check_cases(t_env *env, char *arg, char *dir, char *oldpwd)
 		status.exit_status = 1;
 		return (1);
 	}
-	update_dir(lst, dir, oldpwd);
+	update_dir(lst, dir, &oldpwd);
 	check_oldpwd(env, oldpwd);
 	return (0);
 }
