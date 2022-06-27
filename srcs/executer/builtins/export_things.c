@@ -41,7 +41,6 @@ int	key_exist(t_env *lst, char	*find, int *j)
 				if (!lst->value)
 					lst->value = "";
 				lst->value = ft_strjoin(lst->value, ft_strchr(find, '=') + 1);
-				printf("%s\n", lst->value);
 				if (tmp != NULL)
 					free(tmp);
 			}

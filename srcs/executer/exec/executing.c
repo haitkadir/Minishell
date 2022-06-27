@@ -27,17 +27,17 @@ int	her_doc(t_shell *shell, t_arg *arg)
 		i = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC);
 		while (1)
 		{
-			str = readline("<< ");
+			str = readline("herdoc> ");
 			if (!ft_strcmp(str, shell->data))
 			{
 				free(str);
-				return ;
+				return (id);
 			}
 			else if (!str)
 			{
 				close(i);
 				exit(0);
-				return ;
+				return (id);
 			}
 			else
 			{
@@ -81,7 +81,6 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 			builtins(env, shell->switchs, arg);
 			return (1);
 		}
-
 	}
 	return (0);
 }
@@ -107,7 +106,9 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == HERE_DOC)
 		{
 			id = her_doc(shell, arg);
-			waitpid(id, &status, NULL);
+			waitpid(id, &status, 0);
+			if (!WEXITSTATUS(status))
+				break ;
 			if (status == 0)
 				break ;
 			arg->in_fd = open(".tmp", O_RDONLY);

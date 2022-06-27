@@ -12,7 +12,7 @@
 
 #include "../../../minishell.h"
 
-int	get_home(char	*home, t_env *lst)
+int	get_home(char	**home, t_env *lst)
 {
 	while (lst)
 	{
@@ -24,12 +24,12 @@ int	get_home(char	*home, t_env *lst)
 				status.exit_status = 1;
 				return (1);
 			}
-			home = lst->value;
+			*home = lst->value;
 			break ;
 		}
 		lst = lst->next;
 	}
-	if (!home)
+	if (!*home)
 	{
 		printf("home not found\n");
 		status.exit_status = 1;
@@ -45,7 +45,8 @@ void	cd_home(t_env *env, char *arg)
 	char	*home;
 
 	lst = env;
-	if (get_home(home, lst))
+	home = NULL;
+	if (get_home(&home, lst))
 		return ;
 	while (lst)
 	{
