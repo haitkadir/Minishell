@@ -42,7 +42,7 @@ t_shell *parser(char *line, t_env *env)
 		return (NULL);
 	if (process_data(&shell, token, env))
 		return (NULL);
-	// print_node(shell);
+	print_node(shell);
 	check_command(env, &args, shell);
 	return (shell);
 }

@@ -119,7 +119,7 @@ t_shell	*get_cmd(t_env *env, t_token *token)
 	{
 		if (access(token->content, F_OK | X_OK) == 0)
 			full_cmd = ft_strdup(token->content);
-		else
+		else if (!filetype(token->content)) // this didn't work
 			put_error(token->content, "No such file or directory");
 	}
 	else

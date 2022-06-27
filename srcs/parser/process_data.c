@@ -1,5 +1,7 @@
 #include "../../minishell.h"
 
+/*----------------------------------------------------------------------------*/
+
 void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc)
 {
 	if (files[0] > -1)
@@ -11,6 +13,8 @@ void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc)
 	if (cmd)
 		shelladd_back(shell, cmd);
 }
+
+/*----------------------------------------------------------------------------*/
 
 void	process_data_util(t_shell **shell, t_token **token, t_env *env)
 {
@@ -40,6 +44,8 @@ void	process_data_util(t_shell **shell, t_token **token, t_env *env)
 	store_data(shell, files, new_cmd, here_docs);
 }
 
+/*----------------------------------------------------------------------------*/
+
 char	is_operator(t_token *token)
 {
 	return ((token->token == RED_IN)
@@ -48,6 +54,8 @@ char	is_operator(t_token *token)
 		|| (token->token == HERE_DOC)
 		|| (token->token == PIPE));
 }
+
+/*----------------------------------------------------------------------------*/
 
 char	process_data(t_shell **shell, t_token *token, t_env *env)
 {
@@ -65,3 +73,4 @@ char	process_data(t_shell **shell, t_token *token, t_env *env)
 	}
 	return 0;
 }
+/*----------------------------------------------------------------------------*/
