@@ -45,7 +45,7 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env *env)
 			ft_dup(shell, arg, 1);
 		else
 			ft_dup(shell, arg, 0);
-		builtins(env, shell->data, arg);
+		builtins(env, shell->switchs, arg);
 		close(arg->fd[1]);
 		exit(0);
 	}

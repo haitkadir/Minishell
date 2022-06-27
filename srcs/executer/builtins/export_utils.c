@@ -30,18 +30,18 @@ void	print_export(char	**keys, t_env *sort, int i)
 	i = 0;
 	while (keys[i])
 	{
-		sort = lst;
+		lst = sort;
 		while (sort)
 		{
-			if (!ft_strcmp(keys[i], sort->key))
+			if (!ft_strcmp(keys[i], lst->key))
 			{
-				if (sort->value == NULL)
+				if (lst->value == NULL)
 					printf("declare -x %s\n", keys[i]);
 				else
-					printf("declare -x %s=\"%s\"\n", keys[i], sort->value);
+					printf("declare -x %s=\"%s\"\n", keys[i], lst->value);
 				break ;
 			}
-			sort = sort->next;
+			lst = lst->next;
 		}
 		i++;
 	}
@@ -89,6 +89,7 @@ void	filling_keys(t_env *lst, char	**keys)
 		i++;
 		sort = sort->next;
 	}
+	sort = lst;
 	keys[i] = NULL;
 }
 

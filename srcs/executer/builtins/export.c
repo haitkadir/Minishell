@@ -16,8 +16,8 @@ int	check_keys(t_env *lst, char *str, int *j, int i)
 {
 	t_env	*lst1;
 
-	if (ft_isalpha(str[0]) || str[0] == '_')
-		return (0);
+	if (!(ft_isalpha(str[0]) || str[0] == '_'))
+		return (1);
 	while (str[i])
 	{
 		if (str[i] == '=')
@@ -40,6 +40,7 @@ int	check_keys(t_env *lst, char *str, int *j, int i)
 		ft_envadd_back(&lst, lst1);
 		return (1);
 	}
+	return (1);
 }
 
 void	export_env(t_env **env, char *str, char **find, t_arg *arg)
