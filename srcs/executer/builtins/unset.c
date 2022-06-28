@@ -29,6 +29,7 @@ void	unset_utils(t_env **env, t_env *lst, char *find)
 			}
 			tmp->next = lst->next;
 			free(lst);
+			break ;
 		}
 		tmp = lst;
 		lst = lst->next;

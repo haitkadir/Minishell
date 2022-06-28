@@ -19,10 +19,11 @@ int	her_doc(t_shell *shell, t_arg *arg)
 	char	*str;
 	char	*tmp;
 
-	id = fork();
 	str = NULL;
 	tmp = NULL;
 	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	status.signals = 1;
+	id = fork();
 	if (id == 0)
 	{
 		while (1)
@@ -90,7 +91,7 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 {
 	int	id;
-	int	status;
+	int	rs;
 
 	if (one_cmd(env, arg, shell))
 		return ;
@@ -108,11 +109,15 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == HERE_DOC)
 		{
 			id = her_doc(shell, arg);
-			waitpid(-1, &status, 0);
-			if (!WIFEXITED(status))
+			waitpid(id, &rs, 0);
+			if (WIFSIGNALED(rs))
+			{
+				printf("ana hna\n");
+				return ;
+			}
+			if (rs != 0)
 				break ;
-			if (status != 0)
-				break ;
+			status.signals = 0;
 			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
 		shell = shell->next;
