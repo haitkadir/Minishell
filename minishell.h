@@ -8,6 +8,7 @@
 # include "./libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 # define BUILTINS "echo cd pwd export unset env exit"
 
@@ -35,6 +36,7 @@ void	put_error(char *keyword, char *err);
 typedef struct s_global
 {
 	int	exit_status;
+	int	signals;
 } t_global;
 
 t_global status;
@@ -190,7 +192,7 @@ int		check_keys(t_env *lst, char *str, int *j, int i);
 int		check_path(t_env *env, t_arg *arg);
 void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j);
 void	signals(void);
-
+void	handler(int signal);
 
 
 
