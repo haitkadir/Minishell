@@ -32,7 +32,7 @@ int	open_file(char *filename, int macro)
 	}
     else if (macro == RED_OUT)
 	{
-	    file = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0777);
+	    file = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 		type = RED_OUT;
 	}
     else if (macro == RED_APPEND)

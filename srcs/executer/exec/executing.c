@@ -12,35 +12,47 @@
 
 #include "../../../minishell.h"
 
-void	her_doc(t_shell *shell, t_arg *arg)
+int	her_doc(t_shell *shell, t_arg *arg)
 {
 	int		i;
+	int		id;
 	char	*str;
 	char	*tmp;
 
-	i = 0;
+	id = fork();
 	str = NULL;
 	tmp = NULL;
-	i = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC);
-	while (1)
+	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (id == 0)
 	{
-		str = readline("<< ");
-		if (!ft_strcmp(str, shell->data))
+		while (1)
 		{
-			free(str);
-			return ;
+			str = readline("herdoc> ");
+			if (!ft_strcmp(str, shell->data))
+			{
+				free(str);
+				close(i);
+				// break ;
+				exit(0);
+			}
+			else if (!str)
+			{
+				close(i);
+				// break ;
+				exit(1);
+			}
+			else
+			{
+				ft_putstr_fd(str, i);
+				ft_putstr_fd("\n", i);
+				free(str);
+				str = NULL;
+			}
 		}
-		else if (!str)
-			return ;
-		else
-		{
-			ft_putstr_fd(str, i);
-			ft_putstr_fd("\n", i);
-			free(str);
-			str = NULL;
-		}
+		close(i);
+		exit(0);
 	}
-	close(i);
+	return (id);
 }
 
 int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
@@ -71,13 +83,15 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 			builtins(env, shell->switchs, arg);
 			return (1);
 		}
-
 	}
 	return (0);
 }
 
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 {
+	int	id;
+	int	status;
+
 	if (one_cmd(env, arg, shell))
 		return ;
 	while (shell)
@@ -93,8 +107,13 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 			arg->in_fd = shell->file;
 		else if (shell->token == HERE_DOC)
 		{
-			her_doc(shell, arg);
-			arg->in_fd = open(".tmp", O_RDONLY);
+			id = her_doc(shell, arg);
+			waitpid(-1, &status, 0);
+			if (!WIFEXITED(status))
+				break ;
+			if (status != 0)
+				break ;
+			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
 		shell = shell->next;
 	}

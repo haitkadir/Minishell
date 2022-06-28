@@ -108,7 +108,7 @@ int	cmd_token(t_shell *shell, t_arg *arg, t_env *env)
 		j = check_cmd1(env, arg, shell->switchs[0]);
 		if (j == 1)
 		{
-			if (shell->next != NULL)
+			if (shell->next != NULL && shell->next->token == PIPE)
 				execute_func(env, arg, shell, 1);
 			else
 				execute_func(env, arg, shell, 0);

@@ -148,7 +148,7 @@ typedef struct s_arg
 /* ------------------------------ Utils functions ---------------------------- */
 
 int		ft_strcmp(char *s1, char *s2);
-int		ft_strcmp1(char *s1, char *s2);
+int		ft_strcmp_tl(char *s1, char *s2);
 char	*ft_strrchr1(char *str, int c);
 int		ft_strcmp2(char *s1, char *s2);
 void	check_oldpwd(t_env *env, char	*oldpwd);

@@ -81,13 +81,13 @@ int	check_cmd1(t_env	*env, t_arg *arg, char *str)
 
 void	builtins(t_env	*envi, char **str, t_arg *arg)
 {
-	if (!ft_strcmp1(str[0], "pwd"))
+	if (!ft_strcmp_tl(str[0], "pwd"))
 		pwd(envi, 1);
 	else if (!ft_strcmp(str[0], "export"))
 		export_env(&envi, str[0], str, arg);
 	else if (!ft_strcmp(str[0], "unset"))
 		unset_env(&envi, str);
-	else if (!ft_strcmp1(str[0], "env"))
+	else if (!ft_strcmp_tl(str[0], "env"))
 		env(envi);
 	else if (!ft_strcmp(str[0], "exit"))
 	{
@@ -106,19 +106,19 @@ int	check_builtins(t_env	*envi, char *str)
 {
 	int		id;
 
-	if (!ft_strcmp1(str, "pwd"))
+	if (!ft_strcmp_tl(str, "pwd"))
 		return (1);
 	else if (!ft_strcmp(str, "export"))
 		return (1);
 	else if (!ft_strcmp(str, "unset"))
 		return (1);
-	else if (!ft_strcmp1(str, "env"))
+	else if (!ft_strcmp_tl(str, "env"))
 		return (1);
 	else if (!ft_strcmp(str, "exit"))
 		return (1);
-	else if (!ft_strcmp1(str, "cd"))
+	else if (!ft_strcmp_tl(str, "cd"))
 		return (1);
-	else if (!ft_strcmp1(str, "echo"))
+	else if (!ft_strcmp_tl(str, "echo"))
 		return (1);
 	return (0);
 }
