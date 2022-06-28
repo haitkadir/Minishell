@@ -102,10 +102,8 @@ void	builtins(t_env	*envi, char **str, t_arg *arg)
 		echo_env1(envi, str);
 }
 
-int	check_builtins(t_env	*envi, char *str)
+int	check_builtins(char *str)
 {
-	int		id;
-
 	if (!ft_strcmp_tl(str, "pwd"))
 		return (1);
 	else if (!ft_strcmp(str, "export"))

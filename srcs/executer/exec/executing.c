@@ -77,7 +77,7 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 			arg->in_fd = lst->file;
 			lst = lst->next;
 		}
-		if (lst && lst->token == CMD && check_builtins(env, lst->switchs[0]))
+		if (lst && lst->token == CMD && check_builtins(lst->switchs[0]))
 		{
 			ft_dup(lst, arg, 2);
 			builtins(env, shell->switchs, arg);

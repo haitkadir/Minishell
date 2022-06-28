@@ -182,7 +182,7 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 
 int		one_cmd(t_env	*env, t_arg *arg, t_shell *shell);
 
-int		check_builtins(t_env	*envi, char *str);
+int		check_builtins(char *str);
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell);
 int		check_cmd1(t_env	*env, t_arg *arg, char *str);
 int		cmd_token(t_shell *shell, t_arg *arg, t_env *env);

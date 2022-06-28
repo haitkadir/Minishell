@@ -101,7 +101,7 @@ int	cmd_token(t_shell *shell, t_arg *arg, t_env *env)
 	int	j;
 
 	pipe(arg->fd);
-	if (check_builtins(env, shell->switchs[0]))
+	if (check_builtins(shell->switchs[0]))
 		executing_builtins(shell, arg, env);
 	else
 	{
