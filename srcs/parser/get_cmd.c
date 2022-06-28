@@ -61,6 +61,26 @@ char	*check_cmd(t_env *env, char *cmd)
 	return (put_error(cmd, "Command not found"), NULL);
 }
 
+
+char	check_cmd_permissions(char *cmd)
+{
+	if (access(cmd, F_OK) == 0)
+	{
+		if (filetype(cmd))
+			return (1);
+		else if (access(cmd, X_OK) == 0)
+			return (0);
+		else
+		{
+			put_error(cmd, "Permission denied");
+			return (1);
+		}
+	}
+	put_error(cmd, "No such file or directory");
+	return (1);
+}
+
+
 /*----------------------------------------------------------------------------*/
 
 static int	count_words(t_token *token)
@@ -117,10 +137,8 @@ t_shell	*get_cmd(t_env *env, t_token *token)
 		full_cmd = ft_strdup(token->content);
 	else if (ft_strchr("./", token->content[0]))
 	{
-		if (access(token->content, F_OK | X_OK) == 0)
+		if (!check_cmd_permissions(token->content))
 			full_cmd = ft_strdup(token->content);
-		else if (!filetype(token->content)) // this didn't work
-			put_error(token->content, "No such file or directory");
 	}
 	else
 		full_cmd = check_cmd(env, token->content);
