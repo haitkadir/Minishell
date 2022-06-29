@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
+extern t_global status;
 
 int	her_doc(t_shell *shell, t_arg *arg)
 {

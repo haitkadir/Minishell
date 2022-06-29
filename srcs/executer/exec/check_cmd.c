@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
+extern t_global status;
 
 // int	check_path(t_env *env, t_arg *arg)
 // {

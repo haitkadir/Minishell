@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
+extern t_global status;
 
 void	printing_echo(char	**str, int i)
 {

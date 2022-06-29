@@ -35,8 +35,7 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
 		}
 		else if (line[*i] == '\'')
 			content = word_within_sqoutes(line, i);
-		else if (!check_last(*token, HERE_DOC) && line[*i] == '$' \
-			&& ft_isalnum(line[*i + 1]))
+		else if (!check_last(*token, HERE_DOC) && line[*i] == '$')
 			content = expender(line, i, env);
 		else
 			content = word(line, i);

@@ -12,6 +12,9 @@
 
 #include "../../minishell.h"
 
+t_global status;
+
+
 void	put_error(char *keyword, char *err)
 {
 	ft_putstr_fd("\033[4;31mMinishell\033[0m: ", 2);

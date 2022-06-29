@@ -5,6 +5,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "./libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -14,7 +16,7 @@
 /*-------------------------------- global ------------------------------------*/
 
 
-typedef enum s_type
+enum
 {
 	CMD,
 	CMD_NOT_FOUND,
@@ -25,8 +27,8 @@ typedef enum s_type
 	INVALID_FILE,
 	PIPE,
 	WORD,
-	SPACE,
-}	t_type;
+	SPACE_,
+};
 
 
 void	put_error(char *keyword, char *err);
@@ -36,8 +38,6 @@ typedef struct s_global
 {
 	int	exit_status;
 } t_global;
-
-t_global status;
 
 
 /*--------------------------- get environment variables ----------------------*/
