@@ -40,12 +40,19 @@ static void print_env(t_env	*env)
 
 int main(int ac, char **av, char **main_env)
 {
-	char *line;
-	t_shell *shell;
-	t_env	*env;
+	char				*line;
+	t_shell				*shell;
+	t_env				*env;
+	int	in;
+	int	out;
+
 
 	line = NULL;
+	status.signals = 0;
 	create_env(&env, main_env);
+	hide_ctrl();
+	signal(SIGQUIT, handler);
+	signal(SIGINT, handler);
 	while (1)
 	{
 		line = readline("\033[1;32mMinishell:\e[0m ");
@@ -54,11 +61,12 @@ int main(int ac, char **av, char **main_env)
 		else if (line[0] == '\n')
 			continue ;
 		add_history (line);
+		// signals();
 		shell = parser(line, env);
 		// if (!shell)
 		// 	ft_putstr_fd("\033[1;31mSyntax error\033[0m\n", 2);
 		// print_env(env);
-		
 	}
+	show_ctrl();
 	return (0);
 }

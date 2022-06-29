@@ -20,12 +20,13 @@ int	her_doc(t_shell *shell, t_arg *arg)
 	char	*str;
 	char	*tmp;
 
-	id = fork();
 	str = NULL;
 	tmp = NULL;
 	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	id = fork();
 	if (id == 0)
 	{
+		status.signals = 1;
 		while (1)
 		{
 			str = readline("herdoc> ");
@@ -33,14 +34,12 @@ int	her_doc(t_shell *shell, t_arg *arg)
 			{
 				free(str);
 				close(i);
-				// break ;
-				exit(0);
+				exit(1);
 			}
 			else if (!str)
 			{
 				close(i);
-				// break ;
-				exit(1);
+				exit(0);
 			}
 			else
 			{
@@ -51,18 +50,26 @@ int	her_doc(t_shell *shell, t_arg *arg)
 			}
 		}
 		close(i);
-		exit(0);
+		write(1, "\n", 1);
+		exit(1);
 	}
-	return (id);
+	else
+		return (id);
 }
 
 int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 {
 	int		i;
+	int		rs;
+	int		id;
+	int		in;
+	int		out;
 	t_shell	*lst;
 
 	i = 0;
 	lst = shell;
+	in = dup(STDIN_FILENO);
+	out = dup(STDOUT_FILENO);
 	arg->in_fd = 0;
 	while (lst)
 	{
@@ -73,17 +80,32 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 	if (i == 0)
 	{
 		lst = shell;
-		if (lst && lst->token == RED_IN)
+		while (lst)
 		{
-			arg->in_fd = lst->file;
+			if (lst->token == CMD)
+			{
+				if (check_builtins(lst->switchs[0]))
+				{
+					ft_dup(lst, arg, 2);
+					builtins(env, lst->switchs, arg);
+					dup2(in, 0);
+					dup2(out, 1);
+				}
+				else
+					return (0);
+			}
+			else if (lst->token == RED_IN)
+				arg->in_fd = lst->file;
+			else if (lst->token == HERE_DOC)
+			{
+				id = her_doc(lst, arg);
+				waitpid(id, &rs, 0);
+				status.signals = 0;
+				arg->in_fd = open("tmp", O_RDONLY, 0777);
+			}
 			lst = lst->next;
 		}
-		if (lst && lst->token == CMD && check_builtins(env, lst->switchs[0]))
-		{
-			ft_dup(lst, arg, 2);
-			builtins(env, shell->switchs, arg);
-			return (1);
-		}
+		return (1);
 	}
 	return (0);
 }
@@ -91,10 +113,11 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 {
 	int	id;
-	int	status;
+	int	rs;
 
 	if (one_cmd(env, arg, shell))
 		return ;
+	arg->in_fd = 0;
 	while (shell)
 	{
 		if (shell->token == CMD)
@@ -109,13 +132,15 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == HERE_DOC)
 		{
 			id = her_doc(shell, arg);
-			waitpid(-1, &status, 0);
-			if (!WIFEXITED(status))
+			waitpid(id, &rs, 0);
+			if (WIFSIGNALED(rs))
+				return ;
+			if (rs != 0)
 				break ;
-			if (status != 0)
-				break ;
+			status.signals = 0;
 			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
 		shell = shell->next;
 	}
+	unlink("tmp");
 }

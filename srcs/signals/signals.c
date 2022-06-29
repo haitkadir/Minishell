@@ -12,22 +12,42 @@
 
 #include <signal.h>
 #include "../../minishell.h"
+#include <termios.h>
 
-// void	handler(int signal)
-// {
-// 	int i;
+void	hide_ctrl(void)
+{
+	struct termios	attr;
 
-// 	i = 0;
-// 	if (signal == SIGINT)
-// 		printf("\nMinishell ");
-// 	else if (signal == SIGQUIT)
-// 		i++;
-// }
+	tcgetattr(STDIN_FILENO, &attr);
+	attr.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCIFLUSH, &attr);
+}
 
-// void	signals(void)
-// {
-// 	struct sigaction sa;
+void	show_ctrl(void)
+{
+	struct termios	attr;
 
-// 	sa.sa_sigaction = handler;
-// 	sigaction(SIGINT, &sa, NULL);
-// }
+	tcgetattr(STDIN_FILENO, &attr);
+	attr.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCIFLUSH, &attr);
+}
+
+void	handler(int signal)
+{
+	int i;
+
+	i = 0;
+    if (signal == SIGINT)
+    {
+		if (status.signals == 0)
+    	{
+			printf("\n");
+    		rl_on_new_line();
+			rl_replace_line("", 0);
+    		rl_redisplay();
+        	status.signals = 0;
+		}
+    }
+	if (signal == SIGQUIT)
+		i++;
+}

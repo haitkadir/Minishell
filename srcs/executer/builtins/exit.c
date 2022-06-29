@@ -22,7 +22,7 @@ void	exit10(void)
 
 void	exit11(int i)
 {
-	if (ft_isdigit(i))
+	if (!ft_isdigit(i))
 	{
 		printf("exit\n");
 		status.exit_status = i;

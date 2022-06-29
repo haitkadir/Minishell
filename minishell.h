@@ -10,6 +10,7 @@
 # include "./libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 # define BUILTINS "echo cd pwd export unset env exit"
 
@@ -37,6 +38,7 @@ void	put_error(char *keyword, char *err);
 typedef struct s_global
 {
 	int	exit_status;
+	int	signals;
 } t_global;
 
 
@@ -182,7 +184,7 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 
 int		one_cmd(t_env	*env, t_arg *arg, t_shell *shell);
 
-int		check_builtins(t_env	*envi, char *str);
+int		check_builtins(char *str);
 void	check_command(t_env	*env, t_arg *arg, t_shell *shell);
 int		check_cmd1(t_env	*env, t_arg *arg, char *str);
 int		cmd_token(t_shell *shell, t_arg *arg, t_env *env);
@@ -190,8 +192,9 @@ int		check_keys(t_env *lst, char *str, int *j, int i);
 int		check_path(t_env *env, t_arg *arg);
 void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j);
 void	signals(void);
-
-
+void	handler(int signal);
+void	show_ctrl(void);
+void	hide_ctrl(void);
 
 
 #endif

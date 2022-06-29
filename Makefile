@@ -2,7 +2,13 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -fsanitize=address -static-libsan -I ./ -I libft/
+CFLAGS = -fsanitize=address -static-libsan \
+ -I ./ -I libft/ \
+
+
+RFLAGS =  -L$(shell brew --prefix readline)/lib -lreadline \
+ 		-L$(shell brew --prefix readline)/lib -lhistory \
+ 		-I$(shell brew --prefix readline)/include 
 
 LIBFT = -L libft -lft
 
@@ -48,12 +54,12 @@ $(NAME): $(OBJ)
 	@echo "\n"
 	@make bonus -sC libft/
 	@echo "\033[0;32mCompiling minishell..."
-	@$(CC) -lreadline $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -g
+	@$(CC) -lreadline $(CFLAGS) $(RFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -g
 	@echo "\n\033[0mDone !"
 
 %.o: %.c
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
-	@${CC} ${CFLAGS} -c $< -o $@
+	@${CC} -I$(shell brew --prefix readline)/include ${CFLAGS}  -c $< -o $@
 
 .INTERMEDIATE: $(OBJ)
 

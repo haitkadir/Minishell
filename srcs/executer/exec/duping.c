@@ -15,6 +15,8 @@
 void	ft_dup(t_shell *shell, t_arg *arg, int j)
 {
 	int	fd;
+	int	std_out;
+	int i;
 
 	fd = 0;
 	if (j == 1)
@@ -25,14 +27,12 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j)
 			dup2(fd, 1);
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 		else
 		{
 			dup2(arg->fd[1], 1);
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 	}
 	else if (j == 0)
@@ -43,13 +43,11 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j)
 			dup2(fd, 1);
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 		else
 		{
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 	}
 	else if (j == 2)
@@ -57,8 +55,8 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j)
 		if (shell->prev && shell->prev->token == RED_OUT)
 		{
 			fd = shell->prev->file;
-			dup2(fd, 1);
 			dup2(arg->in_fd, 0);
+			dup2(fd, STDOUT_FILENO);
 		}
 		else
 			dup2(arg->in_fd, 0);
