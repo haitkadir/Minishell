@@ -56,7 +56,7 @@ char	tokenizer(t_token **token, char *line, t_env *env)
 			qoute = !qoute;
 		if (!qoute && is_operators(qoute, line[i], line[i + 1]))
 			get_operator(token, line, &i);
-		else if (ft_isascii(line[i]) && !ft_strchr("#&();|<> \\`~", line[i]))
+		else if (ft_isascii(line[i]) && !ft_strchr("| <>", line[i]))
 		{
 			if (ft_strchr("\"\'", line[i]))
 				qoute = !qoute;

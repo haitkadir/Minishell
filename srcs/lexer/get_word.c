@@ -26,7 +26,7 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
  
 	content = NULL;
 	result = NULL;
-	while(ft_isascii(line[*i]) && !ft_strchr("#&();|<> \\`~", line[*i]))
+	while(ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
 	{
 		if (line[*i] == '\"')
 		{
@@ -38,10 +38,11 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
 		else if (!check_last(*token, HERE_DOC) && line[*i] == '$' \
 			&& ft_isalnum(line[*i + 1]))
 			content = expender(line, i, env);
-		else
+		else if (ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
 			content = word(line, i);
 		get_word_util(&result, &content);
 	}
-	tokenadd_back(token, tokennew(result, WORD));
+	if (result)
+		tokenadd_back(token, tokennew(result, WORD));
 	return (0);
 }
