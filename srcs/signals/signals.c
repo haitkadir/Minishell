@@ -13,6 +13,7 @@
 #include <signal.h>
 #include "../../minishell.h"
 #include <termios.h>
+extern t_global status;
 
 void	hide_ctrl(void)
 {
