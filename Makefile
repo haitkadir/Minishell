@@ -2,7 +2,11 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -fsanitize=address -static-libsan -I ./ -I libft/ 
+CFLAGS = -fsanitize=address -static-libsan \
+ -I ./ -I libft/ \
+ -L$(shell brew --prefix readline)/lib -lreadline \
+ -L$(shell brew --prefix readline)/lib -lhistory \
+ -I$(shell brew --prefix readline)/include 
 
 LIBFT = -L libft -lft
 

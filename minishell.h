@@ -26,7 +26,7 @@ typedef enum s_type
 	INVALID_FILE,
 	PIPE,
 	WORD,
-	SPACE,
+	SPACE_,
 }	t_type;
 
 
@@ -193,7 +193,8 @@ int		check_path(t_env *env, t_arg *arg);
 void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j);
 void	signals(void);
 void	handler(int signal);
-
+void	show_ctrl(void);
+void	hide_ctrl(void);
 
 
 #endif
