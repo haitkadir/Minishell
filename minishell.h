@@ -5,7 +5,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
-# include <sys/types.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include "./libft/libft.h"
 # include <readline/readline.h>
@@ -129,6 +129,7 @@ char	**get_switchs(t_token *token);
 t_shell	*get_cmd(t_env *env, t_token *token);
 int		open_file(char *filename, int macro);
 void    check_file_permession(char  *file, int macro);
+char	filetype(char *input);
 char	is_operator(t_token *token);
 void    process_operator(t_shell **shell, t_token **token);
 void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc);

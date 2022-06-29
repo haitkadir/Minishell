@@ -54,6 +54,11 @@ char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token)
 	substring = NULL;
 	while (line[*i])
 	{
+		if (line[*i] == '\"')
+		{
+			*i += 1;
+			break;
+		}
 		if (!check_last(token, HERE_DOC) && line[*i] == '$')
 			substring = expender(line, i, env);
 		else
@@ -65,11 +70,6 @@ char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token)
 		}
 		else if (substring)
 			string = ft_realloc(string, substring);
-		if (line[*i] == '\"')
-		{
-			*i += 1;
-			break;
-		}
 	}
 	return (string);
 }
