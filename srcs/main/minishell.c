@@ -40,14 +40,11 @@ int main(int ac, char **av, char **main_env)
 	char				*line;
 	t_shell				*shell;
 	t_env				*env;
-	struct sigaction sa;
 
 	line = NULL;
 	status.signals = 0;
-	//sa.sa_handler = handler;
 	create_env(&env, main_env);
-	// sigaction(SIGINT, &sa, NULL);
-	// sigaction(SIGQUIT, &sa, NULL);
+	hide_ctrl();
 	signal(SIGQUIT, handler);
 	signal(SIGINT, handler);
 	while (1)
@@ -58,7 +55,6 @@ int main(int ac, char **av, char **main_env)
 		else if (line[0] == '\n')
 			continue ;
 		add_history (line);
-		
 		// signals();
 		shell = parser(line, env);
 		// if (!shell)
@@ -66,5 +62,7 @@ int main(int ac, char **av, char **main_env)
 		// print_env(env);
 		
 	}
+	show_ctrl();
+
 	return (0);
 }

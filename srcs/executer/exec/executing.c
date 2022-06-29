@@ -59,6 +59,8 @@ int	her_doc(t_shell *shell, t_arg *arg)
 int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 {
 	int		i;
+	int		rs;
+	int		id;
 	t_shell	*lst;
 
 	i = 0;
@@ -73,17 +75,34 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 	if (i == 0)
 	{
 		lst = shell;
-		if (lst && lst->token == RED_IN)
+		while (lst)
 		{
-			arg->in_fd = lst->file;
+			if (lst->token == CMD)
+			{
+				if (check_builtins(lst->switchs[0]))
+				{
+					ft_dup(lst, arg, 2);
+				 	builtins(env, shell->switchs, arg);
+				}
+				else
+					return (0);
+			}
+			else if (lst->token == RED_IN)
+				arg->in_fd = lst->file;
+			else if (lst->token == HERE_DOC)
+			{
+				id = her_doc(shell, arg);
+				waitpid(id, &rs, 0);
+				if (WIFSIGNALED(rs))
+					return (1);
+				if (rs != 0)
+					return (1);
+				status.signals = 0;
+				arg->in_fd = open("tmp", O_RDONLY, 0777);
+			}
 			lst = lst->next;
 		}
-		if (lst && lst->token == CMD && check_builtins(lst->switchs[0]))
-		{
-			ft_dup(lst, arg, 2);
-			builtins(env, shell->switchs, arg);
-			return (1);
-		}
+		return (1);
 	}
 	return (0);
 }
@@ -95,6 +114,7 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 
 	if (one_cmd(env, arg, shell))
 		return ;
+	arg->in_fd = 0;
 	while (shell)
 	{
 		if (shell->token == CMD)
@@ -111,10 +131,7 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 			id = her_doc(shell, arg);
 			waitpid(id, &rs, 0);
 			if (WIFSIGNALED(rs))
-			{
-				printf("ana hna\n");
 				return ;
-			}
 			if (rs != 0)
 				break ;
 			status.signals = 0;

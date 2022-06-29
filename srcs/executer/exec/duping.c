@@ -25,14 +25,12 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j)
 			dup2(fd, 1);
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 		else
 		{
 			dup2(arg->fd[1], 1);
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 	}
 	else if (j == 0)
@@ -43,13 +41,11 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j)
 			dup2(fd, 1);
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 		else
 		{
 			dup2(arg->in_fd, 0);
 			close(arg->fd[1]);
-			//close(arg->fd[0]);
 		}
 	}
 	else if (j == 2)
