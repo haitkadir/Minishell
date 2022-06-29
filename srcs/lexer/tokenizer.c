@@ -4,7 +4,7 @@
 
 char	get_space(t_token **token, char *line, int *i)
 {
-	if (tokenadd_back(token, tokennew(ft_strdup(" "), SPACE)))
+	if (tokenadd_back(token, tokennew(ft_strdup(" "), SPACE_)))
 		return (1);
 	while (ft_isspace(line[*i]))
 		*i += 1;
