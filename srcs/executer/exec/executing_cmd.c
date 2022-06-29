@@ -72,9 +72,9 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 	}
 	waitpid(i, &status.exit_status, 0);
 	if (WIFEXITED(status.exit_status))
-        status.exit_status = status.exit_status % 255;
-    else if (WIFSIGNALED(status.exit_status))
-        status.exit_status += 128;
+		status.exit_status = status.exit_status % 255;
+	else if (WIFSIGNALED(status.exit_status))
+		status.exit_status += 128;
 }
 
 void	executing_builtins(t_shell *shell, t_arg *arg, t_env *env)
@@ -105,20 +105,10 @@ int	cmd_token(t_shell *shell, t_arg *arg, t_env *env)
 		executing_builtins(shell, arg, env);
 	else
 	{
-		//j = check_cmd1(env, arg, shell->switchs[0]);
-		// if (j == 1)
-		// {
 		if (shell->next != NULL && shell->next->token == PIPE)
 			execute_func(env, arg, shell, 1);
 		else
 			execute_func(env, arg, shell, 0);
-		// }
-		// else
-		// {
-		// 	close(arg->fd[0]);
-		// 	close(arg->fd[1]);
-		// 	return (1);
-		// }
 	}
 	return (0);
 }

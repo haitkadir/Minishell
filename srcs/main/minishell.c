@@ -40,6 +40,9 @@ int main(int ac, char **av, char **main_env)
 	char				*line;
 	t_shell				*shell;
 	t_env				*env;
+	int	in;
+	int	out;
+
 
 	line = NULL;
 	status.signals = 0;
@@ -60,9 +63,7 @@ int main(int ac, char **av, char **main_env)
 		// if (!shell)
 		// 	ft_putstr_fd("\033[1;31mSyntax error\033[0m\n", 2);
 		// print_env(env);
-		
 	}
 	show_ctrl();
-
 	return (0);
 }

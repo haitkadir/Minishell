@@ -12,21 +12,6 @@
 
 #include "../../../minishell.h"
 
-// int	check_cmd1(t_env	*env, t_arg *arg, char *str)
-// {
-// 	int		i;
-// 	char	*tmp;
-
-// 	i = 0;
-	
-// 	return (1);
-// 	// if (checking_path(arg, str, tmp))
-// 	// 	return (1);
-// 	ft_putstr_fd("Command not found\n", 2);
-// 	status.exit_status = 127;
-// 	return (0);
-// }
-
 void	builtins(t_env	*envi, char **str, t_arg *arg)
 {
 	if (!ft_strcmp_tl(str[0], "pwd"))

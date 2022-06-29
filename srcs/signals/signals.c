@@ -37,20 +37,17 @@ void	handler(int signal)
 	int i;
 
 	i = 0;
-    if (status.signals == 1)
+    if (signal == SIGINT)
     {
-    	if (signal == SIGINT)
+		if (status.signals == 0)
     	{
-    	    i++;
-    		//printf("\033[1;32mMinishell:\e[0m ");
-    		//write(1, "\n\033[1;32mMinishell:\e[0m ", 24);
 			printf("\n");
     		rl_on_new_line();
 			rl_replace_line("", 0);
     		rl_redisplay();
-    	    status.signals = 0;
-    	}
-  	}
+        	status.signals = 0;
+		}
+    }
 	if (signal == SIGQUIT)
 		i++;
 }

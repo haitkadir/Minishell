@@ -22,10 +22,10 @@ int	her_doc(t_shell *shell, t_arg *arg)
 	str = NULL;
 	tmp = NULL;
 	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	status.signals = 1;
 	id = fork();
 	if (id == 0)
 	{
+		status.signals = 1;
 		while (1)
 		{
 			str = readline("herdoc> ");
@@ -33,14 +33,12 @@ int	her_doc(t_shell *shell, t_arg *arg)
 			{
 				free(str);
 				close(i);
-				// break ;
-				exit(0);
+				exit(1);
 			}
 			else if (!str)
 			{
 				close(i);
-				// break ;
-				exit(1);
+				exit(0);
 			}
 			else
 			{
@@ -51,9 +49,11 @@ int	her_doc(t_shell *shell, t_arg *arg)
 			}
 		}
 		close(i);
-		exit(0);
+		write(1, "\n", 1);
+		exit(1);
 	}
-	return (id);
+	else
+		return (id);
 }
 
 int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
@@ -61,10 +61,14 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 	int		i;
 	int		rs;
 	int		id;
+	int		in;
+	int		out;
 	t_shell	*lst;
 
 	i = 0;
 	lst = shell;
+	in = dup(STDIN_FILENO);
+	out = dup(STDOUT_FILENO);
 	arg->in_fd = 0;
 	while (lst)
 	{
@@ -82,7 +86,9 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 				if (check_builtins(lst->switchs[0]))
 				{
 					ft_dup(lst, arg, 2);
-				 	builtins(env, shell->switchs, arg);
+					builtins(env, lst->switchs, arg);
+					dup2(in, 0);
+					dup2(out, 1);
 				}
 				else
 					return (0);
@@ -91,12 +97,8 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 				arg->in_fd = lst->file;
 			else if (lst->token == HERE_DOC)
 			{
-				id = her_doc(shell, arg);
+				id = her_doc(lst, arg);
 				waitpid(id, &rs, 0);
-				if (WIFSIGNALED(rs))
-					return (1);
-				if (rs != 0)
-					return (1);
 				status.signals = 0;
 				arg->in_fd = open("tmp", O_RDONLY, 0777);
 			}
@@ -139,4 +141,5 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		}
 		shell = shell->next;
 	}
+	unlink("tmp");
 }
