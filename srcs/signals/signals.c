@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "../../minishell.h"
-#include <termios.h>
 
 void	hide_ctrl(void)
 {

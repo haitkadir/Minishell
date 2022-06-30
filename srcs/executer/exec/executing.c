@@ -12,46 +12,6 @@
 
 #include "../../../minishell.h"
 
-int	her_doc(t_shell *shell, t_arg *arg)
-{
-	int		i;
-	char	*str;
-
-	str = NULL;
-	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	status.signals = fork();
-	if (status.signals == 0)
-	{
-		while (1)
-		{
-			str = readline("herdoc> ");
-			if (!ft_strcmp(str, shell->data))
-			{
-				free(str);
-				close(i);
-				exit(0);
-			}
-			else if (!str)
-			{
-				close(i);
-				exit(1);
-			}
-			else
-			{
-				ft_putstr_fd(str, i);
-				ft_putstr_fd("\n", i);
-				free(str);
-				str = NULL;
-			}
-		}
-		close(i);
-		write(1, "\n", 1);
-		exit(0);
-	}
-	else
-		return (status.signals);
-}
-
 int	check_one_cmd(t_shell *lst)
 {
 	while (lst)
@@ -152,9 +112,7 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		else if (shell->token == RED_IN)
 			arg->in_fd = shell->file;
 		else if (shell->token == INVALID_FILE)
-		{
 			arg->not_found = 1;
-		}
 		else if (shell->token == HERE_DOC)
 		{
 			id = her_doc(shell, arg);
@@ -165,14 +123,8 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
 		else if (shell->token == PIPE)
-		{
-			if (arg->not_found == 1)
-				put_error("file", "No such file or directory", 1);
 			arg->not_found = 0;
-		}
 		shell = shell->next;
 	}
-	if (arg->not_found == 1)
-		put_error("file", "No such file or directory", 1);
 	unlink("tmp");
 }

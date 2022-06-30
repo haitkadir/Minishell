@@ -48,6 +48,7 @@ int main(int ac, char **av, char **main_env)
 
 	line = NULL;
 	status.signals = 1;
+	status.exit_status = 0;
 	create_env(&env, main_env);
 	hide_ctrl();
 	signal(SIGQUIT, handler);

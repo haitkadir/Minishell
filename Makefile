@@ -18,7 +18,7 @@ HEADER = minishell.h
 
 BUILTINS =  cd cd_home echo env exit export export_things export_utils pwd unset
 
-EXEC = check_cmd duping executing executing_cmd
+EXEC = check_cmd duping executing executing_cmd her_doc
 
 UTILS = utils
 

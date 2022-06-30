@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
+# include <termios.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include "./libft/libft.h"
@@ -200,5 +201,9 @@ void	handler(int signal);
 void	show_ctrl(void);
 void	hide_ctrl(void);
 
+/* --------------------------------- her_doc --------------------------------- */
+
+void	her_doc_logic(char	*str, int i, t_shell *shell);
+int		her_doc(t_shell *shell, t_arg *arg);
 
 #endif
