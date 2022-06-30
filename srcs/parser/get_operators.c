@@ -10,7 +10,7 @@ char	filetype(char *input)
         return (0);
 	if (!S_ISREG(file_stat.st_mode) && S_ISDIR(file_stat.st_mode))
 	{
-        put_error(input, "Is a directory");
+        put_error(input, "Is a directory", 126);
 		return (1);
 	}
 	return (0);
@@ -26,13 +26,13 @@ void    check_file_permession(char  *file, int macro)
 		if (macro == RED_IN)
 		{
 			if (access(file, F_OK) != 0)
-				put_error(file, "No such file of directory");
+				put_error(file, "No such file of directory", 1);
 			else if (access(file, R_OK) != 0)
-				put_error(file, "Permission denied");
+				put_error(file, "Permission denied", 1);
 		}
 		else if (macro == RED_OUT || macro == RED_APPEND)
 			if (access(file, W_OK) != 0)
-				put_error(file, "Permission denied");
+				put_error(file, "Permission denied", 1);
 	}
 }
 
