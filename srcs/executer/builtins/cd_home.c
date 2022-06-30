@@ -38,6 +38,16 @@ int	get_home(char	**home, t_env *lst)
 	return (0);
 }
 
+void	create_new_pwd(char	*home, t_env *env)
+{
+	t_env	*lst;
+
+	lst = NULL;
+	home = NULL;
+	lst = ft_envnew("PWD", getcwd(home, sizeof(home)));
+	ft_envadd_back(&env, lst);
+}
+
 void	cd_home(t_env *env, char *arg)
 {
 	t_env	*lst;
@@ -60,10 +70,6 @@ void	cd_home(t_env *env, char *arg)
 		lst = lst->next;
 	}
 	if (!pwd(env, 0))
-	{
-		home = NULL;
-		lst = ft_envnew("PWD", getcwd(home, 9999));
-		ft_envadd_back(&env, lst);
-	}
+		create_new_pwd(home, env);
 	check_oldpwd(env, oldpwd);
 }

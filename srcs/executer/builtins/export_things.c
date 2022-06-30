@@ -26,6 +26,16 @@ int	check_equal(t_env *lst, char *str, t_arg *arg)
 	return (1);
 }
 
+void	key_already_exist(char	*tmp, t_env *lst, char	*find)
+{
+	tmp = lst->value;
+	if (!lst->value)
+		lst->value = "";
+	lst->value = ft_strjoin(lst->value, ft_strchr(find, '=') + 1);
+	if (tmp != NULL)
+		free(tmp);
+}
+
 int	key_exist(t_env *lst, char	*find, int *j)
 {
 	char	*tmp;
@@ -36,14 +46,7 @@ int	key_exist(t_env *lst, char	*find, int *j)
 		if (!ft_strncmp(lst->key, find, ft_strlen(lst->key)))
 		{
 			if (*j == 1)
-			{
-				tmp = lst->value;
-				if (!lst->value)
-					lst->value = "";
-				lst->value = ft_strjoin(lst->value, ft_strchr(find, '=') + 1);
-				if (tmp != NULL)
-					free(tmp);
-			}
+				key_already_exist(tmp, lst, find);
 			else
 				lst->value = ft_strdup(ft_strchr(find, '=') + 1);
 			if (!lst->value)
