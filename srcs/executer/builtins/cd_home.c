@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
 
 int	get_home(char	**home, t_env *lst)
 {

@@ -41,7 +41,7 @@ typedef struct s_global
 	int	signals;
 } t_global;
 
-
+t_global status;
 /*--------------------------- get environment variables ----------------------*/
 
 typedef struct s_env

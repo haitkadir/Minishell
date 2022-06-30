@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
 
 void	check_oldpwd(t_env *env, char	*oldpwd)
 {

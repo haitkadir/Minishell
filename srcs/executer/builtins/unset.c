@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
 
 void	unset_utils(t_env **env, t_env *lst, char *find)
 {

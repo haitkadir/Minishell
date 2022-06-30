@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
 
 void	env(t_env *env)
 {

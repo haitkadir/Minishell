@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
 
 int	check_equal(t_env *lst, char *str, t_arg *arg)
 {

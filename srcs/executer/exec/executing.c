@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
 
 int	her_doc(t_shell *shell, t_arg *arg)
 {
@@ -23,10 +22,9 @@ int	her_doc(t_shell *shell, t_arg *arg)
 	str = NULL;
 	tmp = NULL;
 	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	id = fork();
-	if (id == 0)
+	status.signals = fork();
+	if (status.signals == 0)
 	{
-		status.signals = 1;
 		while (1)
 		{
 			str = readline("herdoc> ");
@@ -34,12 +32,12 @@ int	her_doc(t_shell *shell, t_arg *arg)
 			{
 				free(str);
 				close(i);
-				exit(1);
+				exit(0);
 			}
 			else if (!str)
 			{
 				close(i);
-				exit(0);
+				exit(1);
 			}
 			else
 			{
@@ -51,10 +49,26 @@ int	her_doc(t_shell *shell, t_arg *arg)
 		}
 		close(i);
 		write(1, "\n", 1);
-		exit(1);
+		exit(0);
 	}
 	else
-		return (id);
+		return (status.signals);
+}
+
+int	check_one_cmd(t_shell *lst)
+{
+	while (lst)
+	{
+		if (lst->token == CMD)
+		{
+			if (check_builtins(lst->switchs[0]))
+				return (0);
+			else
+				return (1);
+		}
+		lst = lst->next;
+	}
+	return (1);
 }
 
 int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
@@ -79,6 +93,8 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 	}
 	if (i == 0)
 	{
+		if (check_one_cmd(shell))
+			return (0);
 		lst = shell;
 		while (lst)
 		{
@@ -100,7 +116,8 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 			{
 				id = her_doc(lst, arg);
 				waitpid(id, &rs, 0);
-				status.signals = 0;
+				if (rs != 0)
+					return (1);
 				arg->in_fd = open("tmp", O_RDONLY, 0777);
 			}
 			lst = lst->next;
@@ -115,9 +132,9 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 	int	id;
 	int	rs;
 
+	arg->in_fd = 0;
 	if (one_cmd(env, arg, shell))
 		return ;
-	arg->in_fd = 0;
 	while (shell)
 	{
 		if (shell->token == CMD)
@@ -133,11 +150,8 @@ void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
 		{
 			id = her_doc(shell, arg);
 			waitpid(id, &rs, 0);
-			if (WIFSIGNALED(rs))
-				return ;
 			if (rs != 0)
-				break ;
-			status.signals = 0;
+				return ;
 			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
 		shell = shell->next;

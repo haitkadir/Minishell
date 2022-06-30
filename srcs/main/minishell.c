@@ -48,7 +48,7 @@ int main(int ac, char **av, char **main_env)
 
 
 	line = NULL;
-	status.signals = 0;
+	status.signals = 1;
 	create_env(&env, main_env);
 	hide_ctrl();
 	signal(SIGQUIT, handler);
@@ -68,5 +68,6 @@ int main(int ac, char **av, char **main_env)
 		// print_env(env);
 	}
 	show_ctrl();
+	exit10();
 	return (0);
 }

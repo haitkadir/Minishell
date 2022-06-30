@@ -11,26 +11,50 @@
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
-extern t_global status;
+
+int    export_special_char(char c)
+{
+    if (ft_strchr("/|#`[]!{};()*&~,-+@%%^<>", c))
+        return (1);
+    return (0);
+}
 
 int	check_keys(t_env *lst, char *str, int *j, int i)
 {
 	t_env	*lst1;
 	t_env	*tmp;
+	int		t;
 
+	t = 0;
 	if (!(ft_isalpha(str[0]) || str[0] == '_'))
+	{
+		ft_putstr_fd("not a valid identifier\n", 2);
+		status.exit_status = 1;
 		return (1);
+	}
 	while (str[i])
 	{
 		if (str[i] == '=')
 		{
-			if (str[i - 1] == '+' && str[i - 2] != '+')
+			if (str[i - 1] && str[i - 1] == '+' && str[i - 2] != '+')
 				*j = 1;
 			else if (str[i - 1] == '-')
 			{
-				ft_putstr_fd("Error\n", 2);
+				ft_putstr_fd("not a valid identifier\n", 2);
 				status.exit_status = 1;
 				return (1);
+			}
+			if (str[i - 1] && str[i - 1] == '+')
+				i--;
+			while (t <= i)
+			{
+				if (str[t] && export_special_char(str[t]))
+				{
+					ft_putstr_fd("not a valid identifier\n", 2);
+					status.exit_status = 1;
+					return (1);
+				}
+				t++;
 			}
 			return (0);
 		}
@@ -41,6 +65,17 @@ int	check_keys(t_env *lst, char *str, int *j, int i)
 		tmp = lst;
 		while (tmp)
 		{
+			i = 0;
+			while (str[i])
+			{
+				if (export_special_char(str[i]))
+				{
+					ft_putstr_fd("not a valid identifier\n", 2);
+					status.exit_status = 1;
+					return (1);
+				}
+				i++;
+			}
 			if (!ft_strcmp(tmp->key, str))
 				return (1);
 			tmp = tmp->next;
