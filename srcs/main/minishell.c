@@ -12,16 +12,15 @@
 
 #include "../../minishell.h"
 
-t_global status;
 
-
-void	put_error(char *keyword, char *err)
+void	put_error(char *keyword, char *msg, int err)
 {
 	ft_putstr_fd("\033[4;31mMinishell\033[0m: ", 2);
 	ft_putstr_fd(keyword, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(err, 2);
+	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
+	status.exit_status = err;
 }
 
 

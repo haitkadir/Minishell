@@ -12,44 +12,50 @@
 
 #include "../../../minishell.h"
 
+void	no_pipe_case(t_shell *shell, t_arg *arg, int fd)
+{
+	if (shell->prev && shell->prev->token == RED_OUT)
+	{
+		fd = shell->prev->file;
+		dup2(fd, 1);
+		dup2(arg->in_fd, 0);
+		close(arg->fd[1]);
+	}
+	else
+	{
+		dup2(arg->in_fd, 0);
+		close(arg->fd[1]);
+	}
+}
+
+void	pipe_case(t_shell *shell, t_arg *arg, int fd)
+{
+	if (shell->prev && shell->prev->token == RED_OUT)
+	{
+		fd = shell->prev->file;
+		dup2(fd, 1);
+		dup2(arg->in_fd, 0);
+		close(arg->fd[1]);
+	}
+	else
+	{
+		dup2(arg->fd[1], 1);
+		dup2(arg->in_fd, 0);
+		close(arg->fd[1]);
+	}
+}
+
 void	ft_dup(t_shell *shell, t_arg *arg, int j)
 {
 	int	fd;
 	int	std_out;
-	int i;
+	int	i;
 
 	fd = 0;
 	if (j == 1)
-	{
-		if (shell->prev && shell->prev->token == RED_OUT)
-		{
-			fd = shell->prev->file;
-			dup2(fd, 1);
-			dup2(arg->in_fd, 0);
-			close(arg->fd[1]);
-		}
-		else
-		{
-			dup2(arg->fd[1], 1);
-			dup2(arg->in_fd, 0);
-			close(arg->fd[1]);
-		}
-	}
+		pipe_case(shell, arg, fd);
 	else if (j == 0)
-	{
-		if (shell->prev && shell->prev->token == RED_OUT)
-		{
-			fd = shell->prev->file;
-			dup2(fd, 1);
-			dup2(arg->in_fd, 0);
-			close(arg->fd[1]);
-		}
-		else
-		{
-			dup2(arg->in_fd, 0);
-			close(arg->fd[1]);
-		}
-	}
+		no_pipe_case(shell, arg, fd);
 	else if (j == 2)
 	{
 		if (shell->prev && shell->prev->token == RED_OUT)

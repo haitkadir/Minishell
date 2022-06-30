@@ -58,7 +58,7 @@ char	*check_cmd(t_env *env, char *cmd)
 		ft_free(full_cmd);
 		i++;
 	}
-	return (put_error(cmd, "Command not found"), NULL);
+	return (put_error(cmd, "Command not found", 127), NULL);
 }
 
 
@@ -72,11 +72,11 @@ char	check_cmd_permissions(char *cmd)
 			return (0);
 		else
 		{
-			put_error(cmd, "Permission denied");
+			put_error(cmd, "Permission denied", 1);
 			return (1);
 		}
 	}
-	put_error(cmd, "No such file or directory");
+	put_error(cmd, "No such file or directory", 1);
 	return (1);
 }
 

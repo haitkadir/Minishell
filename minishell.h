@@ -32,7 +32,7 @@ enum
 };
 
 
-void	put_error(char *keyword, char *err);
+void	put_error(char *keyword, char *msg, int err);
 
 // for exit status and signals
 typedef struct s_global
@@ -144,7 +144,10 @@ typedef struct s_arg
 	int		fd[2];
 	char	**paths;
 	int		in_fd;
+	int		in;
+	int		out;
 	int		out_fd;
+	int		not_found;
 	int		i;
 } t_arg;
 
