@@ -133,7 +133,7 @@ t_shell	*get_cmd(t_env *env, t_token *token)
 	switchs = NULL;
 	if (!token)
 		return (NULL);
-	if (ft_strnstr_tl(BUILTINS, token->content, ft_strlen(BUILTINS)))
+	if (check_builtins(token->content))
 		full_cmd = ft_strdup(token->content);
 	else if (ft_strchr("./", token->content[0]))
 	{

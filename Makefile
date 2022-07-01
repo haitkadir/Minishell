@@ -43,7 +43,7 @@ SRC = $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
 	  $(addsuffix .c, $(addprefix srcs/signals/, $(SIGNALS))) \
 	  $(addsuffix .c, $(addprefix srcs/executer/builtins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix srcs/executer/exec/, $(EXEC))) \
-	  $(addsuffix .c, $(addprefix srcs/executer/utils/, $(UTILS))) \
+	  $(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
 	  $(addsuffix .c, $(addprefix srcs/main/, $(MAIN))) \
 
 OBJ = $(SRC:c=o)
@@ -59,7 +59,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
-	@${CC} -I$(shell brew --prefix readline)/include ${CFLAGS}  -c $< -o $@
+	@${CC} -I $(shell brew --prefix readline)/include ${CFLAGS}  -c $< -o $@
 
 .INTERMEDIATE: $(OBJ)
 

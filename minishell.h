@@ -13,7 +13,6 @@
 # include <readline/history.h>
 # include <signal.h>
 
-# define BUILTINS "echo cd pwd export unset env exit"
 
 /*-------------------------------- global ------------------------------------*/
 
@@ -32,8 +31,6 @@ enum
 	SPACE_,
 };
 
-
-void	put_error(char *keyword, char *msg, int err);
 
 // for exit status and signals
 typedef struct s_global
@@ -81,6 +78,11 @@ void	tokendelone(t_token *lst);
 void	token_clear(t_token **lst);
 
 t_token	*lexer(char *line, t_env *env);
+
+/*-------------------------------- Utils -------------------------------------*/
+
+int		check_builtins(char *str);
+void	put_error(char *keyword, char *msg, int err);
 
 /*-------------------------------- Parser ------------------------------------*/
 
@@ -155,11 +157,6 @@ typedef struct s_arg
 } t_arg;
 
 /* ------------------------------ Utils functions ---------------------------- */
-
-int		ft_strcmp(char *s1, char *s2);
-int		ft_strcmp_tl(char *s1, char *s2);
-char	*ft_strrchr1(char *str, int c);
-int		ft_strcmp2(char *s1, char *s2);
 void	check_oldpwd(t_env *env, char	*oldpwd);
 
 /* --------------------------------- builtins --------------------------------- */
@@ -191,7 +188,6 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 
 int		one_cmd(t_env	**env, t_arg *arg, t_shell *shell);
 
-int		check_builtins(char *str);
 void	check_command(t_env	**env, t_arg *arg, t_shell *shell);
 int		check_cmd1(t_env	*env, t_arg *arg, char *str);
 int		cmd_token(t_shell *shell, t_arg *arg, t_env **env);

@@ -61,7 +61,7 @@ void	compare_keys(char	**keys, int i)
 		j = 0;
 		while (keys[j])
 		{
-			if (ft_strcmp2(keys[j], keys[i]) > 0)
+			if (ft_strcmp(keys[j], keys[i]) > 0)
 			{
 				tmp = keys[i];
 				keys[i] = keys[j];

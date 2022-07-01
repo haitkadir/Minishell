@@ -34,22 +34,3 @@ void	builtins(t_env	**envi, char **str, t_arg *arg)
 	else if (!ft_strcmp(str[0], "echo"))
 		echo_env1(*envi, str);
 }
-
-int	check_builtins(char *str)
-{
-	if (!ft_strcmp_tl(str, "pwd"))
-		return (1);
-	else if (!ft_strcmp(str, "export"))
-		return (1);
-	else if (!ft_strcmp(str, "unset"))
-		return (1);
-	else if (!ft_strcmp_tl(str, "env"))
-		return (1);
-	else if (!ft_strcmp(str, "exit"))
-		return (1);
-	else if (!ft_strcmp_tl(str, "cd"))
-		return (1);
-	else if (!ft_strcmp_tl(str, "echo"))
-		return (1);
-	return (0);
-}
