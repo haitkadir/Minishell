@@ -165,7 +165,7 @@ void	check_oldpwd(t_env *env, char	*oldpwd);
 void	builtins(t_env	**envi, char **str, t_arg *arg);
 char	*pwd(t_env *env, int i);
 void	unset_env(t_env **env, char **str);
-void	unset_utils(t_env **env, t_env *lst, char *find);
+void	unset_utils(t_env **env, t_env *lst, char *find, t_env *tmp);
 void	env(t_env *env);
 void	exit10(void);
 void	exit11(int	i);

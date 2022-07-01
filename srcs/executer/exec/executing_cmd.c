@@ -62,6 +62,7 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 	status.signals = 2;
 	if (i == 0)
 	{
+		status.signals = 1;
 		arg->paths = env_to_table(env);
 		if (j == 1)
 			ft_dup(shell, arg, 1);

@@ -12,12 +12,9 @@
 
 #include "../../../minishell.h"
 
-void	unset_utils(t_env **env, t_env *lst, char *find)
+void	unset_utils(t_env **env, t_env *lst, char *find, t_env *tmp)
 {
-	t_env	*tmp;
-
 	tmp = NULL;
-	lst = *env;
 	while (lst)
 	{
 		if (!ft_strncmp(lst->key, find, ft_strlen(lst->key)))
@@ -25,11 +22,17 @@ void	unset_utils(t_env **env, t_env *lst, char *find)
 			if (!tmp)
 			{
 				tmp = lst->next;
+				free(lst->key);
+				if (lst->value != NULL)
+					free(lst->value);
 				free(lst);
 				*env = tmp;
 				return ;
 			}
 			tmp->next = lst->next;
+			free(lst->key);
+			if (lst->value != NULL)
+				free(lst->value);
 			free(lst);
 			break ;
 		}
@@ -48,7 +51,8 @@ void	unset_env(t_env **env, char **str)
 	i = 1;
 	while (str[i])
 	{
-		unset_utils(env, lst, str[i]);
+		lst = *env;
+		unset_utils(env, lst, str[i], tmp);
 		i++;
 	}
 	status.exit_status = 0;
