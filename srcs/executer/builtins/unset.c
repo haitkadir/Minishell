@@ -17,6 +17,7 @@ void	unset_utils(t_env **env, t_env *lst, char *find)
 	t_env	*tmp;
 
 	tmp = NULL;
+	lst = *env;
 	while (lst)
 	{
 		if (!ft_strncmp(lst->key, find, ft_strlen(lst->key)))
@@ -25,7 +26,7 @@ void	unset_utils(t_env **env, t_env *lst, char *find)
 			{
 				tmp = lst->next;
 				free(lst);
-				env = &tmp;
+				*env = tmp;
 				return ;
 			}
 			tmp->next = lst->next;
@@ -43,7 +44,7 @@ void	unset_env(t_env **env, char **str)
 	t_env	*tmp;
 	int		i;
 
-	lst = *env;
+	lst = NULL;
 	i = 1;
 	while (str[i])
 	{

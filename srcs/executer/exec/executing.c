@@ -28,7 +28,7 @@ int	check_one_cmd(t_shell *lst)
 	return (1);
 }
 
-int	execute_builting(t_shell *lst, t_arg *arg, int rs, t_env *env)
+int	execute_builting(t_shell *lst, t_arg *arg, int rs, t_env **env)
 {
 	int	id;
 
@@ -57,7 +57,7 @@ int	execute_builting(t_shell *lst, t_arg *arg, int rs, t_env *env)
 	return (1);
 }
 
-int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
+int	one_cmd(t_env	**env, t_arg *arg, t_shell *shell)
 {
 	int		i;
 	int		rs;
@@ -87,7 +87,7 @@ int	one_cmd(t_env	*env, t_arg *arg, t_shell *shell)
 	return (0);
 }
 
-void	check_command(t_env	*env, t_arg *arg, t_shell *shell)
+void	check_command(t_env	**env, t_arg *arg, t_shell *shell)
 {
 	int	id;
 	int	rs;

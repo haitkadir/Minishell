@@ -62,7 +62,7 @@ int main(int ac, char **av, char **main_env)
 			continue ;
 		add_history (line);
 		// signals();
-		shell = parser(line, env);
+		shell = parser(line, &env);
 		// if (!shell)
 		// 	ft_putstr_fd("\033[1;31mSyntax error\033[0m\n", 2);
 		// print_env(env);
