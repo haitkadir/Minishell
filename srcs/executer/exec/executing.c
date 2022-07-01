@@ -106,6 +106,8 @@ void	check_command(t_env	**env, t_arg *arg, t_shell *shell)
 				if (cmd_token(shell, arg, env))
 					return ;
 			}
+			if (arg->in_fd != 0)
+				close(arg->in_fd);
 			arg->in_fd = arg->fd[0];
 			close(arg->fd[1]);
 		}

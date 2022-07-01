@@ -109,7 +109,10 @@ int	cmd_token(t_shell *shell, t_arg *arg, t_env **env)
 		if (shell->next != NULL && shell->next->token == PIPE)
 			execute_func(*env, arg, shell, 1);
 		else
+		{
 			execute_func(*env, arg, shell, 0);
+			close(arg->fd[0]);
+		}
 	}
 	return (0);
 }
