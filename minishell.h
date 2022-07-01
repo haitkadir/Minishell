@@ -56,19 +56,13 @@ void	create_env(t_env **list, char **env);
 char	*ft_getenv(t_env *env, char *buffer);
 void	free_env(t_env *head, char error);
 
+/*-------------------------------- Utils -------------------------------------*/
 
-/*-------------------------------- Lexer -------------------------------------*/
+int		check_builtins(char *str);
+void	put_error(char *keyword, char *msg, int err);
 
-typedef struct s_token
-{
-    struct s_token  *prev;
-	int             token;
-	char            *content;
-    struct s_token  *next;
-}	t_token;
+/*-------------------------------- Tools -------------------------------------*/
 
-char	is_last_operator(t_token *token);
-char	check_last(t_token *token, int	macro);
 t_token	*tokennew(char *content, int token);
 void	tokenadd_front(t_token **lst, t_token *new);
 char	tokenadd_back(t_token **lst, t_token *new);
@@ -77,33 +71,21 @@ t_token	*tokenlast(t_token *lst);
 void	tokendelone(t_token *lst);
 void	token_clear(t_token **lst);
 
-t_token	*lexer(char *line, t_env *env);
-
-/*-------------------------------- Utils -------------------------------------*/
-
-int		check_builtins(char *str);
-void	put_error(char *keyword, char *msg, int err);
-
-/*-------------------------------- Parser ------------------------------------*/
-
-typedef struct s_shell
-{
-    struct s_shell  *prev;
-	int             token;
-	char            *data;
-	char			**switchs;
-	int				file;
-    struct s_shell  *next;
-}	t_shell;
-
 char	shelladd_front(t_shell **shell, t_shell *new);
 char	shelladd_back(t_shell **shell, t_shell *new);
 int		shell_size(t_shell *shell);
 t_shell	*shell_new(int token, char *data, char **switchs, int file);
 t_shell	*shell_last(t_shell *shell);
-t_shell *parser(char *line, t_env **env);
 
 /*-------------------------------- Lexer ------------------------------------*/
+
+typedef struct s_token
+{
+    struct s_token  *prev;
+	int             token;
+	char            *content;
+    struct s_token  *next;
+}	t_token;
 
 char	check_qoutes(char *line);
 char	check_in_out_operators(char *line, char oper);
@@ -123,8 +105,21 @@ char	get_space(t_token **token, char *line, int *i);
 char	is_operators(char qoute, char a, char b);
 char	get_operator(t_token **token, char *line, int *i);
 char	tokenizer(t_token **token, char *line, t_env *env);
+char	is_last_operator(t_token *token);
+char	check_last(t_token *token, int	macro);
+t_token	*lexer(char *line, t_env *env);
 
 /*-------------------------------- Parser ------------------------------------*/
+
+typedef struct s_shell
+{
+    struct s_shell  *prev;
+	int             token;
+	char            *data;
+	char			**switchs;
+	int				file;
+    struct s_shell  *next;
+}	t_shell;
 
 void	free_path(char **path);
 char	**get_path(t_env *env);
@@ -140,6 +135,7 @@ void	handle_files(int *args, char *file, int token);
 void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc);
 void	process_data_util(t_shell **shell, t_token **token, t_env *env);
 char	process_data(t_shell **shell, t_token *token, t_env *env);
+void	parser(char *line, t_env **env);
 
 /*-------------------------------- Executer ------------------------------------*/
 

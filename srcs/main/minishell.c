@@ -16,11 +16,7 @@
 int main(int ac, char **av, char **main_env)
 {
 	char				*line;
-	t_shell				*shell;
 	t_env				*env;
-	int	in;
-	int	out;
-
 
 	line = NULL;
 	status.signals = 1;
@@ -37,8 +33,7 @@ int main(int ac, char **av, char **main_env)
 		else if (line[0] == '\n')
 			continue ;
 		add_history (line);
-		// signals();
-		shell = parser(line, &env);
+		parser(line, &env);
 	}
 	show_ctrl();
 	exit10();

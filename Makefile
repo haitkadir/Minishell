@@ -26,7 +26,7 @@ UTILS = utils
 
 LEXER = lexer tokenizer get_operators get_operators_util get_word get_word_util check_errors check_qoutes
 
-PARSER = parser process_data get_cmd get_operators
+PARSER = parser process_data get_cmd get_cmd_util get_operators
 
 SIGNALS = signals
 
