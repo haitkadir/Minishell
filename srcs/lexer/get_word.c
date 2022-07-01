@@ -4,6 +4,8 @@
 
 char	get_word_util(char **s1, char **s2)
 {
+	if (!*s2)
+		return (0);
 	if (!*s1)
 	{
 		*s1 = ft_strdup(*s2);
@@ -23,9 +25,11 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
 {
 	char	*content;
 	char	*result;
+	int		err;
  
 	content = NULL;
 	result = NULL;
+	err = 0;
 	while(ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
 	{
 		if (line[*i] == '\"')
@@ -40,9 +44,9 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
 			content = expender(line, i, env);
 		else if (ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
 			content = word(line, i);
-		get_word_util(&result, &content);
+		err += get_word_util(&result, &content);
 	}
 	if (result)
 		tokenadd_back(token, tokennew(result, WORD));
-	return (0);
+	return (err);
 }
