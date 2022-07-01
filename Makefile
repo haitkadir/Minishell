@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -fsanitize=address -static-libsan \
+CFLAGS =  \
  -I ./ -I libft/ \
 
 

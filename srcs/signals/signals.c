@@ -44,11 +44,13 @@ void	handler(int signal)
 		rl_replace_line("", 0);
     	rl_redisplay();
 	}
-	else if (signal == SIGINT && status.signals != 1 && status.signals != 0)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-	}
+	else if (signal == SIGINT && status.signals != 1)
+		i++;
+	// else if (signal == SIGINT && status.signals != 1 && status.signals != 0)
+	// {
+	// 	printf("\n");
+	// 	rl_replace_line("", 0);
+	// }
 	if (signal == SIGQUIT)
 		i++;
 }

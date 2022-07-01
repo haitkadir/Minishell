@@ -54,7 +54,7 @@ int	flag_option(t_env *env, char **str, int j, int i)
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 void	no_flag(char	**str)
