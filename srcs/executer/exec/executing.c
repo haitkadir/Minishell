@@ -34,7 +34,7 @@ int	execute_builting(t_shell *lst, t_arg *arg, int rs, t_env **env)
 
 	while (lst)
 	{
-		if (lst->token == CMD)
+		if (lst->token == CMD && arg->not_found == 0)
 		{
 			ft_dup(lst, arg, 2);
 			builtins(env, lst->switchs, arg);
@@ -52,6 +52,8 @@ int	execute_builting(t_shell *lst, t_arg *arg, int rs, t_env **env)
 				return (1);
 			arg->in_fd = open("tmp", O_RDONLY, 0777);
 		}
+		else if (shell->token == INVALID_FILE)
+			arg->not_found = 1;
 		lst = lst->next;
 	}
 	return (1);
