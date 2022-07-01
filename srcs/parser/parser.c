@@ -30,17 +30,17 @@ static void print_node(t_shell *shell)
 
 /*----------------------------------------------------------------------------*/
 
-t_shell *parser(char *line, t_env *env)
+t_shell *parser(char *line, t_env **env)
 {
 	t_token	*token;
 	t_shell	*shell;
 	t_arg args;
 
 	args.paths = NULL;
-	token = lexer(line, env);
+	token = lexer(line, *env);
 	if (!token)
 		return (NULL);
-	if (process_data(&shell, token, env))
+	if (process_data(&shell, token, *env))
 		return (NULL);
 	token_clear(&token);
 	// print_node(shell);

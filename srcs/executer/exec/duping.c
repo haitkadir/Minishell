@@ -19,12 +19,18 @@ void	no_pipe_case(t_shell *shell, t_arg *arg, int fd)
 		fd = shell->prev->file;
 		dup2(fd, 1);
 		dup2(arg->in_fd, 0);
+		if (arg->in_fd != 0)
+			close(arg->in_fd);
 		close(arg->fd[1]);
+		close(arg->fd[0]);
 	}
 	else
 	{
 		dup2(arg->in_fd, 0);
+		if (arg->in_fd != 0)
+			close(arg->in_fd);
 		close(arg->fd[1]);
+		close(arg->fd[0]);
 	}
 }
 
@@ -35,13 +41,19 @@ void	pipe_case(t_shell *shell, t_arg *arg, int fd)
 		fd = shell->prev->file;
 		dup2(fd, 1);
 		dup2(arg->in_fd, 0);
+		if (arg->in_fd != 0)
+			close(arg->in_fd);
 		close(arg->fd[1]);
+		close(arg->fd[0]);
 	}
 	else
 	{
 		dup2(arg->fd[1], 1);
 		dup2(arg->in_fd, 0);
+		if (arg->in_fd != 0)
+			close(arg->in_fd);
 		close(arg->fd[1]);
+		close(arg->fd[0]);
 	}
 }
 

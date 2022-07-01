@@ -59,8 +59,10 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 	int	i;
 
 	i = fork();
+	status.signals = 2;
 	if (i == 0)
 	{
+		status.signals = 1;
 		arg->paths = env_to_table(env);
 		if (j == 1)
 			ft_dup(shell, arg, 1);
@@ -75,9 +77,10 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 		status.exit_status = status.exit_status % 255;
 	else if (WIFSIGNALED(status.exit_status))
 		status.exit_status += 128;
+	status.signals = 1;
 }
 
-void	executing_builtins(t_shell *shell, t_arg *arg, t_env *env)
+void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
 {
 	int	id;
 
@@ -96,7 +99,7 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env *env)
 	close(arg->fd[1]);
 }
 
-int	cmd_token(t_shell *shell, t_arg *arg, t_env *env)
+int	cmd_token(t_shell *shell, t_arg *arg, t_env **env)
 {
 	int	j;
 
@@ -105,9 +108,12 @@ int	cmd_token(t_shell *shell, t_arg *arg, t_env *env)
 	else
 	{
 		if (shell->next != NULL && shell->next->token == PIPE)
-			execute_func(env, arg, shell, 1);
+			execute_func(*env, arg, shell, 1);
 		else
-			execute_func(env, arg, shell, 0);
+		{
+			execute_func(*env, arg, shell, 0);
+			close(arg->fd[0]);
+		}
 	}
 	return (0);
 }

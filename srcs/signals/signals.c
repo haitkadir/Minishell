@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/27 18:21:18 by            #+#    #+#             */
-/*   Updated: 2022/05/27 18:21:19 by           ###   ########.fr       */
+/*   Created: 2022/05/27 18:21:18 by sahafid           #+#    #+#             */
+/*   Updated: 2022/05/27 18:21:19 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	hide_ctrl(void)
 
 	tcgetattr(STDIN_FILENO, &attr);
 	attr.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCIFLUSH, &attr);
+	tcsetattr(STDIN_FILENO, TCSANOW, &attr);
 }
 
 void	show_ctrl(void)
@@ -27,7 +27,7 @@ void	show_ctrl(void)
 
 	tcgetattr(STDIN_FILENO, &attr);
 	attr.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCIFLUSH, &attr);
+	tcsetattr(STDIN_FILENO, TCSANOW, &attr);
 }
 
 void	handler(int signal)
@@ -44,11 +44,8 @@ void	handler(int signal)
 		rl_replace_line("", 0);
     	rl_redisplay();
 	}
-	else if (signal == SIGINT && status.signals != 1 && status.signals != 0)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-	}
+	else if (signal == SIGINT && status.signals != 1)
+		i++;
 	if (signal == SIGQUIT)
 		i++;
 }
