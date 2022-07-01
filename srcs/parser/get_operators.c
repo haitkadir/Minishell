@@ -2,6 +2,29 @@
 
 /*----------------------------------------------------------------------------*/
 
+void	handle_files(int *args, char *file, int token)
+{
+	if (args[0] == -1 || args[1] == -1)
+		return ;
+	args[2] = 0;
+	if (token == RED_IN && args[0])
+	{
+		close(args[0]);
+		args[0] = open_file(file, token);
+	}
+	else if (token == RED_IN && args[0] == -2)
+		args[0] = open_file(file, token);
+	else if ((token == RED_OUT || token == RED_APPEND)  && args[1])
+	{
+		close(args[1]);
+		args[1] = open_file(file, token);
+	}
+	else if ((token == RED_OUT || token == RED_APPEND)  && args[1] == -2)
+		args[1] = open_file(file, token);
+}
+
+/*----------------------------------------------------------------------------*/
+
 char	filetype(char *input)
 {
     struct stat    file_stat;

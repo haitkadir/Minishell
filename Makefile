@@ -30,7 +30,7 @@ PARSER = parser process_data get_cmd get_operators
 
 SIGNALS = signals
 
-TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast tokendelone shell_new shell_last shell_size shelladd_back shelladd_front
+TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast tokendelone shell_new shell_last shell_size shelladd_back shelladd_front token_clear
 
 ENV = get_env
 

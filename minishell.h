@@ -78,6 +78,7 @@ char	tokenadd_back(t_token **lst, t_token *new);
 int     tokensize(t_token *lst);
 t_token	*tokenlast(t_token *lst);
 void	tokendelone(t_token *lst);
+void	token_clear(t_token **lst);
 
 t_token	*lexer(char *line, t_env *env);
 
@@ -133,6 +134,7 @@ void    check_file_permession(char  *file, int macro);
 char	filetype(char *input);
 char	is_operator(t_token *token);
 void    process_operator(t_shell **shell, t_token **token);
+void	handle_files(int *args, char *file, int token);
 void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc);
 void	process_data_util(t_shell **shell, t_token **token, t_env *env);
 char	process_data(t_shell **shell, t_token *token, t_env *env);

@@ -8,6 +8,8 @@ void	store_data(t_shell **shell, int *args, t_shell *cmd, t_shell *here_doc)
 	{
 		if (args[0] > -1)
 			shelladd_back(shell, shell_new(RED_IN, NULL, NULL, args[0]));
+		else if (args[0] == -1)
+			shelladd_back(shell, shell_new(INVALID_FILE, NULL, NULL, args[0]));
 		if (here_doc)
 			shelladd_back(shell, here_doc);
 	}
@@ -17,9 +19,13 @@ void	store_data(t_shell **shell, int *args, t_shell *cmd, t_shell *here_doc)
 			shelladd_back(shell, here_doc);
 		if (args[0] > -1)
 			shelladd_back(shell, shell_new(RED_IN, NULL, NULL, args[0]));
+		else if (args[0] == -1)
+			shelladd_back(shell, shell_new(INVALID_FILE, NULL, NULL, args[0]));
 	}
 	if (args[1] > -1)
 		shelladd_back(shell, shell_new(RED_OUT, NULL, NULL, args[1]));
+	else if (args[1] == -1)
+		shelladd_back(shell, shell_new(INVALID_FILE, NULL, NULL, args[1]));
 	if (cmd)
 		shelladd_back(shell, cmd);
 }
@@ -51,15 +57,9 @@ void	process_data_util(t_shell **shell, t_token **token, t_env *env)
 		if (!new_cmd && (*token)->token == WORD)
 			new_cmd = get_cmd(env, *token);
 		else if ((*token)->token == RED_IN)
-		{
-			args[2] = 0;
-			args[0] = open_file((*token)->content, RED_IN);
-		}
+			handle_files(args, (*token)->content, RED_IN);
 		else if ((*token)->token == RED_OUT || (*token)->token == RED_APPEND)
-		{
-			args[2] = 0;
-			args[1] = open_file((*token)->content, (*token)->token);
-		}
+			handle_files(args, (*token)->content, (*token)->token);
 		else if ((*token)->token == HERE_DOC)
 		{
 			args[2] = 1;
