@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:23 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 18:57:00 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 			status.exit_status = status.exit_status % 255;
 		else if (WIFSIGNALED(status.exit_status))
 			status.exit_status += 128;
+		waitpid(-1, NULL, 0);
 	}
 	status.signals = 1;
 }
@@ -100,8 +101,10 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
 	}
 	if (!(shell->next && shell->next->token == PIPE))
 	{
+		waitpid(id, &status.exit_status, 0);
 		if (WIFEXITED(status.exit_status))
 			status.exit_status = status.exit_status % 255;
+		waitpid(-1, NULL, 0);
 	}
 	close(arg->fd[1]);
 }

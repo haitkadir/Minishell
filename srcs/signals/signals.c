@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:21:18 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/27 18:21:19 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 18:32:22 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	handler(int signal)
 
 	i = 0;
     if (signal == SIGINT && status.signals == 0)
+	{
+		write(1, "\n", 1);
 		exit(1);
+	}
 	else if (signal == SIGINT && status.signals == 1)
 	{
 		printf("\n");
