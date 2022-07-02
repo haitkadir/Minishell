@@ -165,7 +165,7 @@ void	unset_env(t_env **env, char **str);
 void	unset_utils(t_env **env, t_env *lst, char *find, t_env *tmp);
 void	env(t_env *env);
 void	exit10(void);
-void	exit11(int	i);
+void	exit11(char *ptr);
 void	echo_env1(t_env *env, char **str);
 void	cd_home(t_env *env, char *arg);
 void	cd_env(t_env *env, char	*str, char *arg);

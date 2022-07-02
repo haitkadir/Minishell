@@ -6,20 +6,20 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 14:08:04 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 18:35:18 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:24:02 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../minishell.h"
 
-static int	check_is_digit(char *str)
+int	check_is_digit(char *str)
 {
 	int i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (ft_isdigit(str[i]) == 0)
 			return (0);
 		i++;
 	}
@@ -33,13 +33,13 @@ void	exit10(void)
 	exit(0);
 }
 
-void	exit11(int i)
+void	exit11(char *ptr)
 {
-	if (check_is_digit(ft_itoa(i)))
+	if (check_is_digit(ptr))
 	{
 		printf("exit\n");
-		status.exit_status = i;
-		exit(i);
+		status.exit_status = ft_atoi(ptr);
+		exit(ft_atoi(ptr));
 	}
 	printf("exit\n");
 	ft_putstr_fd("numeric argument required\n", 1);

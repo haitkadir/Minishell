@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:23 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:24:50 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	builtins(t_env	**envi, char **str, t_arg *arg)
 	else if (!ft_strcmp(str[0], "exit"))
 	{
 		if (str[1] != NULL)
-			exit11(ft_atoi(str[1]));
+			exit11(str[1]);
 		else
 			exit10();
 	}
