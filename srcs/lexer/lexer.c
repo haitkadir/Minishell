@@ -18,14 +18,14 @@ t_token *lexer(char *line, t_env *env)
 	t_token	*token;
 
 	token = NULL;
-	if (check_errors(line))
-		return (NULL);
 	if (tokenizer(&token, line, env))
 	{
 		token_clear(&token);
 		put_error("Uknown", "Parse error", 258);
 		return (NULL);
 	}
+	// if (check_errors(line))
+	// 	return (NULL);
 	// print_token(token);
 	return (token);
 }

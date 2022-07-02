@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp_tl(char *s1, char *s2)
 {
 	unsigned char	*us1;
 	unsigned char	*us2;
@@ -22,7 +22,7 @@ int	ft_strcmp(char *s1, char *s2)
 	us1 = (unsigned char *) s1;
 	us2 = (unsigned char *) s2;
 	i = 0;
-	while (us1[i] && us1[i] == us2[i])
+	while (us1[i] && ft_tolower(us1[i]) == ft_tolower(us2[i]))
 		i++;
-	return (us1[i] - us2[i]);
+	return (ft_tolower(us1[i]) - ft_tolower(us2[i]));
 }
