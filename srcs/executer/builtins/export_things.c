@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:05:59 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 22:00:59 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 22:17:47 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	export_things(t_env **env, char	*find, t_arg *arg)
 	i = 0;
 	j = 0;
 	lst = *env;
-	if (check_keys(lst, find, &j, i))
+	if (check_keys(env, find, &j, i))
 		return ;
 	if (key_exist(lst, find, &j))
 		return ;

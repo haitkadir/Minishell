@@ -195,7 +195,7 @@ void	converting_env(t_env *env, char	**envirement);
 void	check_command(t_env	**env, t_arg *arg, t_shell *shell);
 int		check_cmd1(t_env	*env, t_arg *arg, char *str);
 int		cmd_token(t_shell *shell, t_arg *arg, t_env **env);
-int		check_keys(t_env *lst, char *str, int *j, int i);
+int		check_keys(t_env **lst, char *str, int *j, int i);
 int		check_path(t_env *env, t_arg *arg);
 void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j);
 void	signals(void);

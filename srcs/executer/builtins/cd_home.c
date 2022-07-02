@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:49:39 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 21:02:49 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 22:51:00 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	cd_home(t_env *env, char *arg)
 		if (!ft_strcmp(lst->key, "PWD"))
 		{
 			if (lst->value)
-				oldpwd = lst->value;
+			{
+				oldpwd = ft_strdup(lst->value);
+				free(lst->value);
+			}
 			lst->value = home;
 			break ;
 		}

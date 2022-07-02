@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:07:37 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 21:18:24 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 22:47:55 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ void	update_dir(t_env *env, char	*dir, char	**oldpwd)
 	{
 		if (!ft_strcmp(lst->key, "PWD"))
 		{
-			if (lst->value)
+			if (lst->value != NULL)
+			{
 				*oldpwd = ft_strdup(lst->value);
-			free(lst->value);
-			lst->value = ft_strdup(getcwd(dir, sizeof(dir)));
+				free(lst->value);
+			}
+			lst->value = getcwd(dir, sizeof(dir));
 			i = 1;
 			break ;
 		}
@@ -60,7 +62,7 @@ void	update_dir(t_env *env, char	*dir, char	**oldpwd)
 	}
 	if (i == 0)
 	{
-		lst = ft_envnew(ft_strdup("PWD"), ft_strdup(getcwd(dir, sizeof(dir))));
+		lst = ft_envnew(ft_strdup("PWD"), getcwd(dir, sizeof(dir)));
 		ft_envadd_back(&env, lst);
 	}
 }

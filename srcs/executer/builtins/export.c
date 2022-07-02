@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:05:59 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 22:01:29 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 22:18:06 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	export_special_char(char c)
 	return (0);
 }
 
-int	no_keys_case(char	*str, t_env *lst, t_env *lst1)
+int	no_keys_case(char	*str, t_env **lst, t_env *lst1)
 {
 	t_env	*tmp;
 	int		i;
 
-	tmp = lst;
+	tmp = *lst;
 	while (tmp)
 	{
 		i = 0;
@@ -43,7 +43,7 @@ int	no_keys_case(char	*str, t_env *lst, t_env *lst1)
 		tmp = tmp->next;
 	}
 	lst1 = ft_envnew(ft_strdup(str), NULL);
-	ft_envadd_back(&lst, lst1);
+	ft_envadd_back(lst, lst1);
 	return (1);
 }
 
@@ -75,7 +75,7 @@ int	key_existed(char	*str, int	*j, int i)
 	return (0);
 }
 
-int	check_keys(t_env *lst, char *str, int *j, int i)
+int	check_keys(t_env **lst, char *str, int *j, int i)
 {
 	t_env	*lst1;
 
