@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 16:12:44 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 17:16:20 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	her_doc_exec(t_shell *shell, t_arg *arg)
 	status.signals = 1;
 	if (rs != 0)
 		return (1);
-	arg->in_fd = open("tmp", O_RDONLY, 0777);
+	arg->in_fd = open("/tmp/tmp_file", O_RDONLY, 0777);
 	return (0);
 }
 
@@ -67,5 +67,5 @@ void	check_command(t_env	**env, t_arg *arg, t_shell *shell)
 			arg->not_found = 0;
 		shell = shell->next;
 	}
-	unlink("tmp");
+	unlink("/tmp/tmp_file");
 }

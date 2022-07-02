@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   her_doc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:23 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 17:16:35 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	her_doc(t_shell *shell, t_arg *arg)
 	char	*str;
 
 	str = NULL;
-	fd = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd = open("/tmp/tmp_file", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	status.signals = fork();
 	if (status.signals == 0)
 	{

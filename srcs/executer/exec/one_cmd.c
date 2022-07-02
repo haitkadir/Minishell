@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:55:07 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 16:11:50 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 17:54:52 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	check_one_cmd(t_shell *lst)
 
 int	execute_builting(t_shell *lst, t_arg *arg, t_env **env)
 {
-	int	id;
-
 	while (lst)
 	{
 		if (lst->token == CMD && arg->not_found == 0)
@@ -40,6 +38,8 @@ int	execute_builting(t_shell *lst, t_arg *arg, t_env **env)
 			builtins(env, lst->switchs, arg);
 			dup2(arg->in, 0);
 			dup2(arg->out, 1);
+			if (lst->prev && lst->prev->token == RED_OUT)
+				close(lst->prev->file);
 		}
 		else if (lst->token == RED_IN)
 			arg->in_fd = lst->file;
@@ -73,7 +73,8 @@ int	one_cmd(t_env	**env, t_arg *arg, t_shell *shell)
 	}
 	if (i == 0)
 	{
-		if (check_one_cmd(shell))
+		lst = shell;
+		if (check_one_cmd(lst))
 			return (0);
 		lst = shell;
 		execute_builting(lst, arg, env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   duping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:23 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 17:51:25 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	pipe_case(t_shell *shell, t_arg *arg, int fd)
 void	ft_dup(t_shell *shell, t_arg *arg, int j)
 {
 	int	fd;
-	int	std_out;
 	int	i;
 
 	fd = 0;
@@ -73,8 +72,8 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j)
 		if (shell->prev && shell->prev->token == RED_OUT)
 		{
 			fd = shell->prev->file;
+			dup2(fd, 1);
 			dup2(arg->in_fd, 0);
-			dup2(fd, STDOUT_FILENO);
 		}
 		else
 			dup2(arg->in_fd, 0);

@@ -25,9 +25,12 @@ void	printing_echo(char	**str, int i)
 	else
 	{
 		if (str[i + 1] != NULL)
-			printf("%s ", str[i]);
+		{
+			ft_putstr_fd(str[i], 1);
+			write(1, " ", 1);
+		}
 		else
-			printf("%s", str[i]);
+			ft_putstr_fd(str[i], 1);
 	}
 }
 
