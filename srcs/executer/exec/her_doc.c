@@ -12,7 +12,7 @@
 
 #include "../../../minishell.h"
 
-void	her_doc_logic(char	*str, int i, t_shell *shell)
+void	her_doc_logic(char	*str, int fd, t_shell *shell)
 {
 	while (1)
 	{
@@ -20,18 +20,18 @@ void	her_doc_logic(char	*str, int i, t_shell *shell)
 		if (!ft_strcmp(str, shell->data))
 		{
 			free(str);
-			close(i);
+			close(fd);
 			exit(0);
 		}
 		else if (!str)
 		{
-			close(i);
+			close(fd);
 			exit(1);
 		}
 		else
 		{
-			ft_putstr_fd(str, i);
-			ft_putstr_fd("\n", i);
+			ft_putstr_fd(str, fd);
+			ft_putstr_fd("\n", fd);
 			free(str);
 			str = NULL;
 		}
@@ -40,16 +40,16 @@ void	her_doc_logic(char	*str, int i, t_shell *shell)
 
 int	her_doc(t_shell *shell, t_arg *arg)
 {
-	int		i;
+	int		fd;
 	char	*str;
 
 	str = NULL;
-	i = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd = open("tmp", O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	status.signals = fork();
 	if (status.signals == 0)
 	{
-		her_doc_logic(str, i, shell);
-		close(i);
+		her_doc_logic(str, fd, shell);
+		close(fd);
 		write(1, "\n", 1);
 		exit(0);
 	}

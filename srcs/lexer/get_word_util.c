@@ -13,7 +13,7 @@ char	*expender(char *line, int *i, t_env *env)
 	buffer = NULL;
 	while (line[*i])
 	{
-		if (!(ft_isalnum(line[*i]) || line[*i] == '_'))
+		if (!ft_isalnum(line[*i]) && line[*i] != '_')
 			break ;
 		len++;
 		*i += 1;
