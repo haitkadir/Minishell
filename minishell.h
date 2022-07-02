@@ -66,26 +66,6 @@ typedef struct s_env
     struct s_env    *next;
 } t_env;
 
-
-
-typedef struct s_token
-{
-    struct s_token  *prev;
-	int             token;
-	char            *content;
-    struct s_token  *next;
-}	t_token;
-
-typedef struct s_shell
-{
-    struct s_shell  *prev;
-	int             token;
-	char            *data;
-	char			**switchs;
-	int				file;
-    struct s_shell  *next;
-}	t_shell;
-
 void	ft_envadd_back(t_env **lst, t_env *new);
 t_env	*ft_envnew(char *key, char *value);
 char	*get_keys(char *str, int c);

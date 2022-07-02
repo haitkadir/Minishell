@@ -24,7 +24,7 @@ t_token *lexer(char *line, t_env *env)
 		put_error("Uknown", "Parse error", 258);
 		return (NULL);
 	}
-	print_token(token);
+	// print_token(token);
 	// if (check_errors(line))
 	// 	return (NULL);
 	return (token);
