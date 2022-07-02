@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:07:37 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:07:38 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 21:18:24 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,20 @@ void	check_oldpwd(t_env *env, char	*oldpwd)
 	{
 		if (!ft_strcmp(lst->key, "OLDPWD"))
 		{
+			if (lst->value != NULL)
+				free(lst->value);
 			if (oldpwd != NULL)
 				lst->value = oldpwd;
 			else
-				lst->value = "";
+				lst->value = ft_strdup("");
 			return ;
 		}
 		lst = lst->next;
 	}
-	lst = ft_envnew("OLDPWD", "");
+	if (oldpwd != NULL)
+		lst = ft_envnew(ft_strdup("OLDPWD"), oldpwd);
+	else
+		lst = ft_envnew(ft_strdup("OLDPWD"), ft_strdup(""));
 	ft_envadd_back(&env, lst);
 }
 
@@ -45,8 +50,9 @@ void	update_dir(t_env *env, char	*dir, char	**oldpwd)
 		if (!ft_strcmp(lst->key, "PWD"))
 		{
 			if (lst->value)
-				*oldpwd = lst->value;
-			lst->value = getcwd(dir, 9999);
+				*oldpwd = ft_strdup(lst->value);
+			free(lst->value);
+			lst->value = ft_strdup(getcwd(dir, sizeof(dir)));
 			i = 1;
 			break ;
 		}
@@ -54,7 +60,7 @@ void	update_dir(t_env *env, char	*dir, char	**oldpwd)
 	}
 	if (i == 0)
 	{
-		lst = ft_envnew("PWD", getcwd(dir, 9999));
+		lst = ft_envnew(ft_strdup("PWD"), ft_strdup(getcwd(dir, sizeof(dir))));
 		ft_envadd_back(&env, lst);
 	}
 }

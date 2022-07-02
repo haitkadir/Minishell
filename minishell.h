@@ -173,7 +173,7 @@ void	cd_env(t_env *env, char	*str, char *arg);
 
 /* --------------------------------- export --------------------------------- */
 
-void	export_things(t_env *env, char	*find, t_arg *arg);
+void	export_things(t_env **env, char	*find, t_arg *arg);
 void	export_env(t_env **env, char *str, char **find, t_arg *arg);
 int		check_equal(t_env *lst, char *str, t_arg *arg);
 void	sorted_env(t_env *lst, t_arg *arg);
@@ -187,6 +187,9 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 int		one_cmd(t_env	**env, t_arg *arg, t_shell *shell);
 int		execute_builting(t_shell *lst, t_arg *arg, t_env **env);
 
+void	exec_in_child(t_env	*env, t_arg *arg, t_shell *shell, int j);
+char	**env_to_table(t_env *env);
+void	converting_env(t_env *env, char	**envirement);
 void	check_command(t_env	**env, t_arg *arg, t_shell *shell);
 int		check_cmd1(t_env	*env, t_arg *arg, char *str);
 int		cmd_token(t_shell *shell, t_arg *arg, t_env **env);

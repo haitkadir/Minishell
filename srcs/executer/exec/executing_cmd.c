@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 18:57:00 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:48:50 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,7 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 	i = fork();
 	status.signals = 2;
 	if (i == 0)
-	{
-		status.signals = 1;
-		arg->paths = env_to_table(env);
-		if (j == 1)
-			ft_dup(shell, arg, 1);
-		else
-			ft_dup(shell, arg, 0);
-		execve(shell->data, shell->switchs, arg->paths);
-		if (errno == EACCES || errno == EFAULT)
-			exit(127);
-	}
+		exec_in_child(env, arg, shell, j);
 	if (!(shell->next && shell->next->token == PIPE))
 	{
 		waitpid(i, &status.exit_status, 0);

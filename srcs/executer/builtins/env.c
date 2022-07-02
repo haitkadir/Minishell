@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 20:23:50 by sahafid           #+#    #+#             */
-/*   Updated: 2022/06/02 20:23:51 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 21:23:48 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	env(t_env *env)
 	}
 	if (i == 0)
 	{
-		printf("env not set\n");
+		ft_putstr_fd("env not set\n", 2);
 		status.exit_status = 1;
 		return ;
 	}

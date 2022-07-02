@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:05:20 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:05:22 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:55:57 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	unset_utils(t_env **env, t_env *lst, char *find, t_env *tmp)
 			if (lst->value != NULL)
 				free(lst->value);
 			free(lst);
-			break ;
+			return ;
 		}
 		tmp = lst;
 		lst = lst->next;

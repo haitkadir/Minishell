@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:05:59 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:06:00 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 22:01:29 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	export_env(t_env **env, char *str, char **find, t_arg *arg)
 	{
 		while (find[i])
 		{
-			export_things(lst, find[i], arg);
+			export_things(env, find[i], arg);
 			i++;
 		}
 	}

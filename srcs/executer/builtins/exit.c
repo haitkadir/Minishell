@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 14:08:04 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 20:24:02 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:33:25 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_is_digit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -23,7 +23,7 @@ int	check_is_digit(char *str)
 			return (0);
 		i++;
 	}
-	return(1);
+	return (1);
 }
 
 void	exit10(void)

@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:08:22 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 20:24:50 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 20:48:54 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,17 @@ void	builtins(t_env	**envi, char **str, t_arg *arg)
 		cd_env(*envi, str[0], str[1]);
 	else if (!ft_strcmp(str[0], "echo"))
 		echo_env1(*envi, str);
+}
+
+void	exec_in_child(t_env	*env, t_arg *arg, t_shell *shell, int j)
+{
+	status.signals = 1;
+	arg->paths = env_to_table(env);
+	if (j == 1)
+		ft_dup(shell, arg, 1);
+	else
+		ft_dup(shell, arg, 0);
+	execve(shell->data, shell->switchs, arg->paths);
+	if (errno == EACCES || errno == EFAULT)
+		exit(127);
 }

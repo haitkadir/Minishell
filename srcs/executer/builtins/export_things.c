@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_things.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:05:59 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/29 16:06:00 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 22:00:59 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	key_exist(t_env *lst, char	*find, int *j)
 	return (0);
 }
 
-void	key_not_exist(t_env *lst, char	*find, int j, int i)
+void	key_not_exist(t_env **lst, char	*find, int j, int i)
 {
 	char	*value;
 	char	*key;
@@ -83,12 +83,14 @@ void	key_not_exist(t_env *lst, char	*find, int j, int i)
 		}
 		i++;
 	}
+	if (!*lst)
+		*lst = NULL;
 	lst1 = ft_envnew(key, value);
-	ft_envadd_back(&lst, lst1);
+	ft_envadd_back(lst, lst1);
 	status.exit_status = 0;
 }
 
-void	export_things(t_env *env, char	*find, t_arg *arg)
+void	export_things(t_env **env, char	*find, t_arg *arg)
 {
 	int		i;
 	int		j;
@@ -96,11 +98,11 @@ void	export_things(t_env *env, char	*find, t_arg *arg)
 
 	i = 0;
 	j = 0;
-	lst = env;
+	lst = *env;
 	if (check_keys(lst, find, &j, i))
 		return ;
 	if (key_exist(lst, find, &j))
 		return ;
 	i = 0;
-	key_not_exist(lst, find, j, i);
+	key_not_exist(env, find, j, i);
 }

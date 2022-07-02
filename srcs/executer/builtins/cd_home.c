@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_home.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sahafid <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:49:39 by sahafid           #+#    #+#             */
-/*   Updated: 2022/05/30 16:49:40 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 21:02:49 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_home(char	**home, t_env *lst)
 				status.exit_status = 1;
 				return (1);
 			}
-			*home = lst->value;
+			*home = ft_strdup(lst->value);
 			break ;
 		}
 		lst = lst->next;
