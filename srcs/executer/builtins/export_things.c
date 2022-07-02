@@ -6,7 +6,7 @@
 /*   By: sahafid <sahafid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:05:59 by sahafid           #+#    #+#             */
-/*   Updated: 2022/07/02 22:17:47 by sahafid          ###   ########.fr       */
+/*   Updated: 2022/07/02 23:45:58 by sahafid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,12 @@ void	key_not_exist(t_env **lst, char	*find, int j, int i)
 	char	*key;
 	t_env	*lst1;
 
-	lst1 = NULL;
 	value = ft_strdup(ft_strchr(find, '=') + 1);
 	key = ft_strdup(get_keys(find, '='));
 	if (j == 1)
 		key = get_keys(key, '+');
-	i = 0;
-	while (key[i])
+	i = -1;
+	while (key[++i])
 	{
 		if (key[i] == '+' || key[i] == '-')
 		{
@@ -81,7 +80,6 @@ void	key_not_exist(t_env **lst, char	*find, int j, int i)
 			free(value);
 			return ;
 		}
-		i++;
 	}
 	if (!*lst)
 		*lst = NULL;
