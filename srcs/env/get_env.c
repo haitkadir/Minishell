@@ -1,19 +1,19 @@
 #include "../../minishell.h"
 
-void	free_env(t_env *head, char error)
+/*----------------------------------------------------------------------------*/
+
+void	free_env(t_env **head, char error)
 {
 	t_env	*tmp;
 
-	if (head)
+	if (*head)
 	{
-		while(head)
+		while(*head)
 		{
-			tmp = head;
-			head = head->next;
-			if (tmp->key)
-				free(tmp->key);
-			if (tmp->value)
-				free(tmp->value);
+			tmp = *head;
+			*head = (*head)->next;
+			ft_free(tmp->key);
+			ft_free(tmp->value);
 			if (tmp)
 				free(tmp);
 		}
@@ -22,6 +22,7 @@ void	free_env(t_env *head, char error)
 		ft_putstr_fd("\033[1;31mAllocation failed\033[0m\n", 2);
 }
 
+/*----------------------------------------------------------------------------*/
 
 void    ft_envadd_back(t_env **lst, t_env *new)
 {
@@ -29,7 +30,7 @@ void    ft_envadd_back(t_env **lst, t_env *new)
 
 	if (!new)
 	{
-		free_env(*lst, 1);
+		free_env(lst, 1);
 		exit(-1);
 	}
     tmp = *lst;
@@ -43,12 +44,12 @@ void    ft_envadd_back(t_env **lst, t_env *new)
     }
 }
 
+/*----------------------------------------------------------------------------*/
+
 t_env    *ft_envnew(char *key, char *value)
 {
     t_env    *tmp;
 
-	// if (!key || !value)
-	// 	return (NULL);
     tmp = NULL;
     tmp = (t_env *)malloc(sizeof(t_env));
     if (!tmp)
@@ -59,7 +60,7 @@ t_env    *ft_envnew(char *key, char *value)
     return (tmp);
 }
 
-
+/*----------------------------------------------------------------------------*/
 
 void    create_env(t_env **list, char **env)
 {
@@ -81,6 +82,7 @@ void    create_env(t_env **list, char **env)
     }
 }
 
+/*----------------------------------------------------------------------------*/
 
 char	*ft_getenv(t_env *env, char *buffer)
 {
@@ -97,6 +99,8 @@ char	*ft_getenv(t_env *env, char *buffer)
 	}
 	return (NULL);
 }
+
+/*----------------------------------------------------------------------------*/
 
 char	*get_keys(char *str, int c)
 {

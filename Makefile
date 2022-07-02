@@ -2,9 +2,9 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -fsanitize=address -static-libsan \
- -I ./ -I libft/ \
+CFLAGS = -g -I ./ -I libft/
 
+MAIN = minishell
 
 RFLAGS =  -L$(shell brew --prefix readline)/lib -lreadline \
  		-L$(shell brew --prefix readline)/lib -lhistory \
@@ -14,27 +14,36 @@ LIBFT = -L libft -lft
 
 HEADER = minishell.h
 
+SIGNALS = signals
+
+#-------------------------------------------------------------------------------
 # execution part
 
 BUILTINS =  cd cd_home echo env exit export export_things export_utils pwd unset
 
 EXEC = check_cmd duping executing executing_cmd her_doc one_cmd
 
-UTILS = utils
+ENV = get_env
 
+#-------------------------------------------------------------------------------
 # parsing part
 
-LEXER = lexer tokenizer get_operators get_operators_util get_word get_word_util check_errors check_qoutes
+UTILS = utils
+
+LEXER = lexer tokenizer get_operators get_operators_util get_word \
+	get_word_util check_errors check_qoutes
 
 PARSER = parser process_data get_cmd get_cmd_util get_operators
 
-SIGNALS = signals
+TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast \
+	tokendelone token_clear shell_new shell_last shell_size shelladd_back \
+	shelladd_front shelldelone shell_clear
 
-TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast tokendelone shell_new shell_last shell_size shelladd_back shelladd_front token_clear
+#-------------------------------------------------------------------------------
 
-ENV = get_env
 
-MAIN = minishell
+
+
 
 SRC = $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
 	  $(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \

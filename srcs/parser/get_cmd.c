@@ -28,7 +28,7 @@ char	*check_cmd(t_env *env, char *cmd)
 		ft_free(full_cmd);
 		i++;
 	}
-	return (put_error(cmd, "Command not found", 127), NULL);
+	return (NULL);
 }
 
 
@@ -96,7 +96,8 @@ t_shell	*get_cmd(t_env *env, t_token *token)
 	else
 		full_cmd = check_cmd(env, token->content);
 	if (!full_cmd)
-		return (shell_new(CMD_NOT_FOUND, NULL, NULL, -1));
+		return (put_error(token->content, "Command not found", 127), \
+			shell_new(CMD_NOT_FOUND, NULL, NULL, -1));
 	switchs = get_switchs(token);
 	return (shell_new(CMD, full_cmd, switchs, -1));
 }

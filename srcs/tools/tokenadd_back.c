@@ -22,7 +22,8 @@ char	tokenadd_back(t_token **lst, t_token *new)
 	else
 	{
 		temp = tokenlast(*lst);
-		if (is_last_operator(temp) && temp->token != PIPE && !temp->content)
+		if (new->token == WORD && is_last_operator(temp) \
+			&& temp->token != PIPE && !temp->content)
 		{
 			temp->content = ft_strdup(new->content);
 			tokendelone(new);

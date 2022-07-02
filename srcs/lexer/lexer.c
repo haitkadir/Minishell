@@ -28,6 +28,9 @@ t_token *lexer(char *line, t_env *env)
 	}
 	// print_token(token);
 	if (check_errors(token))
+	{
+		token_clear(&token);
 		return (NULL);
+	}
 	return (token);
 }
