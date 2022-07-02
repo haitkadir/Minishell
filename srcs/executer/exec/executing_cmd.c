@@ -72,11 +72,14 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 		if (errno == EACCES || errno == EFAULT)
 			exit(127);
 	}
-	waitpid(i, &status.exit_status, 0);
-	if (WIFEXITED(status.exit_status))
-		status.exit_status = status.exit_status % 255;
-	else if (WIFSIGNALED(status.exit_status))
-		status.exit_status += 128;
+	if (!(shell->next && shell->next->token == PIPE))
+	{
+		waitpid(i, &status.exit_status, 0);
+		if (WIFEXITED(status.exit_status))
+			status.exit_status = status.exit_status % 255;
+		else if (WIFSIGNALED(status.exit_status))
+			status.exit_status += 128;
+	}
 	status.signals = 1;
 }
 
@@ -93,9 +96,13 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
 			ft_dup(shell, arg, 0);
 		builtins(env, shell->switchs, arg);
 		close(arg->fd[1]);
-		exit(0);
+		exit(status.exit_status);
 	}
-	waitpid(id, NULL, 0);
+	if (!(shell->next && shell->next->token == PIPE))
+	{
+		if (WIFEXITED(status.exit_status))
+			status.exit_status = status.exit_status % 255;
+	}
 	close(arg->fd[1]);
 }
 
