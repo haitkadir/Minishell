@@ -34,7 +34,7 @@ int	her_doc_exec(t_shell *shell, t_arg *arg)
 
 	id = her_doc(shell, arg);
 	waitpid(id, &rs, 0);
-	status.signals = 1;
+	g_status.signals = 1;
 	if (rs != 0)
 		return (1);
 	arg->in_fd = open("/tmp/tmp_file", O_RDONLY, 0777);

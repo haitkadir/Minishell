@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_word_util.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 23:22:43 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 23:22:45 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 char	*expender(char *line, int *i, t_env *env)
 {
 	char	*buffer;
 	char	*res;
-	int 	len;
-	int 	start;
+	int		len;
+	int		start;
 
 	len = 0;
 	*i += 1;
@@ -28,8 +40,8 @@ char	*expender(char *line, int *i, t_env *env)
 
 static	char	*get_chunk(char *line, int *i)
 {
-	int len;
-	int start;
+	int	len;
+	int	start;
 
 	len = 0;
 	start = *i;
@@ -57,7 +69,7 @@ char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token)
 		if (line[*i] == '\"')
 		{
 			*i += 1;
-			break;
+			break ;
 		}
 		if (!check_last(token, HERE_DOC) && line[*i] == '$')
 			substring = expender(line, i, env);
@@ -78,8 +90,8 @@ char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token)
 
 char	*word_within_sqoutes(char *line, int *i)
 {
-	int len;
-	int start;
+	int	len;
+	int	start;
 
 	len = 0;
 	*i += 1;
@@ -101,8 +113,8 @@ char	*word_within_sqoutes(char *line, int *i)
 
 char	*word(char *line, int *i)
 {
-	int len;
-	int start;
+	int	len;
+	int	start;
 
 	len = 0;
 	start = *i;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_word.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 23:24:57 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 23:24:59 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*----------------------------------------------------------------------------*/
@@ -21,16 +33,14 @@ char	get_word_util(char **s1, char **s2)
 
 /*----------------------------------------------------------------------------*/
 
-char get_word(t_token **token, char *line, int *i, t_env *env)
+char	get_word(t_token **token, char *line, int *i, t_env *env)
 {
 	char	*content;
 	char	*result;
-	int		err;
- 
+
 	content = NULL;
 	result = NULL;
-	err = 0;
-	while(ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
+	while (ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
 	{
 		if (line[*i] == '\"')
 		{
@@ -39,14 +49,15 @@ char get_word(t_token **token, char *line, int *i, t_env *env)
 		}
 		else if (line[*i] == '\'')
 			content = word_within_sqoutes(line, i);
-		else if (!check_last(*token, HERE_DOC) && line[*i] == '$'  \
+		else if (!check_last(*token, HERE_DOC) && line[*i] == '$' \
 			&& (ft_isalnum(line[*i +1]) || line[*i +1] == '_'))
 			content = expender(line, i, env);
 		else if (ft_isascii(line[*i]) && !ft_strchr("| <>", line[*i]))
 			content = word(line, i);
-		err += get_word_util(&result, &content);
+		if (get_word_util(&result, &content))
+			return (1);
 	}
 	if (result)
 		tokenadd_back(token, tokennew(result, WORD));
-	return (err);
+	return (0);
 }

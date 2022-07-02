@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_data.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 23:50:47 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 23:50:49 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*----------------------------------------------------------------------------*/
@@ -32,11 +44,12 @@ void	store_data(t_shell **shell, int *args, t_shell *cmd, t_shell *here_doc)
 
 /*----------------------------------------------------------------------------*/
 
-void	init_vars(int *args, char *is_cmd, t_shell **new_cmd, t_shell **here_docs)
+void	init_vars(int *args, char *is_cmd, t_shell **new_cmd, \
+	t_shell **here_docs)
 {
 	args[0] = -2;
 	args[1] = -2;
-	args[2]	= 0;
+	args[2] = 0;
 	*is_cmd = 0;
 	*new_cmd = NULL;
 	*here_docs = NULL;
@@ -48,7 +61,7 @@ void	process_data_util(t_shell **shell, t_token **token, t_env *env)
 {
 	char	is_cmd;
 	int		args[3];
-	t_shell *new_cmd;
+	t_shell	*new_cmd;
 	t_shell	*here_docs;
 
 	init_vars(args, &is_cmd, &new_cmd, &here_docs);
@@ -98,6 +111,6 @@ char	process_data(t_shell **shell, t_token *token, t_env *env)
 		if (token)
 			token = token->next;
 	}
-	return 0;
+	return (0);
 }
 /*----------------------------------------------------------------------------*/

@@ -59,19 +59,19 @@ void	execute_func(t_env	*env, t_arg *arg, t_shell *shell, int j)
 	int	i;
 
 	i = fork();
-	status.signals = 2;
+	g_status.signals = 2;
 	if (i == 0)
 		exec_in_child(env, arg, shell, j);
 	if (!(shell->next && shell->next->token == PIPE))
 	{
-		waitpid(i, &status.exit_status, 0);
-		if (WIFEXITED(status.exit_status))
-			status.exit_status = status.exit_status % 255;
-		else if (WIFSIGNALED(status.exit_status))
-			status.exit_status += 128;
+		waitpid(i, &g_status.exit_status, 0);
+		if (WIFEXITED(g_status.exit_status))
+			g_status.exit_status = g_status.exit_status % 255;
+		else if (WIFSIGNALED(g_status.exit_status))
+			g_status.exit_status += 128;
 		waitpid(-1, NULL, 0);
 	}
-	status.signals = 1;
+	g_status.signals = 1;
 }
 
 void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
@@ -87,13 +87,13 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
 			ft_dup(shell, arg, 0);
 		builtins(env, shell->switchs, arg);
 		close(arg->fd[1]);
-		exit(status.exit_status);
+		exit(g_status.exit_status);
 	}
 	if (!(shell->next && shell->next->token == PIPE))
 	{
-		waitpid(id, &status.exit_status, 0);
-		if (WIFEXITED(status.exit_status))
-			status.exit_status = status.exit_status % 255;
+		waitpid(id, &g_status.exit_status, 0);
+		if (WIFEXITED(g_status.exit_status))
+			g_status.exit_status = g_status.exit_status % 255;
 		waitpid(-1, NULL, 0);
 	}
 	close(arg->fd[1]);

@@ -51,7 +51,7 @@ int	key_exist(t_env *lst, char	*find, int *j)
 				lst->value = ft_strdup(ft_strchr(find, '=') + 1);
 			if (!lst->value)
 				lst->value = NULL;
-			status.exit_status = 0;
+			g_status.exit_status = 0;
 			return (1);
 		}
 		lst = lst->next;
@@ -75,7 +75,7 @@ void	key_not_exist(t_env **lst, char	*find, int j, int i)
 		if (key[i] == '+' || key[i] == '-')
 		{
 			ft_putstr_fd("error\n", 2);
-			status.exit_status = 1;
+			g_status.exit_status = 1;
 			free(key);
 			free(value);
 			return ;
@@ -85,7 +85,7 @@ void	key_not_exist(t_env **lst, char	*find, int j, int i)
 		*lst = NULL;
 	lst1 = ft_envnew(key, value);
 	ft_envadd_back(lst, lst1);
-	status.exit_status = 0;
+	g_status.exit_status = 0;
 }
 
 void	export_things(t_env **env, char	*find, t_arg *arg)

@@ -33,7 +33,7 @@ int	no_keys_case(char	*str, t_env **lst, t_env *lst1)
 			if (export_special_char(str[i]))
 			{
 				ft_putstr_fd("not a valid identifier\n", 2);
-				status.exit_status = 1;
+				g_status.exit_status = 1;
 				return (1);
 			}
 			i++;
@@ -57,7 +57,7 @@ int	key_existed(char	*str, int	*j, int i)
 	else if (str[i - 1] == '-')
 	{
 		ft_putstr_fd("not a valid identifier\n", 2);
-		status.exit_status = 1;
+		g_status.exit_status = 1;
 		return (1);
 	}
 	if (str[i - 1] && str[i - 1] == '+')
@@ -67,7 +67,7 @@ int	key_existed(char	*str, int	*j, int i)
 		if (str[t] && export_special_char(str[t]))
 		{
 			ft_putstr_fd("not a valid identifier\n", 2);
-			status.exit_status = 1;
+			g_status.exit_status = 1;
 			return (1);
 		}
 		t++;
@@ -83,7 +83,7 @@ int	check_keys(t_env **lst, char *str, int *j, int i)
 	if (!(ft_isalpha(str[0]) || str[0] == '_'))
 	{
 		ft_putstr_fd("not a valid identifier\n", 2);
-		status.exit_status = 1;
+		g_status.exit_status = 1;
 		return (1);
 	}
 	while (str[i])

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 23:44:31 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 23:44:39 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*----------------------------------------------------------------------------*/
@@ -31,14 +43,11 @@ char	*check_cmd(t_env *env, char *cmd)
 	return (NULL);
 }
 
-
-
-
 /*----------------------------------------------------------------------------*/
 
 static int	count_words(t_token *token)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!token)
@@ -58,8 +67,8 @@ char	**get_switchs(t_token *token)
 {
 	char	**switchs;
 	int		i;
-	i = 0;
 
+	i = 0;
 	if (!token)
 		return (NULL);
 	switchs = (char **)ft_calloc(count_words(token) + 1, sizeof(char *));
@@ -81,7 +90,7 @@ t_shell	*get_cmd(t_env *env, t_token *token)
 {
 	char	*full_cmd;
 	char	**switchs;
-	
+
 	full_cmd = NULL;
 	switchs = NULL;
 	if (!token)

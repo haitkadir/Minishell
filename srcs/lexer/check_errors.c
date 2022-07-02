@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_errors.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 23:16:29 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 23:16:32 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*----------------------------------------------------------------------------*/
@@ -32,84 +44,7 @@ char	check_errors(t_token *token)
 	if (check_operators_syntax(token))
 		return (put_error("syntax error", "near unexpected token", 258), 1);
 	if (token->token == PIPE || tokenlast(token)->token == PIPE)
-		return (put_error("syntax error", "expected token before or after `|'", 258), 1);
+		return (put_error("syntax error", \
+			"expected token before or after `|'", 258), 1);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /*----------------------------------------------------------------------------*/
-
-// char check_in_out_operators(char *line, char oper)
-// {
-// 	int i;
-// 	char flag;
-
-// 	i = 0;
-// 	flag = 0;
-// 	while(line[i])
-// 	{
-// 		if (line[i] == oper && line[i + 1] == oper)
-// 			i += 2;
-// 		if (!flag && line[i] == oper)
-// 			flag = !flag;
-// 		else if (flag && line[i] == oper)
-// 			return (1);
-// 		if (flag && !ft_strchr("#&();|<> \\`~/", line[i]))
-// 			flag = !flag;
-// 		i++;
-// 	}
-// 	if (flag)
-// 		return (1);
-// 	return (0);
-// }
-
-// /*----------------------------------------------------------------------------*/
-
-// char	check_errors(char *line)
-// {
-// 	if (check_qoutes(line))
-// 		return (1);
-// 	if (check_in_out_operators(line, '<'))
-// 		return (1);
-// 	if (check_in_out_operators(line, '>'))
-// 		return (1);
-// 	return (0);
-// }

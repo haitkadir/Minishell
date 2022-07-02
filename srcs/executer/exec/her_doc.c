@@ -45,8 +45,8 @@ int	her_doc(t_shell *shell, t_arg *arg)
 
 	str = NULL;
 	fd = open("/tmp/tmp_file", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	status.signals = fork();
-	if (status.signals == 0)
+	g_status.signals = fork();
+	if (g_status.signals == 0)
 	{
 		her_doc_logic(str, fd, shell);
 		close(fd);
@@ -54,5 +54,5 @@ int	her_doc(t_shell *shell, t_arg *arg)
 		exit(0);
 	}
 	else
-		return (status.signals);
+		return (g_status.signals);
 }

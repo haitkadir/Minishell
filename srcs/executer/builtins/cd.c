@@ -78,7 +78,7 @@ int	check_cases(t_env *env, char *arg, char *dir, char *oldpwd)
 	if (chdir(arg))
 	{
 		printf("not sush directory\n");
-		status.exit_status = 1;
+		g_status.exit_status = 1;
 		return (1);
 	}
 	update_dir(lst, dir, &oldpwd);

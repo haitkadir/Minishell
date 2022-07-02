@@ -12,15 +12,14 @@
 
 #include "../../minishell.h"
 
-
-int main(int ac, char **av, char **main_env)
+int	main(int ac, char **av, char **main_env)
 {
-	char				*line;
-	t_env				*env;
+	char	*line;
+	t_env	*env;
 
 	line = NULL;
-	status.signals = 1;
-	status.exit_status = 0;
+	g_status.signals = 1;
+	g_status.exit_status = 0;
 	create_env(&env, main_env);
 	hide_ctrl();
 	signal(SIGQUIT, handler);
