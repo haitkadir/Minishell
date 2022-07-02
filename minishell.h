@@ -98,8 +98,8 @@ t_shell	*shell_last(t_shell *shell);
 
 
 char	check_qoutes(char *line);
-char	check_in_out_operators(char *line, char oper);
-char	check_errors(char *token);
+char	is_redirection(t_token *token);
+char	check_errors(t_token *token);
 char	*expender(char *line, int *i, t_env *env);
 char	*word_within_dqoutes(char *line, int *i, t_env *env, t_token *token);
 char	*word_within_sqoutes(char *line, int *i);
