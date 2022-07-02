@@ -49,6 +49,26 @@ typedef struct s_env
     struct s_env    *next;
 } t_env;
 
+
+
+typedef struct s_token
+{
+    struct s_token  *prev;
+	int             token;
+	char            *content;
+    struct s_token  *next;
+}	t_token;
+
+typedef struct s_shell
+{
+    struct s_shell  *prev;
+	int             token;
+	char            *data;
+	char			**switchs;
+	int				file;
+    struct s_shell  *next;
+}	t_shell;
+
 void	ft_envadd_back(t_env **lst, t_env *new);
 t_env	*ft_envnew(char *key, char *value);
 char	*get_keys(char *str, int c);
@@ -79,13 +99,6 @@ t_shell	*shell_last(t_shell *shell);
 
 /*-------------------------------- Lexer ------------------------------------*/
 
-typedef struct s_token
-{
-    struct s_token  *prev;
-	int             token;
-	char            *content;
-    struct s_token  *next;
-}	t_token;
 
 char	check_qoutes(char *line);
 char	check_in_out_operators(char *line, char oper);
@@ -111,15 +124,6 @@ t_token	*lexer(char *line, t_env *env);
 
 /*-------------------------------- Parser ------------------------------------*/
 
-typedef struct s_shell
-{
-    struct s_shell  *prev;
-	int             token;
-	char            *data;
-	char			**switchs;
-	int				file;
-    struct s_shell  *next;
-}	t_shell;
 
 void	free_path(char **path);
 char	**get_path(t_env *env);
@@ -183,6 +187,7 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 /* ------------------------- executing function ----------------------------- */
 
 int		one_cmd(t_env	**env, t_arg *arg, t_shell *shell);
+int		execute_builting(t_shell *lst, t_arg *arg, t_env **env);
 
 void	check_command(t_env	**env, t_arg *arg, t_shell *shell);
 int		check_cmd1(t_env	*env, t_arg *arg, char *str);
@@ -199,5 +204,6 @@ void	hide_ctrl(void);
 
 void	her_doc_logic(char	*str, int i, t_shell *shell);
 int		her_doc(t_shell *shell, t_arg *arg);
+int		her_doc_exec(t_shell *shell, t_arg *arg);
 
 #endif
