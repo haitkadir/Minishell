@@ -30,7 +30,24 @@ enum
 	WORD,
 	SPACE_,
 };
-
+// Tokenizer or lexer part
+typedef struct s_token
+{
+    struct s_token  *prev;
+	int             token;
+	char            *content;
+    struct s_token  *next;
+}	t_token;
+// The final data that will be returnd to execution part
+typedef struct s_shell
+{
+    struct s_shell  *prev;
+	int             token;
+	char            *data;
+	char			**switchs;
+	int				file;
+    struct s_shell  *next;
+}	t_shell;
 
 // for exit status and signals
 typedef struct s_global
@@ -79,13 +96,6 @@ t_shell	*shell_last(t_shell *shell);
 
 /*-------------------------------- Lexer ------------------------------------*/
 
-typedef struct s_token
-{
-    struct s_token  *prev;
-	int             token;
-	char            *content;
-    struct s_token  *next;
-}	t_token;
 
 char	check_qoutes(char *line);
 char	check_in_out_operators(char *line, char oper);
@@ -111,18 +121,10 @@ t_token	*lexer(char *line, t_env *env);
 
 /*-------------------------------- Parser ------------------------------------*/
 
-typedef struct s_shell
-{
-    struct s_shell  *prev;
-	int             token;
-	char            *data;
-	char			**switchs;
-	int				file;
-    struct s_shell  *next;
-}	t_shell;
 
 void	free_path(char **path);
 char	**get_path(t_env *env);
+char	check_cmd_permissions(char *cmd);
 char	*check_cmd(t_env *env, char *cmd);
 char	**get_switchs(t_token *token);
 t_shell	*get_cmd(t_env *env, t_token *token);
