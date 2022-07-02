@@ -19,10 +19,12 @@ int	ft_strcmp(char *s1, char *s2)
 
 	if (!s1 && !s2)
 		return (0);
+	if (!s1 || !s2)
+		return (1);
 	us1 = (unsigned char *) s1;
 	us2 = (unsigned char *) s2;
 	i = 0;
-	while (us1[i] && us1[i] == us2[i])
+	while (us1[i] && us2[i] && us1[i] == us2[i])
 		i++;
 	return (us1[i] - us2[i]);
 }
