@@ -71,7 +71,7 @@ t_env	*ft_envnew(char *key, char *value);
 char	*get_keys(char *str, int c);
 void	create_env(t_env **list, char **env);
 char	*ft_getenv(t_env *env, char *buffer);
-void	free_env(t_env *head, char error);
+void	free_env(t_env **head, char error);
 
 /*-------------------------------- Utils -------------------------------------*/
 
@@ -93,6 +93,8 @@ char	shelladd_back(t_shell **shell, t_shell *new);
 int		shell_size(t_shell *shell);
 t_shell	*shell_new(int token, char *data, char **switchs, int file);
 t_shell	*shell_last(t_shell *shell);
+void	shelldelone(t_shell *shell);
+void	shell_clear(t_shell **shell);
 
 /*-------------------------------- Lexer ------------------------------------*/
 

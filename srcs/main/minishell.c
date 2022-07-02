@@ -34,7 +34,9 @@ int main(int ac, char **av, char **main_env)
 			continue ;
 		add_history (line);
 		parser(line, &env);
+		ft_free(line);
 	}
+	free_env(&env, 0);
 	show_ctrl();
 	exit10();
 	return (0);

@@ -27,8 +27,12 @@ char	check_operators_syntax(t_token *token)
 
 char	check_errors(t_token *token)
 {
+	if (!token)
+		return (0);
 	if (check_operators_syntax(token))
-		return (put_error("syntax error", "near unexpected token `newline'", 258), 1);
+		return (put_error("syntax error", "near unexpected token", 258), 1);
+	if (token->token == PIPE || tokenlast(token)->token == PIPE)
+		return (put_error("syntax error", "expected token before or after `|'", 258), 1);
 	return (0);
 }
 

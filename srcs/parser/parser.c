@@ -45,4 +45,5 @@ void	parser(char *line, t_env **env)
 	token_clear(&token);
 	// print_node(shell);
 	check_command(env, &args, shell);
+	shell_clear(&shell);
 }
