@@ -29,7 +29,7 @@ int	check_is_digit(char *str)
 void	exit10(void)
 {
 	printf("exit\n");
-	status.exit_status = 0;
+	g_status.exit_status = 0;
 	exit(0);
 }
 
@@ -38,7 +38,7 @@ void	exit11(char *ptr)
 	if (check_is_digit(ptr))
 	{
 		printf("exit\n");
-		status.exit_status = ft_atoi(ptr);
+		g_status.exit_status = ft_atoi(ptr);
 		exit(ft_atoi(ptr));
 	}
 	printf("exit\n");

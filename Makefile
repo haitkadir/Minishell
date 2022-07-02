@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/07/02 23:13:07 by haitkadi          #+#    #+#              #
+#    Updated: 2022/07/02 23:13:17 by haitkadi         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
 CC = gcc
@@ -23,7 +35,7 @@ BUILTINS =  cd cd_home echo env exit export export_things export_utils pwd unset
 
 EXEC = check_cmd duping executing executing_cmd her_doc one_cmd
 
-ENV = get_env
+ENV = get_env get_env_util
 
 #-------------------------------------------------------------------------------
 # parsing part
@@ -70,7 +82,7 @@ $(NAME): $(OBJ)
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} -I $(shell brew --prefix readline)/include ${CFLAGS}  -c $< -o $@
 
-.INTERMEDIATE: $(OBJ)
+# .INTERMEDIATE: $(OBJ)
 
 clean:
 	@echo "\033[0;31mCleaning libft..."
@@ -98,52 +110,3 @@ norm:
 	@norminette $(HEADER)
 
 .PHONY: clean fclean re test norm
-
-
-
-
-
-
-
-
-
-
-
-
-
-# CC = gcc
-# FLAGS = -lreadline -fsanitize=address -static-libasan
-# NAME = minishell
-
-
-# .PHONY: all clean fclean re libft/libft.a \
-# 		srcs/lexer/liblexer.a srcs/lexer/libparser.a
-
-# all: $(NAME)
-
-# libft/libft.a:
-# 	@make bonus -sC libft/
-
-# srcs/lexer/liblexer.a:
-# 	@make -sC srcs/lexer/
-
-# srcs/lexer/libparser.a:
-# 	@make -sC srcs/parser/
-
-# $(NAME): libft/libft.a srcs/lexer/liblexer.a srcs/lexer/libparser.a minishell $(ENVSRCS) $(LIST_FUNCS)
-# 	@$(CC) $(FLAGS) minishell $(LIBFT) $(ENVSRCS) $(LIST_FUNCS) \
-# 	$(PARSER) $(LEXER) -o $(NAME) -g
-# 	@echo "\033[1;34mMinishell Compield successfuly\033[0m"
-
-# clean:
-# 	@make clean -sC ./libft/
-# 	@make clean -sC ./srcs/lexer/
-# 	@make clean -sC ./srcs/parser/
-
-# fclean: clean
-# 	@rm -f $(NAME)
-# 	@make fclean -sC ./libft/
-# 	@make fclean -sC ./srcs/lexer/
-# 	@make fclean -sC ./srcs/parser/
-
-# re: fclean all

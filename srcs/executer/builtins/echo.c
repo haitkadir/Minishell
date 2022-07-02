@@ -17,10 +17,10 @@ void	printing_echo(char	**str, int i)
 	if (!ft_strcmp("$?", str[i]))
 	{
 		if (str[i + 1] != NULL)
-			printf("%d ", status.exit_status);
+			printf("%d ", g_status.exit_status);
 		else
-			printf("%d", status.exit_status);
-		status.exit_status = 0;
+			printf("%d", g_status.exit_status);
+		g_status.exit_status = 0;
 	}
 	else
 	{
@@ -70,10 +70,10 @@ void	no_flag(char	**str)
 		if (!ft_strcmp("$?", str[i]))
 		{
 			if (str[i + 1] != NULL)
-				printf("%d ", status.exit_status);
+				printf("%d ", g_status.exit_status);
 			else
-				printf("%d", status.exit_status);
-			status.exit_status = 0;
+				printf("%d", g_status.exit_status);
+			g_status.exit_status = 0;
 		}
 		else
 		{

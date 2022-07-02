@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 23:31:21 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 23:31:26 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*----------------------------------------------------------------------------*/
@@ -13,7 +25,7 @@ char	get_space(t_token **token, char *line, int *i)
 
 /*----------------------------------------------------------------------------*/
 
-char	check_last(t_token *token, int	macro)
+char	check_last(t_token *token, int macro)
 {
 	if (token)
 	{
@@ -45,7 +57,7 @@ char	is_last_operator(t_token *token)
 
 char	tokenizer(t_token **token, char *line, t_env *env)
 {
-	int i;
+	int		i;
 	char	qoute;
 	int		err;
 
@@ -71,16 +83,3 @@ char	tokenizer(t_token **token, char *line, t_env *env)
 	}
 	return (err);
 }
-
-/*
-
-cat           <          infile        |        grep        -i        name          >    outfile
-
-word space operator space word space pipe space word space word space word space operator word
-
-cmd: "cat"          red_in: "infile"     pipe:       cmd: "grep -i name"  red_out: "outfile"
-
-red_in: "infile"      cmd: "cat"         pipe:       cmd: "grep -i name"  red_out: "outfile"
-
-
-*/

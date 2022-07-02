@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haitkadi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/02 22:49:50 by haitkadi          #+#    #+#             */
+/*   Updated: 2022/07/02 22:50:18 by haitkadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <unistd.h>
@@ -13,9 +25,7 @@
 # include <readline/history.h>
 # include <signal.h>
 
-
 /*-------------------------------- global ------------------------------------*/
-
 
 enum
 {
@@ -33,20 +43,20 @@ enum
 // Tokenizer or lexer part
 typedef struct s_token
 {
-    struct s_token  *prev;
-	int             token;
-	char            *content;
-    struct s_token  *next;
+	struct s_token	*prev;
+	int				token;
+	char			*content;
+	struct s_token	*next;
 }	t_token;
 // The final data that will be returnd to execution part
 typedef struct s_shell
 {
-    struct s_shell  *prev;
-	int             token;
-	char            *data;
+	struct s_shell	*prev;
+	int				token;
+	char			*data;
 	char			**switchs;
 	int				file;
-    struct s_shell  *next;
+	struct s_shell	*next;
 }	t_shell;
 
 // for exit status and signals
@@ -54,17 +64,18 @@ typedef struct s_global
 {
 	int	exit_status;
 	int	signals;
-} t_global;
+}	t_global;
 
-t_global status;
+t_global	g_status;
+
 /*--------------------------- get environment variables ----------------------*/
 
 typedef struct s_env
 {
-    char            *key;
-    char            *value;
-    struct s_env    *next;
-} t_env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 void	ft_envadd_back(t_env **lst, t_env *new);
 t_env	*ft_envnew(char *key, char *value);
@@ -83,11 +94,10 @@ void	put_error(char *keyword, char *msg, int err);
 t_token	*tokennew(char *content, int token);
 void	tokenadd_front(t_token **lst, t_token *new);
 char	tokenadd_back(t_token **lst, t_token *new);
-int     tokensize(t_token *lst);
+int		tokensize(t_token *lst);
 t_token	*tokenlast(t_token *lst);
 void	tokendelone(t_token *lst);
 void	token_clear(t_token **lst);
-
 char	shelladd_front(t_shell **shell, t_shell *new);
 char	shelladd_back(t_shell **shell, t_shell *new);
 int		shell_size(t_shell *shell);
@@ -97,7 +107,6 @@ void	shelldelone(t_shell *shell);
 void	shell_clear(t_shell **shell);
 
 /*-------------------------------- Lexer ------------------------------------*/
-
 
 char	check_qoutes(char *line);
 char	is_redirection(t_token *token);
@@ -118,11 +127,10 @@ char	is_operators(char qoute, char a, char b);
 char	get_operator(t_token **token, char *line, int *i);
 char	tokenizer(t_token **token, char *line, t_env *env);
 char	is_last_operator(t_token *token);
-char	check_last(t_token *token, int	macro);
+char	check_last(t_token *token, int macro);
 t_token	*lexer(char *line, t_env *env);
 
 /*-------------------------------- Parser ------------------------------------*/
-
 
 void	free_path(char **path);
 char	**get_path(t_env *env);
@@ -131,17 +139,18 @@ char	*check_cmd(t_env *env, char *cmd);
 char	**get_switchs(t_token *token);
 t_shell	*get_cmd(t_env *env, t_token *token);
 int		open_file(char *filename, int macro);
-void    check_file_permession(char  *file, int macro);
+void	check_file_permession(char *file, int macro);
 char	filetype(char *input);
 char	is_operator(t_token *token);
-void    process_operator(t_shell **shell, t_token **token);
+void	process_operator(t_shell **shell, t_token **token);
 void	handle_files(int *args, char *file, int token);
-void	store_data(t_shell **shell, int *files, t_shell *cmd, t_shell *here_doc);
+void	store_data(t_shell **shell, int *files, t_shell *cmd, \
+	t_shell *here_doc);
 void	process_data_util(t_shell **shell, t_token **token, t_env *env);
 char	process_data(t_shell **shell, t_token *token, t_env *env);
 void	parser(char *line, t_env **env);
 
-/*-------------------------------- Executer ------------------------------------*/
+/*-------------------------------- Executer ----------------------------------*/
 
 typedef struct s_arg
 {
@@ -154,12 +163,13 @@ typedef struct s_arg
 	int		out_fd;
 	int		not_found;
 	int		i;
-} t_arg;
+}	t_arg;
 
-/* ------------------------------ Utils functions ---------------------------- */
+/* ------------------------------ Utils functions --------------------------- */
+
 void	check_oldpwd(t_env *env, char	*oldpwd);
 
-/* --------------------------------- builtins --------------------------------- */
+/* -------------------------------- builtins -------------------------------- */
 
 void	builtins(t_env	**envi, char **str, t_arg *arg);
 char	*pwd(t_env *env, int i);
@@ -171,7 +181,6 @@ void	exit11(char *ptr);
 void	echo_env1(t_env *env, char **str);
 void	cd_home(t_env *env, char *arg);
 void	cd_env(t_env *env, char	*str, char *arg);
-
 
 /* --------------------------------- export --------------------------------- */
 
@@ -188,7 +197,6 @@ void	ft_dup(t_shell *shell, t_arg *arg, int j);
 
 int		one_cmd(t_env	**env, t_arg *arg, t_shell *shell);
 int		execute_builting(t_shell *lst, t_arg *arg, t_env **env);
-
 void	exec_in_child(t_env	*env, t_arg *arg, t_shell *shell, int j);
 char	**env_to_table(t_env *env);
 void	converting_env(t_env *env, char	**envirement);
@@ -203,7 +211,7 @@ void	handler(int signal);
 void	show_ctrl(void);
 void	hide_ctrl(void);
 
-/* --------------------------------- her_doc --------------------------------- */
+/* --------------------------------- her_doc -------------------------------- */
 
 void	her_doc_logic(char	*str, int i, t_shell *shell);
 int		her_doc(t_shell *shell, t_arg *arg);

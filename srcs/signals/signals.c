@@ -35,19 +35,19 @@ void	handler(int signal)
 	int i;
 
 	i = 0;
-    if (signal == SIGINT && status.signals == 0)
+    if (signal == SIGINT && g_status.signals == 0)
 	{
 		write(1, "\n", 1);
 		exit(1);
 	}
-	else if (signal == SIGINT && status.signals == 1)
+	else if (signal == SIGINT && g_status.signals == 1)
 	{
 		printf("\n");
     	rl_on_new_line();
 		rl_replace_line("", 0);
     	rl_redisplay();
 	}
-	else if (signal == SIGINT && status.signals != 1)
+	else if (signal == SIGINT && g_status.signals != 1)
 		i++;
 	if (signal == SIGQUIT)
 		i++;

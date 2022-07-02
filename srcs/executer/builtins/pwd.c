@@ -25,14 +25,14 @@ char	*pwd(t_env *env, int i)
 			{
 				if (i == 1)
 					printf("%s\n", lst->value);
-				status.exit_status = 0;
+				g_status.exit_status = 0;
 				return (lst->value);
 			}
 			else
 			{
 				if (i == 1)
 					printf("pwd is not set\n");
-				status.exit_status = 1;
+				g_status.exit_status = 1;
 				return (NULL);
 			}
 		}

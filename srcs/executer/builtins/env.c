@@ -29,12 +29,12 @@ void	env(t_env *env)
 			printf("%s=%s\n", lst->key, lst->value);
 		lst = lst->next;
 		i++;
-		status.exit_status = 0;
+		g_status.exit_status = 0;
 	}
 	if (i == 0)
 	{
 		ft_putstr_fd("env not set\n", 2);
-		status.exit_status = 1;
+		g_status.exit_status = 1;
 		return ;
 	}
 }
