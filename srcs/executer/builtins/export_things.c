@@ -48,7 +48,11 @@ int	key_exist(t_env *lst, char	*find, int *j)
 			if (*j == 1)
 				key_already_exist(tmp, lst, find);
 			else
+			{
+				tmp = lst->value;
 				lst->value = ft_strdup(ft_strchr(find, '=') + 1);
+				ft_free(tmp);
+			}
 			if (!lst->value)
 				lst->value = NULL;
 			g_status.exit_status = 0;
