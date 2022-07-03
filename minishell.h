@@ -173,7 +173,7 @@ void	check_oldpwd(t_env *env, char	*oldpwd);
 
 /* -------------------------------- builtins -------------------------------- */
 
-void	builtins(t_env	**envi, char **str, t_arg *arg);
+void	builtins(t_env	**envi, char **str);
 char	*pwd(t_env *env, int i);
 void	unset_env(t_env **env, char **str);
 void	unset_utils(t_env **env, t_env *lst, char *find, t_env *tmp);
@@ -186,10 +186,10 @@ void	cd_env(t_env *env, char *arg);
 
 /* --------------------------------- export --------------------------------- */
 
-void	export_things(t_env **env, char	*find, t_arg *arg);
-void	export_env(t_env **env, char *str, char **find, t_arg *arg);
-int		check_equal(t_env *lst, char *str, t_arg *arg);
-void	sorted_env(t_env *lst, t_arg *arg);
+void	export_things(t_env **env, char	*find);
+void	export_env(t_env **env, char **find);
+int		check_equal(char *str);
+void	sorted_env(t_env *lst);
 
 /* --------------------------------- duping --------------------------------- */
 
@@ -216,7 +216,7 @@ void	hide_ctrl(void);
 /* --------------------------------- her_doc -------------------------------- */
 
 void	her_doc_logic(char	*str, int i, t_shell *shell);
-int		her_doc(t_shell *shell, t_arg *arg);
+int		her_doc(t_shell *shell);
 int		her_doc_exec(t_shell *shell, t_arg *arg);
 
 #endif

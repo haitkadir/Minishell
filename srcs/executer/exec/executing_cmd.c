@@ -85,7 +85,7 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
 			ft_dup(shell, arg, 1);
 		else
 			ft_dup(shell, arg, 0);
-		builtins(env, shell->switchs, arg);
+		builtins(env, shell->switchs);
 		close(arg->fd[1]);
 		exit(g_status.exit_status);
 	}
@@ -101,8 +101,6 @@ void	executing_builtins(t_shell *shell, t_arg *arg, t_env **env)
 
 int	cmd_token(t_shell *shell, t_arg *arg, t_env **env)
 {
-	int	j;
-
 	if (check_builtins(shell->switchs[0]))
 		executing_builtins(shell, arg, env);
 	else

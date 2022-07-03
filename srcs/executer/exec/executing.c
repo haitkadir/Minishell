@@ -32,7 +32,7 @@ int	her_doc_exec(t_shell *shell, t_arg *arg)
 	int	id;
 	int	rs;
 
-	id = her_doc(shell, arg);
+	id = her_doc(shell);
 	waitpid(id, &rs, 0);
 	g_status.signals = 1;
 	if (rs != 0)

@@ -43,8 +43,7 @@ void	create_new_pwd(char	*home, t_env *env)
 	t_env	*lst;
 
 	lst = NULL;
-	home = NULL;
-	lst = ft_envnew("PWD", getcwd(home, sizeof(home)));
+	lst = ft_envnew("PWD", home);
 	ft_envadd_back(&env, lst);
 }
 

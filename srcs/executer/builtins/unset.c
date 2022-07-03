@@ -48,6 +48,7 @@ void	unset_env(t_env **env, char **str)
 	int		i;
 
 	lst = NULL;
+	tmp = NULL;
 	i = 1;
 	while (str[i])
 	{

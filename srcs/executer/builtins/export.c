@@ -19,12 +19,13 @@ int	export_special_char(char c)
 	return (0);
 }
 
-int	no_keys_case(char	*str, t_env **lst, t_env *lst1)
+int	no_keys_case(char	*str, t_env **lst, int i)
 {
 	t_env	*tmp;
-	int		i;
+	t_env	*lst1;
 
 	tmp = *lst;
+	lst1 = NULL;
 	while (tmp)
 	{
 		i = 0;
@@ -77,8 +78,6 @@ int	key_existed(char	*str, int	*j, int i)
 
 int	check_keys(t_env **lst, char *str, int *j, int i)
 {
-	t_env	*lst1;
-
 	i = 0;
 	if (!(ft_isalpha(str[0]) || str[0] == '_'))
 	{
@@ -96,15 +95,15 @@ int	check_keys(t_env **lst, char *str, int *j, int i)
 		}
 		i++;
 	}
-	if (i == ft_strlen(str))
+	if (i == (int)ft_strlen(str))
 	{
-		if (no_keys_case(str, lst, lst1))
+		if (no_keys_case(str, lst, i))
 			return (1);
 	}
 	return (1);
 }
 
-void	export_env(t_env **env, char *str, char **find, t_arg *arg)
+void	export_env(t_env **env, char **find)
 {
 	t_env	*lst;
 	int		i;
@@ -113,14 +112,14 @@ void	export_env(t_env **env, char *str, char **find, t_arg *arg)
 	lst = *env;
 	if (!find[1])
 	{
-		sorted_env(lst, arg);
+		sorted_env(lst);
 		return ;
 	}
 	else
 	{
 		while (find[i])
 		{
-			export_things(env, find[i], arg);
+			export_things(env, find[i]);
 			i++;
 		}
 	}

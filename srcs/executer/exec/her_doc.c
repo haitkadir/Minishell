@@ -26,7 +26,7 @@ void	her_doc_logic(char	*str, int fd, t_shell *shell)
 		else if (!str)
 		{
 			close(fd);
-			exit(1);
+			exit(0);
 		}
 		else
 		{
@@ -38,7 +38,7 @@ void	her_doc_logic(char	*str, int fd, t_shell *shell)
 	}
 }
 
-int	her_doc(t_shell *shell, t_arg *arg)
+int	her_doc(t_shell *shell)
 {
 	int		fd;
 	char	*str;

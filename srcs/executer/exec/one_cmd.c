@@ -35,7 +35,7 @@ int	execute_builting(t_shell *lst, t_arg *arg, t_env **env)
 		if (lst->token == CMD && arg->not_found == 0)
 		{
 			ft_dup(lst, arg, 2);
-			builtins(env, lst->switchs, arg);
+			builtins(env, lst->switchs);
 			dup2(arg->in, 0);
 			dup2(arg->out, 1);
 			if (lst->prev && lst->prev->token == RED_OUT)

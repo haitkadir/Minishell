@@ -60,7 +60,6 @@ void	pipe_case(t_shell *shell, t_arg *arg, int fd)
 void	ft_dup(t_shell *shell, t_arg *arg, int j)
 {
 	int	fd;
-	int	i;
 
 	fd = 0;
 	if (j == 1)

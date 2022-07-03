@@ -93,7 +93,7 @@ void	filling_keys(t_env *lst, char	**keys)
 	keys[i] = NULL;
 }
 
-void	sorted_env(t_env *lst, t_arg *arg)
+void	sorted_env(t_env *lst)
 {
 	t_env	*sort;
 	char	**keys;

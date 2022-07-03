@@ -12,12 +12,12 @@
 
 #include "../../../minishell.h"
 
-void	builtins(t_env	**envi, char **str, t_arg *arg)
+void	builtins(t_env	**envi, char **str)
 {
 	if (!ft_strcmp_tl(str[0], "pwd"))
 		pwd(*envi, 1);
 	else if (!ft_strcmp(str[0], "export"))
-		export_env(envi, str[0], str, arg);
+		export_env(envi, str);
 	else if (!ft_strcmp(str[0], "unset"))
 		unset_env(envi, str);
 	else if (!ft_strcmp_tl(str[0], "env"))
@@ -30,9 +30,9 @@ void	builtins(t_env	**envi, char **str, t_arg *arg)
 			exit10();
 	}
 	else if (!ft_strcmp(str[0], "cd"))
-		cd_env(*envi, str[0], str[1]);
+		cd_env(*envi, str[1]);
 	else if (!ft_strcmp(str[0], "echo"))
-		echo_env1(*envi, str);
+		echo_env1(str);
 }
 
 void	exec_in_child(t_env	*env, t_arg *arg, t_shell *shell, int j)

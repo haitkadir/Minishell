@@ -12,7 +12,7 @@
 
 #include "../../../minishell.h"
 
-int	check_equal(t_env *lst, char *str, t_arg *arg)
+int	check_equal(char *str)
 {
 	int	i;
 
@@ -88,7 +88,7 @@ void	key_not_exist(t_env **lst, char	*find, int j, int i)
 	g_status.exit_status = 0;
 }
 
-void	export_things(t_env **env, char	*find, t_arg *arg)
+void	export_things(t_env **env, char	*find)
 {
 	int		i;
 	int		j;

@@ -12,12 +12,19 @@
 
 #include "../../minishell.h"
 
+static void	init_args(char **line, int ac, char **av)
+{
+	*line = NULL;
+	(void)ac;
+	(void)av;
+}
+
 int	main(int ac, char **av, char **main_env)
 {
 	char	*line;
 	t_env	*env;
 
-	line = NULL;
+	init_args(&line, ac, av);
 	g_status.signals = 1;
 	g_status.exit_status = 0;
 	create_env(&env, main_env);
