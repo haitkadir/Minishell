@@ -10,6 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
+Color_Off='\033[0m'       # Text Reset
+BGreen='\033[1;32m'       # Green
+BYellow='\033[1;33m'      # Yellow
+
+
+define BANNER
+
+	███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     
+	████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     
+	██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     
+	██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     
+	██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗
+	╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+                                                                                                     
+endef
+export BANNER
+
+
 NAME = minishell
 
 CC = gcc
@@ -53,10 +71,6 @@ TOOLS = tokennew tokenadd_front tokenadd_back tokensize tokenlast \
 
 #-------------------------------------------------------------------------------
 
-
-
-
-
 SRC = $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
 	  $(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \
 	  $(addsuffix .c, $(addprefix srcs/parser/, $(PARSER))) \
@@ -69,7 +83,13 @@ SRC = $(addsuffix .c, $(addprefix srcs/env/, $(ENV))) \
 
 OBJ = $(SRC:c=o)
 
-all: $(NAME)
+all: banner $(NAME)
+
+banner:
+	@clear
+	@echo "\n"
+	@echo $(BGreen)"$$BANNER"$(Color_Off)
+	@echo $(BYellow)"                     made by Hssain Aitkadir & Sami Hafid\n"$(Color_Off)
 
 $(NAME): $(OBJ)
 	@echo "\n"
@@ -81,8 +101,6 @@ $(NAME): $(OBJ)
 %.o: %.c
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} -I $(shell brew --prefix readline)/include ${CFLAGS}  -c $< -o $@
-
-# .INTERMEDIATE: $(OBJ)
 
 clean:
 	@echo "\033[0;31mCleaning libft..."
