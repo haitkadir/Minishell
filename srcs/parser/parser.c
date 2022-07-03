@@ -48,6 +48,7 @@ void	parser(char *line, t_env **env)
 	t_shell	*shell;
 	t_arg	args;
 
+	shell = NULL;
 	args.paths = NULL;
 	token = lexer(line, *env);
 	if (!token)
