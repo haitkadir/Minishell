@@ -14,6 +14,22 @@
 
 /*----------------------------------------------------------------------------*/
 
+char	*check_cmd_util(char *path, char *cmd)
+{
+	char	*full_cmd;
+
+	full_cmd = NULL;
+	full_cmd = ft_strjoin(path, cmd);
+	if (!full_cmd)
+		return (NULL);
+	if (access(full_cmd, F_OK) == 0)
+		return (full_cmd);
+	ft_free(full_cmd);
+	return (NULL);
+}
+
+/*----------------------------------------------------------------------------*/
+
 char	*check_cmd(t_env *env, char *cmd)
 {
 	char	*tmp_cmd;
@@ -22,25 +38,21 @@ char	*check_cmd(t_env *env, char *cmd)
 	int		i;
 
 	i = 0;
+	full_cmd = NULL;
 	tmp_cmd = ft_strjoin("/", cmd);
 	path = get_path(env);
 	if (!tmp_cmd || !path)
 		return (NULL);
 	while (path[i])
 	{
-		full_cmd = ft_strjoin(path[i], tmp_cmd);
-		if (!full_cmd)
-			return (NULL);
-		if (access(full_cmd, F_OK) == 0)
-		{
-			free_path(path);
-			ft_free(tmp_cmd);
-			return (full_cmd);
-		}
-		ft_free(full_cmd);
+		full_cmd = check_cmd_util(path[i], tmp_cmd);
+		if (full_cmd)
+			break ;
 		i++;
 	}
-	return (NULL);
+	free_path(path);
+	ft_free(tmp_cmd);
+	return (full_cmd);
 }
 
 /*----------------------------------------------------------------------------*/
