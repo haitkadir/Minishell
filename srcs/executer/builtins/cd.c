@@ -86,7 +86,7 @@ int	check_cases(t_env *env, char *arg, char *dir, char *oldpwd)
 	return (0);
 }
 
-void	cd_env(t_env *env, char	*str, char *arg)
+void	cd_env(t_env *env, char *arg)
 {
 	t_env	*lst;
 	char	*dir;
@@ -98,7 +98,7 @@ void	cd_env(t_env *env, char	*str, char *arg)
 	oldpwd = NULL;
 	i = 0;
 	if (!ft_strcmp(arg, NULL))
-		cd_home(env, arg);
+		cd_home(env, oldpwd);
 	else
 	{
 		if (check_cases(env, arg, dir, oldpwd))

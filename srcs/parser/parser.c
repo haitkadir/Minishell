@@ -14,7 +14,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-static void	print_node(t_shell *shell)
+void	print_node(t_shell *shell)
 {
 	int	i;
 

@@ -48,10 +48,9 @@ void	create_new_pwd(char	*home, t_env *env)
 	ft_envadd_back(&env, lst);
 }
 
-void	cd_home(t_env *env, char *arg)
+void	cd_home(t_env *env, char *oldpwd)
 {
 	t_env	*lst;
-	char	*oldpwd;
 	char	*home;
 
 	lst = env;
@@ -62,7 +61,7 @@ void	cd_home(t_env *env, char *arg)
 	{
 		if (!ft_strcmp(lst->key, "PWD"))
 		{
-			if (lst->value)
+			if (lst->value != NULL)
 			{
 				oldpwd = ft_strdup(lst->value);
 				free(lst->value);

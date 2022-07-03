@@ -129,6 +129,7 @@ char	tokenizer(t_token **token, char *line, t_env *env);
 char	is_last_operator(t_token *token);
 char	check_last(t_token *token, int macro);
 t_token	*lexer(char *line, t_env *env);
+void	print_token(t_token *token);
 
 /*-------------------------------- Parser ------------------------------------*/
 
@@ -149,6 +150,7 @@ void	store_data(t_shell **shell, int *files, t_shell *cmd, \
 void	process_data_util(t_shell **shell, t_token **token, t_env *env);
 char	process_data(t_shell **shell, t_token *token, t_env *env);
 void	parser(char *line, t_env **env);
+void	print_node(t_shell *shell);
 
 /*-------------------------------- Executer ----------------------------------*/
 
@@ -178,9 +180,9 @@ void	unset_utils(t_env **env, t_env *lst, char *find, t_env *tmp);
 void	env(t_env *env);
 void	exit10(void);
 void	exit11(char *ptr);
-void	echo_env1(t_env *env, char **str);
-void	cd_home(t_env *env, char *arg);
-void	cd_env(t_env *env, char	*str, char *arg);
+void	echo_env1(char **str);
+void	cd_home(t_env *env, char *oldpwd);
+void	cd_env(t_env *env, char *arg);
 
 /* --------------------------------- export --------------------------------- */
 

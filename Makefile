@@ -32,7 +32,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -g -I ./ -I libft/
+CFLAGS =  -Wall -Wextra -Werror
 
 MAIN = minishell
 
@@ -95,7 +95,7 @@ $(NAME): $(OBJ)
 	@echo "\n"
 	@make bonus -sC libft/
 	@echo "\033[0;32mCompiling minishell..."
-	@$(CC) -lreadline $(CFLAGS) $(RFLAGS) -o $(NAME) $(OBJ) $(LIBFT) -g
+	@$(CC) -lreadline $(CFLAGS) $(RFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 	@echo "\n\033[0mDone !"
 
 %.o: %.c

@@ -14,7 +14,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-static void	print_token(t_token *token)
+void	print_token(t_token *token)
 {
 	while (token)
 	{

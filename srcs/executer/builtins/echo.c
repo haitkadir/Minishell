@@ -34,7 +34,7 @@ void	printing_echo(char	**str, int i)
 	}
 }
 
-int	flag_option(t_env *env, char **str, int j, int i)
+int	flag_option(char **str, int j, int i)
 {
 	while (str[i])
 	{
@@ -86,7 +86,7 @@ void	no_flag(char	**str)
 	}
 }
 
-void	echo_env1(t_env *env, char **str)
+void	echo_env1(char **str)
 {
 	int		i;
 	int		j;
@@ -100,7 +100,7 @@ void	echo_env1(t_env *env, char **str)
 	}
 	if (str[1][0] == '-' && str[1][1] == 'n')
 	{
-		if (flag_option(env, str, j, i))
+		if (flag_option(str, j, i))
 			return ;
 	}
 	no_flag(str);
