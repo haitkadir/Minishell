@@ -98,7 +98,7 @@ $(NAME): $(OBJ)
 	@$(CC) -lreadline $(CFLAGS) $(RFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 	@echo "\n\033[0mDone !"
 
-%.o: %.c
+%.o: %.c $(HEADER)
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} -I $(shell brew --prefix readline)/include ${CFLAGS}  -c $< -o $@
 

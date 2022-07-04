@@ -20,7 +20,7 @@ char	is_operators(char qoute, char a, char b)
 		|| (!qoute && a == '<' && b != '<')
 		|| (!qoute && a == '>' && b == '>')
 		|| (!qoute && a == '>' && b != '>')
-		|| (!qoute && a == '|' && b != '|'));
+		|| (!qoute && a == '|'));
 }
 
 /*----------------------------------------------------------------------------*/
@@ -38,7 +38,7 @@ char	get_operator(t_token **token, char *line, int *i)
 		ret += get_red_append(token, i);
 	else if (line[*i] == '>' && line[*i + 1] != '>')
 		ret += get_red_out(token, i);
-	else if (line[*i] == '|' && line[*i + 1] != '|')
+	else if (line[*i] == '|')
 		ret += get_pipe(token, i);
 	return (ret);
 }

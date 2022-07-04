@@ -109,6 +109,8 @@ void	shell_clear(t_shell **shell);
 /*-------------------------------- Lexer ------------------------------------*/
 
 char	check_qoutes(char *line);
+char	check_operators_syntax(t_token *token);
+char	check_pipe_syntax(t_token *token);
 char	is_redirection(t_token *token);
 char	check_errors(t_token *token);
 char	*expender(char *line, int *i, t_env *env);

@@ -14,50 +14,21 @@
 
 /*----------------------------------------------------------------------------*/
 
-static char	check_qoutes_util(char c, char *flag, char *dbl, char *sngl)
-{
-	if (c == '\"')
-	{
-		if (!*flag)
-			*flag = 'd';
-		if (*flag == 'd' && *dbl && *sngl)
-		{
-			*sngl = !*sngl;
-			*flag = 0;
-		}
-		*dbl = !*dbl;
-	}
-	else if (c == '\'')
-	{
-		if (!*flag)
-			*flag = 's';
-		if (*flag == 's' && *dbl && *sngl)
-		{
-			*dbl = !*dbl;
-			*flag = 0;
-		}
-		*sngl = !*sngl;
-	}
-	return (0);
-}
-
-/*----------------------------------------------------------------------------*/
-
 char	check_qoutes(char *line)
 {
 	int		i;
 	char	dbl;
 	char	sngl;
-	char	flag;
 
 	dbl = 0;
 	sngl = 0;
-	flag = 0;
 	i = 0;
 	while (line[i])
 	{
-		if (check_qoutes_util(line[i], &flag, &dbl, &sngl))
-			return (1);
+		if (line[i] == '\"' && !sngl)
+			dbl = !dbl;
+		else if (line[i] == '\'' && !dbl)
+			sngl = !sngl;
 		i++;
 	}
 	if (dbl || sngl)
