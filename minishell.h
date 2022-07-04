@@ -149,6 +149,7 @@ void	process_operator(t_shell **shell, t_token **token);
 void	handle_files(int *args, char *file, int token);
 void	store_data(t_shell **shell, int *files, t_shell *cmd, \
 	t_shell *here_doc);
+void	init_vars(int *args, t_shell **new_cmd, t_shell **here_docs);
 void	process_data_util(t_shell **shell, t_token **token, t_env *env);
 char	process_data(t_shell **shell, t_token *token, t_env *env);
 void	parser(char *line, t_env **env);

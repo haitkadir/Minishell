@@ -109,7 +109,7 @@ t_shell	*get_cmd(t_env *env, t_token *token)
 		return (NULL);
 	if (check_builtins(token->content))
 		full_cmd = ft_strdup(token->content);
-	else if (ft_strchr("./", token->content[0]))
+	else if (ft_strchr("/.", token->content[0]))
 	{
 		if (!check_cmd_permissions(token->content))
 			full_cmd = ft_strdup(token->content);

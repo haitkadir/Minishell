@@ -44,13 +44,11 @@ void	store_data(t_shell **shell, int *args, t_shell *cmd, t_shell *here_doc)
 
 /*----------------------------------------------------------------------------*/
 
-void	init_vars(int *args, char *is_cmd, t_shell **new_cmd, \
-	t_shell **here_docs)
+void	init_vars(int *args, t_shell **new_cmd, t_shell **here_docs)
 {
 	args[0] = -2;
 	args[1] = -2;
 	args[2] = 0;
-	*is_cmd = 0;
 	*new_cmd = NULL;
 	*here_docs = NULL;
 }
@@ -59,12 +57,11 @@ void	init_vars(int *args, char *is_cmd, t_shell **new_cmd, \
 
 void	process_data_util(t_shell **shell, t_token **token, t_env *env)
 {
-	char	is_cmd;
 	int		args[3];
 	t_shell	*new_cmd;
 	t_shell	*here_docs;
 
-	init_vars(args, &is_cmd, &new_cmd, &here_docs);
+	init_vars(args, &new_cmd, &here_docs);
 	while (*token && (*token)->token != PIPE)
 	{
 		if (!new_cmd && (*token)->token == WORD)
